@@ -1,0 +1,192 @@
+[
+  {
+    "_id": "657342353452354",
+    "titulo": "Proyecto de inteligencia artificial",
+    "categoria": "tecnología",
+    "imagen": "ruta/a/imagen.jpg",
+    "descripcion": "Este proyecto busca desarrollar un sistema de inteligencia artificial para reconocimiento de imágenes.",
+    "tecnologias": ["python", "tensorflow", "opencv"],
+    "idiomaEquipo": ["español", "inglés"],
+    "rolesRequeridos": [
+      { "rol": "backend", "senority": "junior", "totales": 2, "ocupados": 1 },
+      { "rol": "backend", "senority": "senior", "totales": 1, "ocupados": 0 },
+      { "rol": "frontend", "senority": "junior", "totales": 1, "ocupados": 0 },
+      {
+        "rol": "devops",
+        "senority": "semi-senior",
+        "totales": 1,
+        "ocupados": 0
+      }
+    ],
+    "isRolesRequeridosCompleted": false,
+    "status": "buscando equipo",
+    "estimadoEjecucion": 1589760000000,
+    "fechaComienzo": 1583020800000,
+    "estadoAvance": 0.6,
+    "linksConexion": [
+      { "nombreRedSocial": "discord", "link": "https://discord.gg/proyecto1" },
+      { "nombreRedSocial": "slack", "link": "https://slack.com/proyecto1" }
+    ],
+    "adminis": ["128712331278123"],
+    "colaboradores": ["8945387178223178", "437812378598981"]
+  },
+  {
+    "_id": "124567890123456",
+    "titulo": "Plataforma de aprendizaje en línea",
+    "categoria": "educativo",
+    "imagen": "ruta/a/imagen.jpg",
+    "descripcion": "Este proyecto consiste en desarrollar una plataforma de aprendizaje en línea para estudiantes de todas las edades.",
+    "tecnologias": ["javascript", "React", "Node.js", "MongoDB"],
+    "idiomaEquipo": ["español", "inglés", "francés"],
+    "rolesRequeridos": [
+      { "rol": "frontend", "senority": "junior", "totales": 3, "ocupados": 2 },
+      { "rol": "backend", "senority": "senior", "totales": 2, "ocupados": 1 },
+      {
+        "rol": "devops",
+        "senority": "semi-senior",
+        "totales": 1,
+        "ocupados": 0
+      }
+    ],
+    "isRolesRequeridosCompleted": false,
+    "status": "buscando equipo",
+    "estimadoEjecucion": 1654320000000,
+    "fechaComienzo": 1640995200000,
+    "estadoAvance": 0.2,
+    "linksConexion": [
+      { "nombreRedSocial": "discord", "link": "https://discord.gg/proyecto2" },
+      {
+        "nombreRedSocial": "whatsapp",
+        "link": "https://chat.whatsapp.com/proyecto2"
+      },
+      { "nombreRedSocial": "slack", "link": "https://slack.com/proyecto2" }
+    ],
+    "adminis": ["128712331278123"],
+    "colaboradores": ["8747893221378904"]
+  },
+  {
+    "_id": "987654321098765",
+    "titulo": "Plataforma de comercio electrónico",
+    "categoria": "negocios",
+    "imagen": "ruta/a/imagen.jpg",
+    "descripcion": "Este proyecto tiene como objetivo desarrollar una plataforma de comercio electrónico para la venta de productos variados.",
+    "tecnologias": ["python", "Django", "PostgreSQL"],
+    "idiomaEquipo": ["español", "inglés"],
+    "rolesRequeridos": [
+      { "rol": "backend", "senority": "junior", "totales": 2, "ocupados": 1 },
+      { "rol": "frontend", "senority": "senior", "totales": 1, "ocupados": 0 },
+      {
+        "rol": "devops",
+        "senority": "semi-senior",
+        "totales": 1,
+        "ocupados": 0
+      }
+    ],
+    "isRolesRequeridosCompleted": false,
+    "status": "buscando equipo",
+    "estimadoEjecucion": 1698768000000,
+    "fechaComienzo": 1691049600000,
+    "estadoAvance": 0.1,
+    "linksConexion": [
+      { "nombreRedSocial": "discord", "link": "https://discord.gg/proyecto3" },
+      { "nombreRedSocial": "slack", "link": "https://slack.com/proyecto3" }
+    ],
+    "adminis": ["127845489809831"],
+    "colaboradores": ["34721374612671237"]
+  },
+  {
+    "_id": "543210987654321",
+    "titulo": "Aplicación móvil para viajes",
+    "categoria": "viajes",
+    "imagen": "ruta/a/imagen.jpg",
+    "descripcion": "Este proyecto busca desarrollar una aplicación móvil para planificar y gestionar viajes de manera sencilla y eficiente.",
+    "tecnologias": ["Java", "Android", "Firebase"],
+    "idiomaEquipo": ["español", "inglés", "italiano"],
+    "rolesRequeridos": [
+      { "rol": "backend", "senority": "junior", "totales": 2, "ocupados": 1 },
+      { "rol": "frontend", "senority": "junior", "totales": 2, "ocupados": 2 },
+      { "rol": "devops", "senority": "senior", "totales": 1, "ocupados": 0 }
+    ],
+    "isRolesRequeridosCompleted": false,
+    "status": "buscando equipo",
+    "estimadoEjecucion": 1722230400000,
+    "fechaComienzo": 1717238400000,
+    "estadoAvance": 0.05,
+    "linksConexion": [
+      { "nombreRedSocial": "discord", "link": "https://discord.gg/proyecto4" },
+      {
+        "nombreRedSocial": "whatsapp",
+        "link": "https://chat.whatsapp.com/proyecto4"
+      }
+    ],
+    "adminis": ["127845489809831"],
+    "colaboradores": []
+  },
+  {
+    "_id": "135792468013579",
+    "titulo": "Plataforma de streaming de música",
+    "categoria": "entretenimiento",
+    "imagen": "ruta/a/imagen.jpg",
+    "descripcion": "Este proyecto tiene como objetivo desarrollar una plataforma de streaming de música que permita a los usuarios acceder a una amplia biblioteca de canciones y crear listas de reproducción personalizadas.",
+    "tecnologias": ["JavaScript", "React", "Node.js", "MongoDB"],
+    "idiomaEquipo": ["español", "inglés"],
+    "rolesRequeridos": [
+      { "rol": "backend", "senority": "junior", "totales": 3, "ocupados": 2 },
+      { "rol": "backend", "senority": "senior", "totales": 1, "ocupados": 1 },
+      { "rol": "frontend", "senority": "junior", "totales": 2, "ocupados": 2 },
+      { "rol": "frontend", "senority": "senior", "totales": 1, "ocupados": 0 },
+      {
+        "rol": "devops",
+        "senority": "semi-senior",
+        "totales": 1,
+        "ocupados": 0
+      }
+    ],
+    "isRolesRequeridosCompleted": false,
+    "status": "buscando equipo",
+    "estimadoEjecucion": 1752601600000,
+    "fechaComienzo": 1745328000000,
+    "estadoAvance": 0.15,
+    "linksConexion": [
+      { "nombreRedSocial": "discord", "link": "https://discord.gg/proyecto5" },
+      { "nombreRedSocial": "slack", "link": "https://slack.com/proyecto5" }
+    ],
+    "adminis": ["128712331278123"],
+    "colaboradores": [
+      "8945387178223178",
+      "437812378598981",
+      "45789127832185789"
+    ]
+  },
+  {
+    "_id": "246813579024681",
+    "titulo": "Plataforma de gestión de proyectos",
+    "categoria": "negocios",
+    "imagen": "ruta/a/imagen.jpg",
+    "descripcion": "Este proyecto busca desarrollar una plataforma de gestión de proyectos que permita a los equipos colaborar y organizar sus tareas de manera eficiente.",
+    "tecnologias": ["Ruby", "Ruby on Rails", "PostgreSQL"],
+    "idiomaEquipo": ["español", "inglés"],
+    "rolesRequeridos": [
+      { "rol": "backend", "senority": "junior", "totales": 2, "ocupados": 2 },
+      { "rol": "backend", "senority": "senior", "totales": 1, "ocupados": 1 },
+      { "rol": "frontend", "senority": "junior", "totales": 2, "ocupados": 2 },
+      {
+        "rol": "devops",
+        "senority": "semi-senior",
+        "totales": 1,
+        "ocupados": 1
+      }
+    ],
+    "isRolesRequeridosCompleted": true,
+    "status": "buscando equipo",
+    "estimadoEjecucion": 1783872000000,
+    "fechaComienzo": 1776768000000,
+    "estadoAvance": 0.8,
+    "linksConexion": [
+      { "nombreRedSocial": "discord", "link": "https://discord.gg/proyecto6" },
+      { "nombreRedSocial": "slack", "link": "https://slack.com/proyecto6" }
+    ],
+    "adminis": ["128712331278123"],
+    "colaboradores": []
+  }
+]
