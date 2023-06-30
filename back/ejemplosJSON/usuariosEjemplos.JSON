@@ -1,0 +1,131 @@
+[
+  {
+    "_id": "1233522341234123",
+    "mailLogueado": "mimail@gmail.com",
+    "passwordHashiado": "jshdfuiq2h54iu12h4iu213h4i2u34h12i3u4h12u3i41h234oi",
+    "userName": "MessiDeveloper",
+    "description": "Yo soy una persona....",
+    "roles": ["backend", "devop"],
+    "senority": "junior",
+    "stack": ["javascript", "node.js", "express.js", "python", "flask"],
+    "redesSociales": {
+      "linkedin": "mi link de linkedin",
+      "github": "mi link github",
+      "gitlab": "mi link gitlab",
+      "algunOtra": "algun otro link"
+    },
+    "proyectosAdministrados": [
+      "73472163817478",
+      "177540120387123",
+      "71234712364916234"
+    ],
+    "proyectosColaborando": [
+      "889213891234892",
+      "43712387213895",
+      "76326792764367934",
+      "4937843841482789"
+    ],
+    "foto": "un/link/a/mi/foto.jpg",
+    "ultimaConexion": "2023-07-23T18:03:23.034"
+  },
+  {
+    "_id": "9876543210987654",
+    "mailLogueado": "otromail@gmail.com",
+    "passwordHashiado": "kjsdf9834jkl2h4iu213h4i2u34h12i3u4h12u3i41h234oi",
+    "userName": "Coder123",
+    "description": "¡Hola! Soy un apasionado de la programación y me encanta aprender nuevas tecnologías.",
+    "roles": ["frontend", "designer"],
+    "senority": "junior",
+    "stack": ["HTML", "CSS", "JavaScript", "React"],
+    "redesSociales": {
+      "linkedin": "mi link de linkedin",
+      "github": "mi link github",
+      "twitter": "mi link de twitter"
+    },
+    "proyectosAdministrados": ["734712345678123", "1775412345678123"],
+    "proyectosColaborando": ["889212345678912", "43712345678913"],
+    "foto": "un/link/a/mi/foto.jpg",
+    "ultimaConexion": "2023-06-25T09:45:18.123"
+  },
+  {
+    "_id": "2468135790246813",
+    "mailLogueado": "usuario3@mail.com",
+    "passwordHashiado": "kajsdf9823lkj98sd9f98234lksdf",
+    "userName": "DevMaster",
+    "description": "Soy un desarrollador experimentado con conocimientos en múltiples lenguajes de programación.",
+    "roles": ["fullstack", "devops"],
+    "senority": "senior",
+    "stack": ["Java", "Spring", "Python", "Django", "AWS"],
+    "redesSociales": {
+      "linkedin": "mi link de linkedin",
+      "github": "mi link github",
+      "gitlab": "mi link gitlab"
+    },
+    "proyectosAdministrados": [
+      "712345678912341",
+      "1775123456781234",
+      "712345678912345"
+    ],
+    "proyectosColaborando": ["88912345678912", "43712345678913"],
+    "foto": "un/link/a/mi/foto.jpg",
+    "ultimaConexion": "2023-06-28T15:20:05.789"
+  },
+  {
+    "_id": "987654321098765432",
+    "mailLogueado": "user5@example.com",
+    "passwordHashiado": "lkj3298kjdf92kjdsf9klj32k4j2kj34h12i3u4h12u3i41h234oi",
+    "userName": "TechGuru",
+    "description": "Apasionado por la tecnología y siempre en búsqueda de nuevas soluciones innovadoras.",
+    "roles": ["backend", "devops"],
+    "senority": "senior",
+    "stack": ["Python", "Django", "Node.js", "Kubernetes", "AWS"],
+    "redesSociales": {
+      "linkedin": "mi link de linkedin",
+      "github": "mi link github",
+      "gitlab": "mi link gitlab",
+      "medium": "mi link a Medium"
+    },
+    "proyectosAdministrados": ["7123456789123456"],
+    "proyectosColaborando": ["889123456789123", "4371234567891234"],
+    "foto": "un/link/a/mi/foto.jpg",
+    "ultimaConexion": "2023-06-29T11:54:31.234"
+  },
+  {
+    "_id": "246813579024681356",
+    "mailLogueado": "user6@example.com",
+    "passwordHashiado": "sdf98k3jl9sdf2l3kj4h12i3u4h12u3i41h234oi",
+    "userName": "CodeNinja",
+    "description": "Amante de los desafíos y experto en encontrar soluciones eficientes a los problemas.",
+    "roles": ["fullstack"],
+    "senority": "semi-senior",
+    "stack": ["Java", "Spring", "JavaScript", "React", "MySQL"],
+    "redesSociales": {
+      "linkedin": "mi link de linkedin",
+      "github": "mi link github",
+      "twitter": "mi link de twitter"
+    },
+    "proyectosAdministrados": ["7345678912345678", "17751234567812345"],
+    "proyectosColaborando": ["889123456789123456", "437123456789123456"],
+    "foto": "un/link/a/mi/foto.jpg",
+    "ultimaConexion": "2023-06-30T09:15:28.456"
+  },
+  {
+    "_id": "1357924680135792468",
+    "mailLogueado": "user7@example.com",
+    "passwordHashiado": "kj3h4k12h4iu213h4i2u34h12i3u4h12u3i41h234oi",
+    "userName": "TechEnthusiast",
+    "description": "Apasionado por la tecnología y siempre en búsqueda de aprender nuevas habilidades.",
+    "roles": ["frontend"],
+    "senority": "junior",
+    "stack": ["HTML", "CSS", "JavaScript", "React", "Vue.js"],
+    "redesSociales": {
+      "linkedin": "mi link de linkedin",
+      "github": "mi link github",
+      "gitlab": "mi link gitlab"
+    },
+    "proyectosAdministrados": ["71234567891234567"],
+    "proyectosColaborando": ["8891234567891234567", "4371234567891234567"],
+    "foto": "un/link/a/mi/foto.jpg",
+    "ultimaConexion": "2023-06-29T17:42:59.789"
+  }
+]
