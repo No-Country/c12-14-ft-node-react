@@ -83,10 +83,34 @@ const Landing = () => {
       name: 'Eccomerce',
       id: 6,
     },
+    {
+      name: 'Eccomerce',
+      id: 7,
+    },
+    {
+      name: 'Eccomerce',
+      id: 8,
+    },
+    {
+      name: 'Eccomerce',
+      id: 9,
+    },
+    {
+      name: 'Eccomerce',
+      id: 10,
+    },
+    {
+      name: 'Eccomerce',
+      id: 11,
+    },
+    {
+      name: 'Eccomerce',
+      id: 12,
+    },
   ]
 
   return (
-    <main className='flex flex-col items-center w-full gap-20'>
+    <main className='flex flex-col items-center w-full gap-40 pt-20 pb-52'>
       {/* search bar */}
       <SearchBar />
 
@@ -186,10 +210,12 @@ const Landing = () => {
       {/* categories */}
       <section className=' bg-slate-600 flex w-full gap-10 text-white items-center justify-center py-20'>
         <div className='max-w-6xl w-full flex justify-around gap-10'>
-          <h2>Categories</h2>
-          <div>
+          <h2 className='text-3xl'>Categories</h2>
+          <div className='grid grid-cols-2 gap-5 gap-x-20'>
             {categories.map((category) => (
-              <p key={category.id}>{category.name}</p>
+              <p className='text-2xl' key={category.id}>
+                {category.name}
+              </p>
             ))}
           </div>
         </div>
