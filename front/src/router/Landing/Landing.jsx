@@ -57,6 +57,34 @@ const Landing = () => {
     },
   ]
 
+  // categories
+  const categories = [
+    {
+      name: 'Eccomerce',
+      id: 1,
+    },
+    {
+      name: 'Eccomerce',
+      id: 2,
+    },
+    {
+      name: 'Eccomerce',
+      id: 3,
+    },
+    {
+      name: 'Eccomerce',
+      id: 4,
+    },
+    {
+      name: 'Eccomerce',
+      id: 5,
+    },
+    {
+      name: 'Eccomerce',
+      id: 6,
+    },
+  ]
+
   return (
     <main className='flex flex-col items-center w-full gap-20'>
       {/* search bar */}
@@ -151,6 +179,18 @@ const Landing = () => {
                 <CardMiniProject key={project.id} project={project} />
               ))
             }
+          </div>
+        </div>
+      </section>
+
+      {/* categories */}
+      <section className=' bg-slate-600 flex w-full gap-10 text-white items-center justify-center py-20'>
+        <div className='max-w-6xl w-full flex justify-around gap-10'>
+          <h2>Categories</h2>
+          <div>
+            {categories.map((category) => (
+              <p key={category.id}>{category.name}</p>
+            ))}
           </div>
         </div>
       </section>
