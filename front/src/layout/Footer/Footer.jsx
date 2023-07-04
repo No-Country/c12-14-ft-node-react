@@ -1,6 +1,5 @@
-/* eslint-disable import/no-absolute-path */
-import AppStore from '/AppStore.png'
-import GooglePlay from '/GooglePlay.png'
+import AppStore from '@/assets/AppStore.png'
+import GooglePlay from '@/assets/GooglePlay.png'
 import {
   AiOutlineInstagram,
   AiOutlineDribbble,
