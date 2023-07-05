@@ -5,17 +5,14 @@ const Project = require("../models/Project");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
-/////////// FUNCIONES DE BUSQUEDA /////////// devuelven documentos
+/////////// FUNCIONES DE BUSQUEDA /////////// --> Devuelven Documentos segun distintos criterios
 
 //esta funcion filtra por projectId
 async function getProjectById(projectStrngId) {
   try {
-    console.log("hola");
-    const projectObjectId = await ObjectId(projectStrngId);
-    console.log(projectObjectId)
-    console.log(projectObjectId);
-    const query = { title: { _id: projectObjectId } };
-    const projects = await Project.findOne(query);
+    const projectObjectId = new ObjectId(projectStrngId);
+    const query = { _id: projectObjectId };
+    const project = await Project.findOne(query);
     if (project) {
       return project;
     } else {
@@ -48,6 +45,23 @@ async function getProjectsByCategory(category) {
     const projects = await Project.find(query);
     if (projects) {
       return projects;
+    } else {
+      return null; //--> termina devolviendo un [], en lugar de null, no se pq..
+    }
+  } catch (err) {
+    return false; // si ocurre un error tira false.. no error.
+  }
+}
+
+//esta funcion devuelve la propiedad hidden de un proyecto
+
+async function getHiddenStatusOfProject(projectStrngId) {
+  try {
+    const projectObjectId = new ObjectId(projectStrngId);
+    const query = { _id: projectObjectId };
+    const project = await Project.findOne(query);
+    if (project) {
+      return project.hidden;
     } else {
       return null; //--> termina devolviendo un [], en lugar de null, no se pq..
     }
@@ -102,11 +116,44 @@ async function checkUserExistenceByMail(mail) {
   }
 }
 
+//esta funcion devuelve true si el usuario es admin de un proyecto (se reciben ambos Id como parametros)
+async function checkUserAsAdmin(userId, projectId) {
+  try {
+    const proyect = await getProjectById(projectId);
+    if (!proyect) {
+      throw new Error("proyect not found, in Function:checkUserAsAdmin ");
+    }
+    return proyect.admins.includes(userId);
+  } catch (err) {
+    console.log(err);
+    return null; // si ocurre un error tira null.. no error.
+  }
+}
+
+//esta funcion devuelve true si el usuario es colaborator de un proyecto (se reciben ambos Id como parametros)
+async function checkUserAsCollaborator(userId, projectId) {
+  try {
+    const proyect = await getProjectById(projectId);
+    if (!proyect) {
+      throw new Error(
+        "proyect not found, in Function:checkUserAsCollaborator "
+      );
+    }
+    return proyect.collaborators.includes(userId);
+  } catch (err) {
+    console.log(err);
+    return null; // si ocurre un error tira null.. no error.
+  }
+}
+
 module.exports = {
   getProjectById,
+  getHiddenStatusOfProject,
   checkUserExistenceByMail,
   getProjectsByTitle,
   getProjectsByCategory,
   getProjectsByUserAsAdmin,
   getProjectsByUserAsCollaborator,
+  checkUserAsAdmin,
+  checkUserAsCollaborator,
 };
