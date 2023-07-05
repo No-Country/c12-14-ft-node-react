@@ -3,12 +3,12 @@ const { Schema, model } = require("mongoose");
 
 //a continuacion instancio la clase "User"
 const userSchema = new Schema({
-  mailLogueado: {
+  mail: {
     type: String,
     unique: true,
     required: true,
   },
-  passwordHashiado: {
+  password: {
     type: String,
   },
   userName: {
@@ -19,32 +19,33 @@ const userSchema = new Schema({
   description: {
     type: String,
   },
-  roles: [{ //--> un array de strings 
-    type: String,
+  rols: [{ //--> un array de strings 
+    type: Object,
     required: true, 
   }],
-  senority: {
-    type: String,
-    required: true, 
-  },
   stack: [{ //--> un array de strings 
     type: String,
     required: true, 
   }],
-  redesSociales: {
+  socialsMedia: {
     type: Object
   },
-  proyectosAdministrados:{
-    type: Array
-  },
-  proyectosColaborando:{
-    type: Array
-  },
-  foto:{
+  adminProjects:[{
+    type: String
+  }],
+  collaboratorProjects:[{
+    type: String
+  }],
+  photo:{
     type: String
   },
-  ultimaConexion:{
-    type: Date
+  lastConnection:{
+    type: Date,
+    default: new Date()
+  },
+  hidden:{
+    type:Boolean,
+    default: false
   }
 
 
