@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Layout } from '@/layout/Layout'
 import Home from './Home/Home'
 import Landing from './Landing/Landing'
+import FormProject from './FormProject/FormProject'
 import { ProjectModal } from '../components/ProjectModal/ProjectModal'
 import { useSelector } from 'react-redux'
 
@@ -14,6 +15,7 @@ export const AppRoutes = () => {
         <Route element={<Layout />}>
           <Route path='/' element={<Home />} />
           <Route path='/landing' element={<Landing />} />
+          <Route path='/post-project' element={<FormProject />} />
         </Route>
       </Routes>
     </BrowserRouter>
