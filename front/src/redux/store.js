@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import projectModalReducer from './slices/projectModalSlice'
+import templateSlice from './slices/templateSlice'
 
 const store = configureStore({
   reducer: {
-    projectModal: projectModalReducer,
+    templateSlice,
   },
 })
 
