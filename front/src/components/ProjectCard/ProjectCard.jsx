@@ -2,20 +2,19 @@ import { GrStatusGoodSmall } from 'react-icons/gr'
 import { BiSolidUser } from 'react-icons/bi'
 import { MdOutlineDateRange } from 'react-icons/md'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { openProjectModal } from '@/redux/slices/projectModalSlice'
+import { ProjectModal } from '../ProjectModal/ProjectModal'
 
 export const ProjectCard = ({ project }) => {
   const [showMore, setShowMore] = useState(false)
-  const dispatch = useDispatch()
+  const [showModal, setShowModal] = useState(false)
 
   return (
-    <div className='bg-gray-600 text-white w-[680px] font-sans ml-1 rounded-lg'>
+    <div className='bg-gray-600 text-white w-[680px] font-sans ml-1 rounded-lg relative'>
+      {showModal && (
+        <ProjectModal project={project} setShowModal={setShowModal} />
+      )}
       <div className='flex items-center justify-between px-8 pt-6 pb-4 text-xl'>
-        <h4
-          className='cursor-pointer'
-          onClick={() => dispatch(openProjectModal())}
-        >
+        <h4 className='cursor-pointer' onClick={() => setShowModal(true)}>
           Titulo de proyecto
         </h4>
         <div className='flex items-center gap-2 text-sm pr-12'>
