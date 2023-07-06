@@ -95,6 +95,75 @@ async function addLanguajeToProject(projectId, userAdminId, languajeToAdd) {
   }
 }
 
+//agrego un link a connectionLinks
+async function addConecctionLinkToProject(
+  projectId,
+  userAdminId,
+  nameLink,
+  urlLink
+) {
+  try {
+    const adminValidation = await find.checkUserAsAdmin(userAdminId, projectId);
+    if (!adminValidation) {
+      throw new Error("Error en la validacion del Admin");
+    }
+    const name = nameLink.toLowerCase();
+    const url = urlLink.toLowerCase();
+    const linkToAdd = {}
+    linkToAdd["name"]=name
+    linkToAdd["link"]=url
+    console.log(linkToAdd)
+    const update = { $push: { connectionLinks: linkToAdd } };
+    const result = await Project.updateOne({ _id: projectId }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // el link de conneccion se agrego exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//agrego un link a connectionLinks
+async function addRequiredRolToProject(
+  projectId,
+  userAdminId,
+  rolToaAdd,
+  senorityToAdd,
+  quantityRequiredToAdd,
+  quantityOccupiedToAdd = 0
+) {
+  try {
+    const adminValidation = await find.checkUserAsAdmin(userAdminId, projectId);
+    if (!adminValidation) {
+      throw new Error("Error en la validacion del Admin");
+    }
+    const rol = rolToaAdd.toLowerCase();
+    const senority = senorityToAdd.toLowerCase();
+    const quantityRequired = + quantityRequiredToAdd
+    const quantityOccupied = + quantityOccupiedToAdd;
+    const positionToAdd = {}
+    positionToAdd["rol"]=rol
+    positionToAdd["senority"]=senority
+    positionToAdd["quantityRequired"]=quantityRequired
+    positionToAdd["quantityOccupied"]=quantityOccupied
+    console.log(positionToAdd)
+    const update = { $push: { requiredRols: positionToAdd} };
+    const result = await Project.updateOne({ _id: projectId }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // el rol requerido se agrego exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
 //Seteo el status del proyecto
 async function setStatusProject(projectId, userAdminId, status) {
   try {
@@ -159,15 +228,15 @@ async function setStartDateOfProject(projectId, userAdminId, startDateToSet) {
 }
 
 //Seteo el progreso del proyecto (0<= progreso <= 1) lo guardo como tipo number
-async function setProgressOfProject(projectId, userAdminId, currenProgress) {
-  const currentProgress = +currenProgress;
+async function setProgressOfProject(projectId, userAdminId, currentProgress) {
+  const progress = +currentProgress;
   try {
     const adminValidation = await find.checkUserAsAdmin(userAdminId, projectId);
     if (!adminValidation) {
       throw new Error("Error en la validacion del Admin");
     }
-    if (+currenProgress >= 0 && currenProgress <= 1) {
-      const update = { $set: { progressState: currenProgress } };
+    if (progress >= 0 && progress <= 1) {
+      const update = { $set: { progressState: progress } };
       const result = await Project.updateOne({ _id: projectId }, update);
 
       if (result.modifiedCount > 0) {
@@ -190,7 +259,7 @@ async function toggleHiddenOfProject(projectId, userAdminId) {
     if (!adminValidation) {
       throw new Error("Error en la validacion del Admin");
     }
-    const hiddenCurrent = await find.getHiddenStatusOfProject(projectId)
+    const hiddenCurrent = await find.getHiddenStatusOfProject(projectId);
     const update = { $set: { hidden: !hiddenCurrent } };
     const result = await Project.updateOne({ _id: projectId }, update);
 
@@ -213,5 +282,7 @@ module.exports = {
   setTimeOfProject,
   setStartDateOfProject,
   setProgressOfProject,
-  toggleHiddenOfProject
+  toggleHiddenOfProject,
+  addConecctionLinkToProject,
+  addRequiredRolToProject
 };
