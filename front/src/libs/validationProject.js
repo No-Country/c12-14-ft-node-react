@@ -33,13 +33,13 @@ export default function validateProject(form, errors, setErrors) {
   }
 
   if (form.rols.length <= 0) {
-    newErrors.rols = 'Los roles son requeridas'
+    newErrors.rols = 'Los roles son requeridos'
   } else {
     newErrors.rols = ''
   }
 
   if (form.links.length <= 0) {
-    newErrors.links = 'Los roles son requeridas'
+    newErrors.links = 'Los links son requeridos'
   } else {
     newErrors.links = ''
   }

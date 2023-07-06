@@ -221,9 +221,9 @@ function FormProject() {
   // * -----------------------------//
 
   return (
-    <main className='flex gap-10 py-20'>
-      <section>
-        <div>
+    <main className='flex gap-20 py-20 w-full justify-center'>
+      <section className=' w-1/3 m-1 bg-gray-500'>
+        <div className=''>
           <img src='' alt='' />
         </div>
       </section>
@@ -254,10 +254,10 @@ function FormProject() {
           <MdOutlineArrowForwardIos />
         </div>
 
-        <div className=' border-2 rounded-lg p-5'>
-          <form>
+        <form className='flex flex-col gap-10'>
+          <div className=' border-2 rounded-lg p-5 flex flex-col gap-5  pt-10'>
             {/* // title */}
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-2'>
               <label className=' font-bold'>Titulo de proyecto</label>
               <input
                 className='border-2 p-2 h-14 w-full'
@@ -267,11 +267,11 @@ function FormProject() {
                 name='title'
                 onChange={handleInput}
               />
-              <span>{errors.title}</span>
+              <span className='text-red-500'>{errors.title}</span>
             </div>
 
             {/* // category */}
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-2'>
               <label className=' font-bold'>Categoria</label>
               <select
                 className='border-2 p-2 h-14 w-full'
@@ -300,11 +300,11 @@ function FormProject() {
                   Nonprofit Foundation
                 </option>
               </select>
-              <span>{errors.category}</span>
+              <span className='text-red-500'>{errors.category}</span>
             </div>
 
             {/* // description */}
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-2'>
               <label className=' font-bold'>Descripción</label>
               <textarea
                 className='border-2 p-2 h-14 w-full'
@@ -315,15 +315,15 @@ function FormProject() {
                 cols='10'
                 onChange={handleInput}
               />
-              <span>{errors.description}</span>
+              <span className='text-red-500'>{errors.description}</span>
             </div>
 
             {/* // technologies */}
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-2'>
               <label className=' font-bold'>Tecnologias requeridas</label>
               <div className='flex gap-2'>
                 <input
-                  className='border-2 p-2 h-14 w-full'
+                  className='border-2 p-2 h-10 w-full'
                   type='text'
                   placeholder='Ej: React'
                   value={tecnology.name}
@@ -331,7 +331,7 @@ function FormProject() {
                   onChange={handleInputTechnologies}
                 />
                 <button
-                  className=' bg-gray-500 text-white font-bold rounded-lg p-2'
+                  className=' bg-gray-500 text-white font-bold rounded-lg p-2 w-10 h-10 grid place-items-center'
                   onClick={addTechnologies}
                 >
                   <IoAddSharp />
@@ -349,16 +349,16 @@ function FormProject() {
                   </div>
                 ))}
               </div>
-              <span>{errors.technologies}</span>
+              <span className='text-red-500'>{errors.technologies}</span>
             </div>
 
             {/* // rols */}
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-2'>
               <label className=' font-bold'>Roles solicitados</label>
               <div className='flex gap-2'>
-                <div className='flex gap-1'>
+                <div className='flex gap-2'>
                   <input
-                    className='border-2 p-2 h-14 w-full'
+                    className='border-2 p-2 h-10 w-full'
                     type='text'
                     placeholder='Ej: Backend'
                     value={rol.name}
@@ -366,7 +366,7 @@ function FormProject() {
                     onChange={handleInputRols}
                   />
                   <input
-                    className='border-2 p-2 h-14 w-full'
+                    className='border-2 p-2 h-10 w-full'
                     type='text'
                     placeholder='Ej: Junior'
                     value={rol.senority}
@@ -374,7 +374,7 @@ function FormProject() {
                     onChange={handleInputRols}
                   />
                   <input
-                    className='border-2 p-2 h-14 w-full'
+                    className='border-2 p-2 h-10 w-full'
                     type='number'
                     placeholder='Ej: 1'
                     value={rol.number}
@@ -383,7 +383,7 @@ function FormProject() {
                   />
                 </div>
                 <button
-                  className=' bg-gray-500 text-white font-bold rounded-lg p-2'
+                  className=' bg-gray-500 text-white font-bold rounded-lg p-2 w-10 h-10 grid place-items-center'
                   onClick={addRols}
                 >
                   <IoAddSharp />
@@ -401,16 +401,16 @@ function FormProject() {
                   </div>
                 ))}
               </div>
-              <span>{errors.rols}</span>
+              <span className='text-red-500'>{errors.rols}</span>
             </div>
 
             {/* // links */}
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-2'>
               <label className=' font-bold'>Enlaces</label>
               <div className='flex gap-2'>
-                <div className='flex gap-1'>
+                <div className='flex gap-2'>
                   <input
-                    className='border-2 p-2 h-14 w-full'
+                    className='border-2 p-2 h-10 w-full'
                     type='text'
                     placeholder='Ej: Repositorio'
                     value={link.name}
@@ -418,7 +418,7 @@ function FormProject() {
                     onChange={handleInputLinks}
                   />
                   <input
-                    className='border-2 p-2 h-14 w-full'
+                    className='border-2 p-2 h-10 w-full'
                     type='text'
                     placeholder='Ej: https://github.com/Jefersonsteven'
                     value={link.url}
@@ -427,7 +427,7 @@ function FormProject() {
                   />
                 </div>
                 <button
-                  className=' bg-gray-500 text-white font-bold rounded-lg p-2'
+                  className=' bg-gray-500 text-white font-bold rounded-lg p-2 w-10 h-10 grid place-items-center'
                   onClick={addLinks}
                 >
                   <IoAddSharp />
@@ -445,10 +445,15 @@ function FormProject() {
                   </p>
                 ))}
               </div>
-              <span>{errors.links}</span>
+              <span className='text-red-500'>{errors.links}</span>
             </div>
-          </form>
-        </div>
+          </div>
+          <div className='flex justify-end gap-5'>
+            <button className='bg-gray-500 text-white font-bold rounded p-2'>
+              CONTINUAR
+            </button>
+          </div>
+        </form>
       </section>
     </main>
   )
