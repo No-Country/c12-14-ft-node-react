@@ -1,6 +1,7 @@
-import { useState } from 'react'
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 import { IoAddSharp } from 'react-icons/io5'
+import validateProject from '../../libs/validationProject'
+import { useState } from 'react'
 
 function FormProject() {
   // * states
@@ -9,7 +10,7 @@ function FormProject() {
     title: '',
     category: '',
     description: '',
-    tecnologies: [],
+    technologies: [],
     rols: [],
     links: [],
   })
@@ -18,12 +19,14 @@ function FormProject() {
     id: crypto.randomUUID(),
     name: '',
   })
+
   const [rol, setRol] = useState({
     id: crypto.randomUUID(),
     name: '',
     senority: '',
     number: '',
   })
+
   const [link, setLink] = useState({
     id: crypto.randomUUID(),
     name: '',
@@ -34,7 +37,7 @@ function FormProject() {
     title: '',
     category: '',
     description: '',
-    tecnologies: '',
+    technologies: '',
     rols: '',
     links: '',
   })
@@ -48,7 +51,15 @@ function FormProject() {
       ...form,
       [e.target.name]: e.target.value,
     })
-    console.log(form)
+
+    validateProject(
+      {
+        ...form,
+        [e.target.name]: e.target.value,
+      },
+      errors,
+      setErrors
+    )
   }
 
   const handleInputTechnologies = (e) => {
@@ -58,27 +69,47 @@ function FormProject() {
     })
   }
 
-  const handleDeleteTecnology = (e) => {
-    const id = e.target.id
-    const newTecnologies = form.tecnologies.filter((tecnology) => {
-      return tecnology.id !== id
-    })
-    setForm({
-      ...form,
-      tecnologies: newTecnologies,
-    })
-  }
-
   const addTechnologies = (e) => {
     e.preventDefault()
     if (tecnology === '') return
     setForm({
       ...form,
-      tecnologies: [...form.tecnologies, tecnology],
+      technologies: [...form.technologies, tecnology],
     })
+
+    validateProject(
+      {
+        ...form,
+        technologies: [...form.technologies, tecnology],
+      },
+      errors,
+      setErrors
+    )
+
     setTecnology({
       id: crypto.randomUUID(),
       name: '',
+    })
+  }
+
+  const handleDeleteTecnology = (e) => {
+    const id = e.target.id
+    const newTechnologies = form.technologies.filter((tecnology) => {
+      return tecnology.id !== id
+    })
+
+    validateProject(
+      {
+        ...form,
+        technologies: newTechnologies,
+      },
+      errors,
+      setErrors
+    )
+
+    setForm({
+      ...form,
+      technologies: newTechnologies,
     })
   }
 
@@ -89,17 +120,6 @@ function FormProject() {
     })
   }
 
-  const handleDeleteRol = (e) => {
-    const id = e.target.id
-    const newRols = form.rols.filter((rol) => {
-      return rol.id !== id
-    })
-    setForm({
-      ...form,
-      rols: newRols,
-    })
-  }
-
   const addRols = (e) => {
     e.preventDefault()
     if (rol === '') return
@@ -107,11 +127,42 @@ function FormProject() {
       ...form,
       rols: [...form.rols, rol],
     })
+
+    validateProject(
+      {
+        ...form,
+        rols: [...form.rols, rol],
+      },
+      errors,
+      setErrors
+    )
+
     setRol({
       id: crypto.randomUUID(),
       name: '',
       senority: '',
       number: '',
+    })
+  }
+
+  const handleDeleteRol = (e) => {
+    const id = e.target.id
+    const newRols = form.rols.filter((rol) => {
+      return rol.id !== id
+    })
+
+    validateProject(
+      {
+        ...form,
+        rols: newRols,
+      },
+      errors,
+      setErrors
+    )
+
+    setForm({
+      ...form,
+      rols: newRols,
     })
   }
 
@@ -122,17 +173,6 @@ function FormProject() {
     })
   }
 
-  const handleDeleteLink = (e) => {
-    const id = e.target.id
-    const newLinks = form.links.filter((link) => {
-      return link.id !== id
-    })
-    setForm({
-      ...form,
-      links: newLinks,
-    })
-  }
-
   const addLinks = (e) => {
     e.preventDefault()
     if (link === '') return
@@ -140,6 +180,16 @@ function FormProject() {
       ...form,
       links: [...form.links, link],
     })
+
+    validateProject(
+      {
+        ...form,
+        links: [...form.links, link],
+      },
+      errors,
+      setErrors
+    )
+
     setLink({
       id: crypto.randomUUID(),
       name: '',
@@ -147,17 +197,38 @@ function FormProject() {
     })
   }
 
+  const handleDeleteLink = (e) => {
+    const id = e.target.id
+    const newLinks = form.links.filter((link) => {
+      return link.id !== id
+    })
+
+    validateProject(
+      {
+        ...form,
+        links: newLinks,
+      },
+      errors,
+      setErrors
+    )
+
+    setForm({
+      ...form,
+      links: newLinks,
+    })
+  }
+
   // * -----------------------------//
 
   return (
-    <main className='flex gap-10'>
+    <main className='flex gap-10 py-20'>
       <section>
         <div>
           <img src='' alt='' />
         </div>
       </section>
 
-      <section>
+      <section className='flex flex-col gap-20'>
         <div className='flex gap-2 items-center'>
           <div className='flex gap-1'>
             <span
@@ -247,7 +318,7 @@ function FormProject() {
               <span>{errors.description}</span>
             </div>
 
-            {/* // tecnologies */}
+            {/* // technologies */}
             <div className='flex flex-col gap-1'>
               <label className=' font-bold'>Tecnologias requeridas</label>
               <div className='flex gap-2'>
@@ -256,7 +327,7 @@ function FormProject() {
                   type='text'
                   placeholder='Ej: React'
                   value={tecnology.name}
-                  name='tecnologies'
+                  name='technologies'
                   onChange={handleInputTechnologies}
                 />
                 <button
@@ -267,7 +338,7 @@ function FormProject() {
                 </button>
               </div>
               <div className='flex gap-2  border-2 rounded-lg p-5'>
-                {form.tecnologies.map((tecnology) => (
+                {form.technologies.map((tecnology) => (
                   <div
                     key={tecnology.id}
                     id={tecnology.id}
@@ -278,7 +349,7 @@ function FormProject() {
                   </div>
                 ))}
               </div>
-              <span>{errors.tecnologies}</span>
+              <span>{errors.technologies}</span>
             </div>
 
             {/* // rols */}
@@ -364,15 +435,14 @@ function FormProject() {
               </div>
               <div className='flex gap-2  border-2 rounded-lg p-5'>
                 {form.links.map((link) => (
-                  <a
-                    href={link.url}
+                  <p
                     key={link.id}
                     id={link.id}
                     className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
                     onClick={handleDeleteLink}
                   >
                     {link.name}
-                  </a>
+                  </p>
                 ))}
               </div>
               <span>{errors.links}</span>
