@@ -1,6 +1,6 @@
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 import { IoAddSharp } from 'react-icons/io5'
-import validateProject from '../../libs/validationProject'
+import validateProject from '@/libs/validationProject'
 import { useState } from 'react'
 
 function FormProject() {
@@ -216,6 +216,21 @@ function FormProject() {
       ...form,
       links: newLinks,
     })
+  }
+
+  const handleNext = (e) => {
+    e.preventDefault()
+    if (
+      form.title.length !== 0 &&
+      errors.title === '' &&
+      errors.category === '' &&
+      errors.description === '' &&
+      errors.technologies === '' &&
+      errors.rols === '' &&
+      errors.links === ''
+    ) {
+      console.log(form)
+    }
   }
 
   // * -----------------------------//
@@ -449,7 +464,10 @@ function FormProject() {
             </div>
           </div>
           <div className='flex justify-end gap-5'>
-            <button className='bg-gray-500 text-white font-bold rounded p-2'>
+            <button
+              onClick={handleNext}
+              className='bg-gray-500 text-white font-bold rounded p-2'
+            >
               CONTINUAR
             </button>
           </div>
