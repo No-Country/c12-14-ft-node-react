@@ -10,11 +10,8 @@ import { BiSolidUser } from 'react-icons/bi'
 import { IoPersonAddSharp } from 'react-icons/io5'
 import { HiUsers } from 'react-icons/hi'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { closeProjectModal } from '@/redux/slices/projectModalSlice'
 
-export const ProjectModal = ({ project }) => {
-  const dispatch = useDispatch()
+export const ProjectModal = ({ project, setShowModal }) => {
   const [copyToClipboard, setCopyToClipboard] = useState(
     'https://www.google.com/'
   )
@@ -22,7 +19,7 @@ export const ProjectModal = ({ project }) => {
   return (
     <div
       className='fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50 backdrop-blur-sm'
-      onClick={() => dispatch(closeProjectModal())}
+      onClick={() => setShowModal(false)}
     >
       <div
         className='flex gap-5 text-white relative'
@@ -30,7 +27,7 @@ export const ProjectModal = ({ project }) => {
       >
         <MdArrowBackIos
           className='absolute text-5xl -top-14 left-0 text-white  cursor-pointer'
-          onClick={() => dispatch(closeProjectModal())}
+          onClick={() => setShowModal(false)}
         />
         <div className='flex flex-col gap-5 w-[680px]'>
           <div className='flex bg-gray-600 rounded-lg items-center justify-between py-8 px-10 text-2xl'>
