@@ -109,10 +109,10 @@ async function addConecctionLinkToProject(
     }
     const name = nameLink.toLowerCase();
     const url = urlLink.toLowerCase();
-    const linkToAdd = {}
-    linkToAdd["name"]=name
-    linkToAdd["link"]=url
-    console.log(linkToAdd)
+    const linkToAdd = {};
+    linkToAdd["name"] = name;
+    linkToAdd["link"] = url;
+    console.log(linkToAdd);
     const update = { $push: { connectionLinks: linkToAdd } };
     const result = await Project.updateOne({ _id: projectId }, update);
 
@@ -142,15 +142,15 @@ async function addRequiredRolToProject(
     }
     const rol = rolToaAdd.toLowerCase();
     const senority = senorityToAdd.toLowerCase();
-    const quantityRequired = + quantityRequiredToAdd
-    const quantityOccupied = + quantityOccupiedToAdd;
-    const positionToAdd = {}
-    positionToAdd["rol"]=rol
-    positionToAdd["senority"]=senority
-    positionToAdd["quantityRequired"]=quantityRequired
-    positionToAdd["quantityOccupied"]=quantityOccupied
-    console.log(positionToAdd)
-    const update = { $push: { requiredRols: positionToAdd} };
+    const quantityRequired = +quantityRequiredToAdd;
+    const quantityOccupied = +quantityOccupiedToAdd;
+    const positionToAdd = {};
+    positionToAdd["rol"] = rol;
+    positionToAdd["senority"] = senority;
+    positionToAdd["quantityRequired"] = quantityRequired;
+    positionToAdd["quantityOccupied"] = quantityOccupied;
+    console.log(positionToAdd);
+    const update = { $push: { requiredRols: positionToAdd } };
     const result = await Project.updateOne({ _id: projectId }, update);
 
     if (result.modifiedCount > 0) {
@@ -162,7 +162,6 @@ async function addRequiredRolToProject(
     console.log(err);
   }
 }
-
 
 //Seteo el status del proyecto
 async function setStatusProject(projectId, userAdminId, status) {
@@ -177,6 +176,69 @@ async function setStatusProject(projectId, userAdminId, status) {
 
     if (result.modifiedCount > 0) {
       return true; // la Tecnologia se agrego exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//Seteo el title del proyecto
+async function setTitleProject(projectId, userAdminId, title) {
+  try {
+    const adminValidation = await find.checkUserAsAdmin(userAdminId, projectId);
+    if (!adminValidation) {
+      throw new Error("Error en la validacion del Admin");
+    }
+
+    const update = { $set: { title: title.toLowerCase() } };
+    const result = await Project.updateOne({ _id: projectId }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // El titulo se modifico exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//Seteo la categoria del proyecto
+async function setCategoryProject(projectId, userAdminId, category) {
+  try {
+    const adminValidation = await find.checkUserAsAdmin(userAdminId, projectId);
+    if (!adminValidation) {
+      throw new Error("Error en la validacion del Admin");
+    }
+
+    const update = { $set: { category: category.toLowerCase() } };
+    const result = await Project.updateOne({ _id: projectId }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // La categoria se modifico exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//Seteo la description del proyecto
+async function setDescriptionProject(projectId, userAdminId, description) {
+  try {
+    const adminValidation = await find.checkUserAsAdmin(userAdminId, projectId);
+    if (!adminValidation) {
+      throw new Error("Error en la validacion del Admin");
+    }
+
+    const update = { $set: { description: description.toLowerCase() } };
+    const result = await Project.updateOne({ _id: projectId }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // La categoria se modifico exitosamente
     } else {
       return false; // No se encontró el proyecto o no se realizó ninguna modificación
     }
@@ -273,6 +335,28 @@ async function toggleHiddenOfProject(projectId, userAdminId) {
   }
 }
 
+// /////////// FUNCIONES QUE MODOFICAN DOCUMENTOS USER /////////
+// //Seteo el title del proyecto
+// async function setUserPassword(usertId, oldPass, newPass) {
+//   try {
+//     const adminValidation = await find.checkUserAsAdmin(userAdminId, projectId);
+//     if (!adminValidation) {
+//       throw new Error("Error en la validacion del Admin");
+//     }
+
+//     const update = { $set: { title: title.toLowerCase() } };
+//     const result = await Project.updateOne({ _id: projectId }, update);
+
+//     if (result.modifiedCount > 0) {
+//       return true; // El titulo se modifico exitosamente
+//     } else {
+//       return false; // No se encontró el proyecto o no se realizó ninguna modificación
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
 module.exports = {
   addAdminToProject,
   addCollaboratorToProject,
@@ -284,5 +368,8 @@ module.exports = {
   setProgressOfProject,
   toggleHiddenOfProject,
   addConecctionLinkToProject,
-  addRequiredRolToProject
+  addRequiredRolToProject,
+  setTitleProject,
+  setCategoryProject,
+  setDescriptionProject,
 };
