@@ -11,7 +11,7 @@ const initialState = {
 }
 
 const loginWithSlice = createSlice({
-  name: 'projectModal',
+  name: 'loginWith',
   initialState,
   reducers: {
     loginWithGoogle() {
