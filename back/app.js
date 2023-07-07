@@ -1,5 +1,5 @@
 require('dotenv').config();
-const Server = require('./config/server');
+const Server = require('./config/http/server');
 
 server = new Server();
 
