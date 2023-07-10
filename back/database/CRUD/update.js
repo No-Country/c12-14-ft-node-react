@@ -1,7 +1,7 @@
 require("../../config/mongoDB"); //--> me conecto a la DB
 
-const User = require("../models/User");
-const Project = require("../models/Project");
+const User = require("../../src/models/User");
+const Project = require("../../src/models/Project");
 const find = require("./find"); // -->importo el modulo find para
 
 const mongoose = require("mongoose");

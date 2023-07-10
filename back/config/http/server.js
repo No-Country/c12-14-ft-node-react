@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require('cors');
 
 const mainRoutes = require('../../src/routes/main');
-// const userRoutes = require('../../src/routes/users');
+const userRoutes = require('../../src/routes/users');
 
 class Server {
 
@@ -18,7 +18,7 @@ class Server {
   routes() {
 
     this.app.use('/', mainRoutes);
-    // this.app.use('/users', userRoutes);
+    this.app.use('/users', userRoutes);
 
   }
 

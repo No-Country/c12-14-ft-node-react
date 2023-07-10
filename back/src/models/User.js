@@ -1,5 +1,7 @@
 //aca creo las "clase"("Schema"(esquema)) "users" de los documentos de MongoDB.
-const { Schema, model } = require("mongoose");
+const {Schema, model} = require("mongoose");
+const connection = require('../../config/database/mongo/connection');
+
 
 //a continuacion instancio la clase "User"
 const userSchema = new Schema({
@@ -14,37 +16,37 @@ const userSchema = new Schema({
   userName: {
     type: String,
     unique: true, //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
-    required: true, 
+    required: true,
   },
   description: {
     type: String,
   },
-  rols: [{ //--> un array de strings 
+  rols: [{ //--> un array de strings
     type: Object,
-    required: true, 
+    required: true,
   }],
-  stack: [{ //--> un array de strings 
+  stack: [{ //--> un array de strings
     type: String,
-    required: true, 
+    required: true,
   }],
   socialsMedia: {
     type: Object
   },
-  adminProjects:[{
+  adminProjects: [{
     type: String
   }],
-  collaboratorProjects:[{
+  collaboratorProjects: [{
     type: String
   }],
-  photo:{
+  photo: {
     type: String
   },
-  lastConnection:{
+  lastConnection: {
     type: Date,
     default: new Date()
   },
-  hidden:{
-    type:Boolean,
+  hidden: {
+    type: Boolean,
     default: false
   }
 
@@ -59,8 +61,11 @@ const userSchema = new Schema({
   //     ref: "Bill",
   //   },
   // ],
+}, {
+  versionKey: false,
+  timestamps: true
 });
 
 model("User", userSchema);
 
-module.exports = model("User", userSchema);
+module.exports = connection.model("User", userSchema);
