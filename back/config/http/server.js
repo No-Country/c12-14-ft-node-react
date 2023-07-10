@@ -1,38 +1,42 @@
 const express = require("express");
-const mainRoutes = require('../../src/routes/main');
 const cors = require('cors');
 
-class Server{
+const mainRoutes = require('../../src/routes/main');
+// const userRoutes = require('../../src/routes/users');
+
+class Server {
 
   constructor() {
 
     this.app = express();
     this.port = process.env.PORT || 3000;
-    this.midelwares();
+    this.middlewares();
     this.routes();
 
-
   }
-  routes(){
 
+  routes() {
 
     this.app.use('/', mainRoutes);
+    // this.app.use('/users', userRoutes);
+
   }
 
-  midelwares() {
+  middlewares() {
+
     this.app.use(cors());
-
-    // this.app.use(express.json());
+    this.app.use(express.json());
 
   }
-  listen(){
 
-    this.app.listen(  this.port, ()=> {
-      console.log(`[server-info]:Server up at http://127.0.0.1:${this.port}`)
+  listen() {
+
+    this.app.listen(this.port, () => {
+      console.log(`[server-info]:Server up at http://127.0.0.1:${this.port}`);
     });
   }
 
 
 }
 
-module.exports= Server;
+module.exports = Server;
