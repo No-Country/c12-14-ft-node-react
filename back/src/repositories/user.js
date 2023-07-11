@@ -7,6 +7,12 @@ class UserRepository extends BaseRepository {
     super(userModel);
   }
 
+  async create(data) {
+
+    data.pass = bycrypt(data.pass, 545);
+    return super.create(data);
+  }
+
 
 }
 
