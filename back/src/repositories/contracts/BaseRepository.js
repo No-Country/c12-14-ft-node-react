@@ -7,7 +7,6 @@ class BaseRepository {
   }
 
   async all() {
-
     return await this.model.find()
       .then((data) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`);

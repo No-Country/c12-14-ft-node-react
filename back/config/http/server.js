@@ -4,6 +4,7 @@ const cors = require("cors");
 const mainRoutes = require("../../src/routes/main");
 const userRoutes = require("../../src/routes/users");
 const projectRoutes = require("../../src/routes/project");
+const categoryRoutes = require("../../src/routes/category");
 
 class Server {
   constructor() {
@@ -17,6 +18,7 @@ class Server {
     this.app.use("/", mainRoutes);
     this.app.use("/api", mainRoutes);
     this.app.use("/api/users", userRoutes);
+    this.app.use("/api/category", categoryRoutes);
     this.app.use("/api/projects", projectRoutes);
   }
 
