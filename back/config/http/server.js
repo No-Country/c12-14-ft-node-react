@@ -16,8 +16,8 @@ class Server {
   routes() {
     this.app.use("/", mainRoutes);
     this.app.use("/api", mainRoutes);
-    this.app.use("api/users", userRoutes);
-    this.app.use("api/projects", projectRoutes);
+    this.app.use("/api/users", userRoutes);
+    this.app.use("/api/projects", projectRoutes);
   }
 
   middlewares() {
