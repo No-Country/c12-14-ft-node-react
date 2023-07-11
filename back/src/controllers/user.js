@@ -1,31 +1,69 @@
 const {response} = require('express');
-const  user= require('../models/User');
-const Logger = require('../utils/logger')
-const getUsers = ( req, res = response) => {
+const userRepository = require('../repositories/user');
+const getUsers = async (req, res = response) => {
 
-    res.json({msg: 'Hello user controller'});
+  await userRepository.all().then((data) => {
+
+    res.status(200)
+      .json({msg: 'User found', user: data});
+
+  }).catch(err => {
+    res.status(500).json({msg: 'User find error', error: err.message});
+  });
+
 
 }
 
-const  setUsers = async ( req, res = response) => {
+const getUser = async (req, res = response) => {
 
-  const {password, userName, mail} = req.body;
+  const {id} = req.params;
 
-  const  usuario = await user.create({
-    password: password,
-    userName: userName,
-    mail: mail
-  }).then(() =>{
-    Logger.info('[Users]: Operation saved successfully');
-    res.status(201).json({msg: 'Hello user post controller'});
+  await userRepository.findById(id).then((data) => {
 
-  })
-    .catch(err => Logger.error(`[Users]: Operation error ${err.message}`));
+    res.status(200)
+      .json({msg: 'User found', user: data});
 
+  }).catch(err => {
+    res.status(500).json({msg: 'User find error', error: err.message});
+  });
+}
 
+const setUsers = async (req, res = response) => {
 
+  await userRepository.create(req.body).then((data) => {
 
-  // return result;
+    res.status(201)
+      .json({msg: 'User successfully created', user: data});
+
+  }).catch(err => {
+    res.status(500).json({msg: 'User error', error: err.message});
+  });
+
+}
+
+const updateUser = async (req, res = response) => {
+  const {id} = req.params;
+  await userRepository.UpdateById(id, req.body).then((data) => {
+
+    res.status(200)
+      .json({msg: 'User updated', user: data});
+
+  }).catch(err => {
+    res.status(500).json({msg: 'User update error', error: err.message});
+  });
+
+}
+const deleteUser = async (req, res = response) => {
+  const {id} = req.params;
+
+  await userRepository.deleteById(id).then((data) => {
+
+    res.status(200)
+      .json({msg: 'User deleted', user: data});
+
+  }).catch(err => {
+    res.status(500).json({msg: 'User delete error', error: err.message});
+  });
 
 }
 
@@ -33,4 +71,7 @@ const  setUsers = async ( req, res = response) => {
 module.exports = {
   getUsers,
   setUsers,
+  getUser,
+  updateUser,
+  deleteUser
 }

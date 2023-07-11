@@ -1,5 +1,5 @@
 //aca creo las "clase"("Schema"(esquema)) "users" de los documentos de MongoDB.
-const {Schema, model} = require("mongoose");
+const {Schema} = require("mongoose");
 const connection = require('../../config/database/mongo/connection');
 
 
@@ -66,6 +66,5 @@ const userSchema = new Schema({
   timestamps: true
 });
 
-model("User", userSchema);
 
 module.exports = connection.model("User", userSchema);

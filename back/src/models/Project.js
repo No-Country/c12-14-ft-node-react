@@ -68,9 +68,9 @@ const projectSchema = new Schema({
       type: String
     },
   ],
-  hidden:{
-    type:Boolean,
-    default:false
+  hidden: {
+    type: Boolean,
+    default: false
   }
 
   // //bills es una lista de elementos, en lo que cada elemento es un Objecto del tipo "ObjectID" que se refiere a documentos de Bill.
@@ -86,4 +86,4 @@ const projectSchema = new Schema({
 });
 
 
-module.exports = connection.model("User", projectSchema);
+module.exports = connection.model("Projects", projectSchema);
