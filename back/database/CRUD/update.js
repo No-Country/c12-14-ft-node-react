@@ -30,7 +30,6 @@ async function addAdminToProject(projectId, userAdminId, userToAddId) {
   }
 }
 
-
 //agrego un usuario como Colaborador de un proyecto
 async function addCollaboratorToProject(projectId, userAdminId, userToAddId) {
   try {
@@ -418,7 +417,6 @@ async function addStackToUser(usertId, stackToAdd) {
   }
 }
 
-
 // Agrego un ProjectId al User.adminProjects d
 async function addProjectToUserAdminProjects(usertId, projectId) {
   try {
@@ -435,8 +433,8 @@ async function addProjectToUserAdminProjects(usertId, projectId) {
   }
 }
 
-// Agrego un ProjectId al User.collaboratorProjects 
-async function addProjectToUserCollaboratorProjects (usertId, projectId) {
+// Agrego un ProjectId al User.collaboratorProjects
+async function addProjectToUserCollaboratorProjects(usertId, projectId) {
   try {
     const update = { $push: { collaboratorProjects: projectId } };
     const result = await User.updateOne({ _id: new ObjectId(usertId) }, update);
@@ -454,7 +452,6 @@ async function addProjectToUserCollaboratorProjects (usertId, projectId) {
 //Seteo la ruta de la imagen del usuario
 async function setPhotoToUser(userId, newPhotoUrl) {
   try {
-
     const update = { $set: { photo: newPhotoUrl } };
     const result = await User.updateOne({ _id: new ObjectId(userId) }, update);
 
@@ -471,7 +468,7 @@ async function setPhotoToUser(userId, newPhotoUrl) {
 //actualizar la ultima conexion del usuario
 async function updateLastConnectionToUser(userId) {
   try {
-    const update = { $set: { lastConnection: new Date()} };
+    const update = { $set: { lastConnection: new Date() } };
     const result = await User.updateOne({ _id: new ObjectId(userId) }, update);
     if (result.modifiedCount > 0) {
       return true; // La categoria se modifico exitosamente
@@ -482,7 +479,6 @@ async function updateLastConnectionToUser(userId) {
     console.log(err);
   }
 }
-
 
 module.exports = {
   addAdminToProject,
@@ -506,5 +502,5 @@ module.exports = {
   addProjectToUserAdminProjects,
   addProjectToUserCollaboratorProjects,
   setPhotoToUser,
-  updateLastConnectionToUser
+  updateLastConnectionToUser,
 };
