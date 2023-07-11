@@ -3,6 +3,7 @@ const cors = require('cors');
 
 const mainRoutes = require('../../src/routes/main');
 const userRoutes = require('../../src/routes/users');
+const projectRoutes = require('../../src/routes/project');
 
 class Server {
 
@@ -18,7 +19,9 @@ class Server {
   routes() {
 
     this.app.use('/', mainRoutes);
-    this.app.use('/users', userRoutes);
+    this.app.use('/api', mainRoutes);
+    this.app.use('api/users', userRoutes);
+    this.app.use('api/projects', projectRoutes);
 
   }
 
