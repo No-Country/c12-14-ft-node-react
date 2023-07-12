@@ -4,6 +4,7 @@ const cors = require("cors");
 const mainRoutes = require("../../src/routes/main");
 const userRoutes = require("../../src/routes/users");
 const projectRoutes = require("../../src/routes/project");
+const authRoutes = require("../../src/routes/auth.js");
 
 class Server {
   constructor() {
@@ -18,6 +19,7 @@ class Server {
     this.app.use("/api", mainRoutes);
     this.app.use("/api/users", userRoutes);
     this.app.use("/api/projects", projectRoutes);
+    this.app.use("/api/auth", authRoutes);
   }
 
   middlewares() {
