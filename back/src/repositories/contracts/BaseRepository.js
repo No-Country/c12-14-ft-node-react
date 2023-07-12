@@ -1,23 +1,25 @@
-const Logger = require("../../utils/logger");
+const Logger = require('../../utils/logger')
 
 class BaseRepository {
   constructor(model) {
-    this.model = model;
+    this.model = model
   }
 
   async all() {
     return await this.model
       .find()
       .then((data) => {
-        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`);
-        return data;
+        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
+        return data
+        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
+        return data
       })
       .catch((err) => {
         Logger.error(
           `[${this.model.collection.collectionName}]: Operation error ${err.message}`
-        );
-        throw new Error(err);
-      });
+        )
+        throw new Error(err)
+      })
   }
 
   async create(data) {
@@ -26,61 +28,56 @@ class BaseRepository {
       .then((dataCreated) => {
         Logger.info(
           `[${this.model.collection.collectionName}]: Operation saved successfully`
-        );
-        return dataCreated;
+        )
+        return dataCreated
       })
       .catch((err) => {
         Logger.error(
           `[${this.model.collection.collectionName}]: Operation error ${err.message}`
-        );
-        throw new Error(err);
-      });
+        )
+        throw new Error(err)
+      })
   }
 
   async findById(id) {
     return await this.model
       .findById(id)
       .then((data) => {
-        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`);
-        return data;
+        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
+        return data
       })
       .catch((err) => {
         Logger.error(
           `[${this.model.collection.collectionName}]: Operation error ${err.message}`
-        );
-        throw new Error(err);
-      });
-  }
-
-  async UpdateById(id, data) {
-    return await this.model
-      .findByIdAndUpdate(id, data, { new: true })
+        )
+        throw new Error(err)
+      })
       .then((dataUpdated) => {
-        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`);
-        return dataUpdated;
+        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
+        return dataUpdated
       })
       .catch((err) => {
         Logger.error(
           `[${this.model.collection.collectionName}]: Operation error ${err.message}`
-        );
-        throw new Error(err);
-      });
+        )
+        throw new Error(err)
+      })
   }
 
   async deleteById(id) {
     return await this.model
       .findByIdAndDelete(id)
       .then((data) => {
-        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`);
-        return data ? true : false;
+        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
+        return data ? true : false
       })
       .catch((err) => {
         Logger.error(
           `[${this.model.collection.collectionName}]: Operation error ${err.message}`
-        );
-        throw new Error(err);
-      });
+        )
+        throw new Error(err)
+      })
   }
 }
 
-module.exports = BaseRepository;
+module.exports = BaseRepository

@@ -2,7 +2,7 @@ const {Router} = require('express');
 const {
   getProjects,
   getProject,
-  setProjects,
+  createProjects,
   updateProject,
   deleteProject
 } = require('../controllers/project');
@@ -12,7 +12,7 @@ const router = new Router();
 
 router.get('/' , getProjects);
 router.get('/:id', getProject);
-router.post('/', setProjects);
+router.post('/', createProjects);
 router.patch('/:id', updateProject);
 router.delete('/:id', deleteProject);
 
