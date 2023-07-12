@@ -1,8 +1,8 @@
 console.log("ejecutando create.js");
 
 const mongoose = require("mongoose");
-const User = require("../models/User");
-const Project = require("../models/Project");
+const User = require("../../src/models/User");
+const Project = require("../../src/models/Project");
 require("../../config/mongoDB");
 
 //const Schema = mongoose.Schema
@@ -11,17 +11,17 @@ const ObjectId = mongoose.Types.ObjectId;
 
 //funcion para crear un nuevo usuario.
 async function createUser({
-  mail,
-  password,
-  userName,
-  description,
-  rols,
-  stack,
-  socialsMedia,
-  adminProjects,
-  collaboratorProjects,
-  photo,
-}) {
+                            mail,
+                            password,
+                            userName,
+                            description,
+                            rols,
+                            stack,
+                            socialsMedia,
+                            adminProjects,
+                            collaboratorProjects,
+                            photo,
+                          }) {
   try {
     const user = new User({
       mail: mail.toLowerCase(),
@@ -46,21 +46,21 @@ async function createUser({
 
 //funcion para crear un nuevo proyecto.
 async function createProject({
-  title,
-  category,
-  description,
-  technologies,
-  languaje,
-  requiredRols,
-  isRequiredRolsCompleted,
-  status,
-  timeOfProject,
-  startDate,
-  progressState,
-  connectionLinks,
-  admins,
-  collaborators,
-}) {
+                               title,
+                               category,
+                               description,
+                               technologies,
+                               languaje,
+                               requiredRols,
+                               isRequiredRolsCompleted,
+                               status,
+                               timeOfProject,
+                               startDate,
+                               progressState,
+                               connectionLinks,
+                               admins,
+                               collaborators,
+                             }) {
   try {
     const project = new Project({
       title: title.toLowerCase(),

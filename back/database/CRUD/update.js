@@ -1,7 +1,7 @@
 require("../../config/mongoDB"); //--> me conecto a la DB
 
-const User = require("../models/User");
-const Project = require("../models/Project");
+const User = require("../../src/models/User");
+const Project = require("../../src/models/Project");
 const find = require("./find"); // -->importo el modulo find para
 
 const mongoose = require("mongoose");
@@ -20,7 +20,6 @@ async function addAdminToProject(projectId, userAdminId, userToAddId) {
     const update = { $push: { admins: userToAddId } };
     const result = await Project.updateOne({ _id: projectId }, update);
 
-    console.log("result: ", result);
     if (result.modifiedCount > 0) {
       return true; // El admin fue agregado exitosamente
     } else {
@@ -38,7 +37,6 @@ async function addCollaboratorToProject(projectId, userAdminId, userToAddId) {
     if (!adminValidation) {
       throw new Error("Error en la validacion del Admin");
     }
-
     const update = { $push: { collaborators: userToAddId } };
     const result = await Project.updateOne({ _id: projectId }, update);
 
@@ -336,26 +334,151 @@ async function toggleHiddenOfProject(projectId, userAdminId) {
 }
 
 // /////////// FUNCIONES QUE MODOFICAN DOCUMENTOS USER /////////
-// //Seteo el title del proyecto
-// async function setUserPassword(usertId, oldPass, newPass) {
-//   try {
-//     const adminValidation = await find.checkUserAsAdmin(userAdminId, projectId);
-//     if (!adminValidation) {
-//       throw new Error("Error en la validacion del Admin");
-//     }
+//Seteo el password del usuario (la verificacion del pasword viejo lo deberia hacer antes)
+async function setUserPassword(
+  usertId,
+  newPass,
+  oldPass = "falta implementar funcion"
+) {
+  try {
+    const oldPassValidation = true; // En realidad aca deberia venir una funcion de verificacion del password viejo que devuelva true/false
+    console.log(
+      "Falta la verficacione del password actual antes de modificarlo."
+    );
+    if (!oldPassValidation) {
+      throw new Error("Error en la validacion del user y el password viejo");
+    }
 
-//     const update = { $set: { title: title.toLowerCase() } };
-//     const result = await Project.updateOne({ _id: projectId }, update);
+    const update = { $set: { password: newPass } };
+    const result = await User.updateOne({ _id: new ObjectId(usertId) }, update);
 
-//     if (result.modifiedCount > 0) {
-//       return true; // El titulo se modifico exitosamente
-//     } else {
-//       return false; // No se encontró el proyecto o no se realizó ninguna modificación
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+    if (result.modifiedCount > 0) {
+      return true; // El password se modifico exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//Seteo la descripcion del usuario
+async function setUserDescription(usertId, description) {
+  try {
+    const update = { $set: { description: description } };
+    const result = await User.updateOne({ _id: new ObjectId(usertId) }, update);
+    if (result.modifiedCount > 0) {
+      return true; // La descripcion se modifico exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// Agregar un rol al usuario
+
+async function addRolToUser(usertId, rolToAdd, senorityToAdd) {
+  try {
+    const rol = rolToAdd.toLowerCase();
+    const senority = senorityToAdd.toLowerCase();
+    const newRolToAdd = {};
+    newRolToAdd["rol"] = rol;
+    newRolToAdd["senority"] = senority;
+    console.log(newRolToAdd);
+    const update = { $push: { rols: newRolToAdd } };
+    const result = await User.updateOne({ _id: new ObjectId(usertId) }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // el link de conneccion se agrego exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// Agrego un stack al usuario
+async function addStackToUser(usertId, stackToAdd) {
+  try {
+    const newStack = stackToAdd.toLowerCase();
+    const update = { $push: { stack: newStack } };
+    const result = await User.updateOne({ _id: new ObjectId(usertId) }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // el link de conneccion se agrego exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// Agrego un ProjectId al User.adminProjects d
+async function addProjectToUserAdminProjects(usertId, projectId) {
+  try {
+    const update = { $push: { adminProjects: projectId } };
+    const result = await User.updateOne({ _id: new ObjectId(usertId) }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // el link de conneccion se agrego exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// Agrego un ProjectId al User.collaboratorProjects
+async function addProjectToUserCollaboratorProjects(usertId, projectId) {
+  try {
+    const update = { $push: { collaboratorProjects: projectId } };
+    const result = await User.updateOne({ _id: new ObjectId(usertId) }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // el link de conneccion se agrego exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//Seteo la ruta de la imagen del usuario
+async function setPhotoToUser(userId, newPhotoUrl) {
+  try {
+    const update = { $set: { photo: newPhotoUrl } };
+    const result = await User.updateOne({ _id: new ObjectId(userId) }, update);
+
+    if (result.modifiedCount > 0) {
+      return true; // La categoria se modifico exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//actualizar la ultima conexion del usuario
+async function updateLastConnectionToUser(userId) {
+  try {
+    const update = { $set: { lastConnection: new Date() } };
+    const result = await User.updateOne({ _id: new ObjectId(userId) }, update);
+    if (result.modifiedCount > 0) {
+      return true; // La categoria se modifico exitosamente
+    } else {
+      return false; // No se encontró el proyecto o no se realizó ninguna modificación
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 module.exports = {
   addAdminToProject,
@@ -372,4 +495,12 @@ module.exports = {
   setTitleProject,
   setCategoryProject,
   setDescriptionProject,
+  setUserPassword,
+  setUserDescription,
+  addRolToUser,
+  addStackToUser,
+  addProjectToUserAdminProjects,
+  addProjectToUserCollaboratorProjects,
+  setPhotoToUser,
+  updateLastConnectionToUser,
 };
