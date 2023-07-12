@@ -1,5 +1,6 @@
 const { response } = require("express");
 const userRepository = require("../repositories/user");
+const AuthServices = require("../services/auth.service");
 
 const getUsers = async (req, res = response) => {
   await userRepository
@@ -22,17 +23,6 @@ const getUser = async (req, res = response) => {
     })
     .catch((err) => {
       res.status(500).json({ msg: "User find error", error: err.message });
-    });
-};
-
-const setUsers = async (req, res = response) => {
-  await userRepository
-    .create(req.body)
-    .then((data) => {
-      res.status(201).json({ msg: "User successfully created", user: data });
-    })
-    .catch((err) => {
-      res.status(500).json({ msg: "User error", error: err.message });
     });
 };
 
@@ -61,10 +51,25 @@ const deleteUser = async (req, res = response) => {
     });
 };
 
+const forgotPassword = async (req, res = response) => {
+  const { mail, password } = req.body;
+  const auth = new AuthServices();
+  const hash = await auth.encryptPassword(password);
+
+  await userRepository
+    .changePassword(mail, hash)
+    .then((data) => {
+      res.status(200).json({ msg: "Password changed", user: data });
+    })
+    .catch((err) => {
+      res.status(500).json({ msg: "User not exits", error: err.message });
+    });
+};
+
 module.exports = {
   getUsers,
-  setUsers,
   getUser,
   updateUser,
   deleteUser,
+  forgotPassword,
 };

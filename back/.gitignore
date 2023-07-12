@@ -667,3 +667,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/node,vs,visualstudiocode,windows,linux,webstorm
+.vercel
