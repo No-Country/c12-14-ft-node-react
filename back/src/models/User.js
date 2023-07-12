@@ -31,7 +31,7 @@ const userSchema = new Schema(
     stack: [
       {
         //--> un array de strings
-        type: String,
+        type: Object,
         required: true,
       },
     ],

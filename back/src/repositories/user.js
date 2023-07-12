@@ -16,6 +16,13 @@ class UserRepository extends BaseRepository {
     const user = await this.userModel.findOne({ userName: username });
     return user;
   }
+
+  async changePassword(email, newPassword) {
+    const user = await this.userModel.findOne({ mail: email });
+    user.password = newPassword;
+    await user.save();
+    return user;
+  }
 }
 
 module.exports = new UserRepository(userModel);
