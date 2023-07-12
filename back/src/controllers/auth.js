@@ -89,22 +89,53 @@ const login = async (req, res = response) => {
   }
 };
 
+const logout = async (req, res = response) => {
+  try {
+    // const token = req.cookies.devCollabToken;
+    const token = req.body.devCollabToken;
+    if (token) {
+      const authServices = new AuthServices();
+      try {
+        authServices.verifyJWT(token);
+        const serialized = serialize("devCollabToken", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV !== "production",
+          sameSite: "none",
+          maxAge: 0,
+        });
+        res.setHeader("Set-Cookie", serialized);
+        res.status(200).json({
+          msg: "Logout success",
+          session: "destroyed",
+        });
+      } catch (error) {}
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: "Error in logout",
+      error: error.message,
+    });
+  }
+};
+
 const verify = async (req, res = response) => {
   try {
     // const token = req.cookies.devCollabToken;
     const token = req.body.devCollabToken;
-    const authServices = new AuthServices();
-    const {
-      user: { id, username, mail },
-    } = await authServices.verifyJWT(token);
-    res.status(200).json({
-      msg: "User verified",
-      user: {
-        id,
-        username,
-        mail,
-      },
-    });
+    if (token) {
+      const authServices = new AuthServices();
+      const {
+        user: { id, username, mail },
+      } = await authServices.verifyJWT(token);
+      res.status(200).json({
+        msg: "User verified",
+        user: {
+          id,
+          username,
+          mail,
+        },
+      });
+    }
   } catch (error) {
     res.status(500).json({
       msg: "Error in verify",
@@ -117,4 +148,5 @@ module.exports = {
   register,
   login,
   verify,
+  logout,
 };
