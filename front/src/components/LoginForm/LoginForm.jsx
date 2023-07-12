@@ -3,7 +3,7 @@ import GoogleLogo from '@/assets/GoogleLogo.png'
 
 const LoginForm = () => {
   return (
-    <div className='m-5 bg-white w-[539px] p-10 rounded-xl flex flex-col gap-10'>
+    <div className='bg-white w-[539px] p-10 rounded-xl flex flex-col gap-10 formShadow'>
       <section className='flex w-full justify-between'>
         <p className='text-xl font-semibold'>Bienvenido</p>
 
@@ -27,9 +27,7 @@ const LoginForm = () => {
             className='absolute top-[14px] left-[30px]'
           />
           <button className='w-full h-full'>Iniciar con Google</button>
-        </div>
-        <div className='bg-[#808080] h-[55px] min-w-[60px] rounded-xl'>
-          <button className='w-full h-full'>IN</button>
+          {/* TODO: Agregar el ButtonGoogleAuth y ButtonGithubAuth */}
         </div>
         <div className='bg-[#808080] h-[55px] min-w-[60px] rounded-xl'>
           <button className='w-full h-full'>GH</button>
