@@ -1,7 +1,7 @@
 const { response, request } = require('express')
 const userRepository = require('../repositories/project')
 
-const getProjects = async (req = request , res = response) => {
+const getProjects = async (req = request, res = response) => {
   await userRepository
     .all()
     .then((data) => {
