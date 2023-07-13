@@ -24,6 +24,7 @@ const RegisterForm = () => {
             Ingresa tu correo electrónico
           </label>
           <input
+            name='mail'
             type='text'
             placeholder='Correo Electronico'
             id='email'
@@ -37,6 +38,7 @@ const RegisterForm = () => {
               Tu nombre de usuario
             </label>
             <input
+              name='username'
               type='text'
               placeholder='Usuario'
               id='username'
@@ -49,6 +51,7 @@ const RegisterForm = () => {
               Número de contacto
             </label>
             <input
+              name='phonenumber'
               type='text'
               placeholder='Usuario'
               id='contactNumber'
@@ -62,6 +65,7 @@ const RegisterForm = () => {
             Ingresa tu contraseña
           </label>
           <input
+            name='password'
             type='password'
             placeholder='Contraseña'
             id='password'
