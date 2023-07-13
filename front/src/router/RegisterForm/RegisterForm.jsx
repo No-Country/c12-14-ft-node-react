@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const RegisterForm = () => {
   return (
-    <div className='m-5 bg-white w-[539px] p-10 rounded-xl flex flex-col gap-10'>
+    <div className='m-5 bg-white w-[539px] p-10 rounded-xl flex flex-col gap-10 formShadow'>
       <section className='flex w-full justify-between'>
         <p className='text-xl font-semibold'>Bienvenido</p>
 

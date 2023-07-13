@@ -3,8 +3,8 @@ import { Layout } from '@/layout/Layout'
 import Home from './Home/Home'
 import Landing from './Landing/Landing'
 import FormProject from './FormProject/FormProject'
-import LoginForm from './LoginForm/LoginForm'
-import RegisterForm from './RegisterForm/RegisterForm'
+import Login from './Login/Login'
+import Register from './Register/Register'
 
 export const AppRoutes = () => {
   return (
@@ -15,8 +15,8 @@ export const AppRoutes = () => {
           <Route path='/landing' element={<Landing />} />
           <Route path='/post-project' element={<FormProject />} />
         </Route>
-        <Route path='/login' element={<LoginForm />} />
-        <Route path='/register' element={<RegisterForm />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
     </BrowserRouter>
   )
