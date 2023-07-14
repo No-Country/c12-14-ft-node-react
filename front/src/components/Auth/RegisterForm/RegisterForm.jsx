@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { RegisterInput } from './RegisterInput'
 
 const RegisterForm = () => {
   return (
@@ -19,59 +20,42 @@ const RegisterForm = () => {
       </section>
 
       <form className='flex flex-col gap-7 w-full'>
-        <div className='flex flex-col gap-3'>
-          <label htmlFor='email' className='text-md'>
-            Ingresa tu correo electrónico
-          </label>
-          <input
-            name='mail'
-            type='text'
-            placeholder='Correo Electronico'
-            id='email'
-            className='w-full h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
-          />
-        </div>
+        <RegisterInput
+          label='Email'
+          name='mail'
+          type='email'
+          placeholder='Correo electrónico'
+        />
 
         <div className='flex gap-4'>
-          <div className='flex flex-col gap-3'>
-            <label htmlFor='username' className='text-md'>
-              Tu nombre de usuario
-            </label>
-            <input
-              name='username'
-              type='text'
-              placeholder='Usuario'
-              id='username'
-              className='flex-1 min-h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
-            />
-          </div>
+          <RegisterInput
+            label='Tu nombre de usuario'
+            name='username'
+            type='text'
+            placeholder='Usuario'
+          />
 
-          <div className='flex flex-col gap-3'>
-            <label htmlFor='contactNumber' className='text-md'>
-              Número de contacto
-            </label>
-            <input
-              name='phonenumber'
-              type='text'
-              placeholder='Usuario'
-              id='contactNumber'
-              className='flex-1 min-h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
-            />
-          </div>
-        </div>
-
-        <div className='flex flex-col gap-3'>
-          <label htmlFor='password' className='text-md'>
-            Ingresa tu contraseña
-          </label>
-          <input
-            name='password'
-            type='password'
-            placeholder='Contraseña'
-            id='password'
-            className='w-full h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
+          <RegisterInput
+            label='Número de contacto'
+            name='phone'
+            type='tel'
+            placeholder='Número de contacto'
           />
         </div>
+
+        <RegisterInput
+          label='Ingresa una contraseña'
+          name='password'
+          type='password'
+          placeholder='Contraseña'
+        />
+
+        <RegisterInput
+          label='Repetir contraseña'
+          name='confirmPassword'
+          type='password'
+          placeholder='Repetir contraseña'
+        />
 
         <button
           type='submit'
