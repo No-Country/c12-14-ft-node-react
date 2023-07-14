@@ -1,9 +1,9 @@
-import RegisterForm from '@/components/RegisterForm/RegisterForm'
+import RegisterForm from '@/components/Auth/RegisterForm/RegisterForm'
 
 const Login = () => {
   return (
     <main className='relative h-screen flex flex-col'>
-      <div className='absolute right-20 top-[calc(50%-340px)]'>
+      <div className='absolute right-20 h-screen flex items-center'>
         <RegisterForm />
       </div>
 
