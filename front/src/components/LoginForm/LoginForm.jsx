@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import GoogleLogo from '@/assets/GoogleLogo.png'
+import { FcGoogle } from 'react-icons/fc'
+import { BsLinkedin } from 'react-icons/bs'
 
 const LoginForm = () => {
   return (
@@ -19,19 +20,15 @@ const LoginForm = () => {
         <h1 className='text-4xl font-bold'>Iniciar sesión</h1>
       </section>
 
-      <section className='flex gap-5 text-white'>
-        <div className='flex-1 bg-[#808080] h-[55px] relative rounded-xl'>
-          <img
-            src={GoogleLogo}
-            alt='Google Logo Inicio de sesión'
-            className='absolute top-[14px] left-[30px]'
-          />
-          <button className='w-full h-full'>Iniciar con Google</button>
-          {/* TODO: Agregar el ButtonGoogleAuth y ButtonGithubAuth */}
-        </div>
-        <div className='bg-[#808080] h-[55px] min-w-[60px] rounded-xl'>
-          <button className='w-full h-full'>GH</button>
-        </div>
+      <section className='flex gap-5 text-white h-[55px]'>
+        <button className='flex-1 bg-[#808080] relative rounded-xl'>
+          <FcGoogle className='absolute top-4 left-8 text-2xl' />
+          Iniciar con Google
+        </button>
+        <button className='bg-[#808080] min-w-[60px] rounded-xl flex items-center justify-center'>
+          <BsLinkedin className='text-2xl' />
+        </button>
+        <button className='bg-[#808080] min-w-[60px] rounded-xl'> </button>
       </section>
 
       <form className='flex flex-col gap-7 w-full'>
@@ -42,7 +39,6 @@ const LoginForm = () => {
           <input
             type='text'
             placeholder='Usuario o correo electrónico'
-            id='email'
             className='w-full h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
           />
         </div>
@@ -54,12 +50,13 @@ const LoginForm = () => {
           <input
             type='password'
             placeholder='Contraseña'
-            id='password'
             className='w-full h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
           />
         </div>
 
-        <p className='text-sm underline self-end'>Olvidé mi contraseña</p>
+        <p className='text-sm underline self-end cursor-pointer'>
+          Olvidé mi contraseña
+        </p>
 
         <button
           type='submit'
