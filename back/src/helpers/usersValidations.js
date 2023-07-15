@@ -20,6 +20,26 @@ const checkUserNameNotInUse =  async (userName = '') =>{
 
 }
 
+const checkEmailRegistered =  async (email = '') =>{
+
+  const existe = await userRepository.findUserByEmail(email);
+
+  if(!existe)
+    throw new Error("Email doesn't exist ");
+
+
+}
+
+const checkUserNameRegistered =  async (userName = '') =>{
+
+  const existe = await userRepository.findUserByUsername(userName);
+
+  if(!existe)
+    throw new Error("User name doesn't exist");
+
+
+}
+
 //TODO: Stack validation
 
 
@@ -27,5 +47,7 @@ const checkUserNameNotInUse =  async (userName = '') =>{
 module.exports = {
   checkEmailNotInUse,
   checkUserNameNotInUse,
+  checkEmailRegistered,
+  checkUserNameRegistered,
 }
 

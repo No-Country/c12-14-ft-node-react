@@ -6,22 +6,19 @@ class AuthServices {
   async encryptPassword(password) {
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
-    const hash = await bcrypt.hash(password, salt);
-    return hash;
+    return  await bcrypt.hash(password, salt);
   }
 
   async comparePassword(password, hash) {
-    const result = await bcrypt.compare(password, hash);
-    return result;
+    return await bcrypt.compare(password, hash);
   }
 
   async generateJWT(user) {
-    const { id, username, mail } = user;
-    const payload = { id, username, mail };
-    const token = jwt.sign(payload, process.env.SECRET_KEY, {
+    const { id, username, email } = user;
+    const payload = { id, username, email };
+    return jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "24h",
     });
-    return token;
   }
 
   async verifyJWT(token) {
