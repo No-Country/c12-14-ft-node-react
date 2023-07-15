@@ -17,24 +17,6 @@ function FormProject() {
     links: [],
   })
 
-  const [tecnology, setTecnology] = useState({
-    id: crypto.randomUUID(),
-    name: '',
-  })
-
-  const [rol, setRol] = useState({
-    id: crypto.randomUUID(),
-    name: '',
-    senority: '',
-    number: '',
-  })
-
-  const [link, setLink] = useState({
-    id: crypto.randomUUID(),
-    name: '',
-    url: '',
-  })
-
   const [errors, setErrors] = useState({
     title: '',
     category: '',
@@ -96,12 +78,6 @@ function FormProject() {
           <PostProject
             form={form}
             setForm={setForm}
-            tecnology={tecnology}
-            setTecnology={setTecnology}
-            rol={rol}
-            setRol={setRol}
-            link={link}
-            setLink={setLink}
             errors={errors}
             setErrors={setErrors}
             setView={setView}

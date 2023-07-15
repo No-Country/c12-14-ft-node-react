@@ -1,23 +1,52 @@
 import { IoAddSharp } from 'react-icons/io5'
 import validateProject from '@/libs/validationProject'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import SearchTag from '../SearchTag/SearchTag'
+import axios from 'axios'
 
-function PostProject({
-  form,
-  setForm,
-  tecnology,
-  setTecnology,
-  rol,
-  setRol,
-  link,
-  setLink,
-  errors,
-  setErrors,
-  setView,
-}) {
+const dataStacks = async () => {
+  const data = await axios.get(`${import.meta.env.VITE_API_URL}/stacks`)
+  return data.data.stack
+}
+
+const dataCategories = async () => {
+  const data = await axios.get(`${import.meta.env.VITE_API_URL}/categories`)
+  return data.data.category
+}
+
+function PostProject({ form, setForm, errors, setErrors, setView }) {
   // * states
 
+  const [stack, setStack] = useState([])
+
+  const [categories, setCategories] = useState([])
+
+  const [rol, setRol] = useState({
+    id: crypto.randomUUID(),
+    name: '',
+    senority: '',
+    number: '',
+  })
+
+  const [link, setLink] = useState({
+    id: crypto.randomUUID(),
+    name: '',
+    url: '',
+  })
+
   const [writing, setWriting] = useState(false)
+
+  // * data
+
+  useEffect(() => {
+    dataStacks().then((data) => {
+      setStack(data)
+    })
+
+    dataCategories().then((data) => {
+      setCategories(data)
+    })
+  }, [])
 
   // * handlers
 
@@ -39,39 +68,6 @@ function PostProject({
       errors,
       setErrors
     )
-  }
-
-  const handleInputTechnologies = (e) => {
-    if (!writing) {
-      setWriting(true)
-    }
-    setTecnology({
-      ...tecnology,
-      name: e.target.value,
-    })
-  }
-
-  const addTechnologies = (e) => {
-    e.preventDefault()
-    if (tecnology === '') return
-    setForm({
-      ...form,
-      technologies: [...form.technologies, tecnology],
-    })
-
-    validateProject(
-      {
-        ...form,
-        technologies: [...form.technologies, tecnology],
-      },
-      errors,
-      setErrors
-    )
-
-    setTecnology({
-      id: crypto.randomUUID(),
-      name: '',
-    })
   }
 
   const handleDeleteTecnology = (e) => {
@@ -224,6 +220,8 @@ function PostProject({
 
   // * -----------------------------//
 
+  // * styles //
+
   const classInput = (name) => {
     return `border-2 rounded-lg p-2 h-14 w-full ${
       writing &&
@@ -260,23 +258,18 @@ function PostProject({
             onChange={handleInput}
           >
             <option value=''>Selecciona una categoria</option>
-            <option value='Web-Development'>Web Development</option>
-            <option value='Data-Science'>Data Science</option>
-            <option value='Telecommunications'>Telecommunications</option>
-            <option value='Artificial-Intelligence'>
-              Artificial Intelligence
-            </option>
-            <option value='Cybersecurity'>Cybersecurity</option>
-            <option value='Internet-of-Things'>Internet of Things</option>
-            <option value='Healthcare'>Healthcare</option>
-            <option value='Finance'>Finance</option>
-            <option value='Retail'>Retail</option>
-            <option value='Transportation'>Transportation</option>
-            <option value='Media-and-Entertainment'>
-              Media and Entertainment
-            </option>
-            <option value='Education'>Education</option>
-            <option value='Nonprofit-Foundation'>Nonprofit Foundation</option>
+            {categories.length > 0 &&
+              categories.map((category) => {
+                return (
+                  <option
+                    key={category._id}
+                    id={category._id}
+                    value={category.categoryName}
+                  >
+                    {category.categoryName}
+                  </option>
+                )
+              })}
           </select>
           <span className='text-red-500'>{errors.category}</span>
         </div>
@@ -299,23 +292,21 @@ function PostProject({
         {/* // technologies */}
         <div className='flex flex-col gap-2'>
           <label className=' font-bold'>Tecnologias requeridas</label>
-          <div className='flex gap-2'>
-            <input
-              className={classInput('technologies')}
-              type='text'
-              placeholder='Ej: React'
-              value={tecnology.name}
-              name='technologies'
-              onChange={handleInputTechnologies}
-            />
-            <button
-              className=' bg-gray-500 text-white font-bold rounded-lg p-2 w-10 h-10 grid place-items-center'
-              onClick={addTechnologies}
-            >
-              <IoAddSharp />
-            </button>
-          </div>
-          <div className='flex gap-2  border-2 rounded-lg p-5'>
+          <SearchTag
+            data={stack}
+            setDatastate={setForm}
+            datastate={form}
+            errors={errors}
+            setErrors={setErrors}
+          />
+          <div
+            className={`flex gap-2  border-2 rounded-lg p-5 ${
+              writing &&
+              (errors.technologies !== ''
+                ? ' border-red-500  focus-visible:outline-red-500'
+                : 'border-green-500  focus-visible:outline-green-500')
+            }`}
+          >
             {form.technologies.map((tecnology) => (
               <div
                 key={tecnology.id}
@@ -323,7 +314,7 @@ function PostProject({
                 className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
                 onClick={handleDeleteTecnology}
               >
-                {tecnology.name}
+                {tecnology.stackName}
               </div>
             ))}
           </div>
@@ -336,7 +327,7 @@ function PostProject({
           <div className='flex gap-2'>
             <div className='flex gap-2'>
               <input
-                className={classInput('rols')}
+                className='border-2 rounded-lg p-2 h-14 w-full '
                 type='text'
                 placeholder='Ej: Backend'
                 value={rol.name}
@@ -344,7 +335,7 @@ function PostProject({
                 onChange={handleInputRols}
               />
               <input
-                className={classInput('rols')}
+                className='border-2 rounded-lg p-2 h-14 w-full '
                 type='text'
                 placeholder='Ej: Junior'
                 value={rol.senority}
@@ -352,7 +343,7 @@ function PostProject({
                 onChange={handleInputRols}
               />
               <input
-                className={classInput('rols')}
+                className='border-2 rounded-lg p-2 h-14 w-full '
                 type='number'
                 placeholder='Ej: 1'
                 value={rol.number}
@@ -367,7 +358,14 @@ function PostProject({
               <IoAddSharp />
             </button>
           </div>
-          <div className='flex gap-2  border-2 rounded-lg p-5'>
+          <div
+            className={`flex gap-2  border-2 rounded-lg p-5 ${
+              writing &&
+              (errors.rols !== ''
+                ? ' border-red-500  focus-visible:outline-red-500'
+                : 'border-green-500  focus-visible:outline-green-500')
+            }`}
+          >
             {form.rols.map((rol) => (
               <div
                 key={rol.id}

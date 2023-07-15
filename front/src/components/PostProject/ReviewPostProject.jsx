@@ -62,7 +62,7 @@ function ReviewPostProject({ form, errors, setErrors, setView }) {
               key={tecnology.id}
               className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
             >
-              {tecnology.name}
+              {tecnology.stackName}
             </div>
           ))}
         </div>

@@ -8,7 +8,7 @@ const Header = () => {
       <div>
         <UvaLogo className='h-[44px] w-[120px]' />
       </div>
-      <nav className='flex gap-8'>
+      <nav className='flex gap-12'>
         <ul className='flex gap-4 justify-between items-center'>
           <li>
             <Link to='/post-project'>Publicar un proyecto</Link>
@@ -20,12 +20,20 @@ const Header = () => {
             <Link to={`/profile/${'Aqui va esta el id'}`}>Mi perfil</Link>
           </li>
         </ul>
-        <ul className='flex gap-1 justify-between items-center'>
+        <ul className='flex gap-8 justify-between items-center'>
           <li>
-            <MdNotifications />
+            <MdNotifications size={24} />
           </li>
           <li>
-            <img src={'variable img'} alt='foto de perfil' />
+            <img
+              src='assets/default.png'
+              onError={(e) => {
+                e.target.src = '/src/assets/default.png'
+              }}
+              width={48}
+              height={48}
+              alt='foto de perfil'
+            />
           </li>
         </ul>
         <ul className='flex gap-8 items-center'>
