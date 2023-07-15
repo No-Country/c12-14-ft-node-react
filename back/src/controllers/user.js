@@ -52,12 +52,12 @@ const deleteUser = async (req, res = response) => {
 };
 
 const forgotPassword = async (req, res = response) => {
-  const { mail, password } = req.body;
+  const { email, password } = req.body;
   const auth = new AuthServices();
   const hash = await auth.encryptPassword(password);
 
   await userRepository
-    .changePassword(mail, hash)
+    .changePassword(email, hash)
     .then((data) => {
       res.status(200).json({ msg: "Password changed", user: data });
     })

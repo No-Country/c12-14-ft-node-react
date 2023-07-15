@@ -1,26 +1,17 @@
-const user = require('../repositories/user')
 const userRepository = require('../repositories/user')
 const AuthServices = require('../services/auth.service')
 const { serialize } = require('cookie')
 
 const register = async (req, res = response) => {
-  const { username, mail, password, phonenumber } = req.body
+  const { userName, email, password } = req.body
   const authServices = new AuthServices()
 
   try {
-    const userEmail = await userRepository.findUserByEmail(mail)
-    const userName = await userRepository.findUserByUsername(username)
-
-    if (userEmail || userName) {
-      return res.status(400).json({
-        msg: 'User already exists',
-      })
-    }
 
     const hash = await authServices.encryptPassword(password)
     const newUser = await userRepository.create({
-      userName: username,
-      mail: mail,
+      userName: userName,
+      email: email,
       password: hash,
     })
 
@@ -34,16 +25,17 @@ const register = async (req, res = response) => {
 }
 
 const login = async (req, res = response) => {
-  const { username, mail, password } = req.body
+  // console.log(req.body);
+  const { userName, email, password } = req.body
   const authServices = new AuthServices()
 
   try {
     let user
 
-    if (username.length === 0) {
-      user = await userRepository.findUserByEmail(mail)
+    if (userName.length === 0) {
+      user = await userRepository.findUserByEmail(email)
     } else {
-      user = await userRepository.findUserByUsername(username)
+      user = await userRepository.findUserByUsername(userName)
     }
 
     if (!user) {
@@ -59,11 +51,10 @@ const login = async (req, res = response) => {
         msg: 'Incorrect password',
       })
     } else {
-      console.log(user)
       const token = await authServices.generateJWT({
         id: user.id,
         username: user.userName,
-        mail: user.mail,
+        email: user.email,
       })
 
       const serialized = serialize('devCollabToken', token, {
@@ -125,14 +116,14 @@ const verify = async (req, res = response) => {
     if (token) {
       const authServices = new AuthServices()
       const {
-        user: { id, username, mail },
+        user: { id, username, email },
       } = await authServices.verifyJWT(token)
       res.status(200).json({
         msg: 'User verified',
         user: {
           id,
           username,
-          mail,
+          email,
         },
       })
     }

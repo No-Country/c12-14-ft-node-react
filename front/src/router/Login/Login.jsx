@@ -1,14 +1,10 @@
-import LoginAs from '@/components/LoginAs/LoginAs'
-import LoginForm from '@/components/LoginForm/LoginForm'
-import ButtonGithubAuth from '../../components/ButtonsAuth/ButtonGithubAuth'
-import ButtonGoogleAuth from '../../components/ButtonsAuth/ButtonGoogleAuth'
+import LoginAs from '@/components/Auth/LoginAs/LoginAs'
+import LoginForm from '@/components/Auth/LoginForm/LoginForm'
 
 const Login = () => {
   return (
     <main className='relative h-screen flex flex-col'>
       <div className='absolute right-20 top-[calc(50%-340px)]'>
-        <ButtonGithubAuth />
-        <ButtonGoogleAuth />
         <LoginForm />
       </div>
 
