@@ -58,24 +58,36 @@ function FormProject() {
         <div className='flex gap-2 items-center'>
           <div className='flex gap-1'>
             <span
-              className={
-                ' grid place-items-center w-7 h-7 bg-gray-400 text-gray-500 rounded-full font-bold'
-              }
+              className={` grid place-items-center w-7 h-7 ${
+                view === 1 ? 'bg-purple-700' : 'bg-gray-600'
+              } text-white rounded-full font-bold`}
             >
               1
             </span>
-            <p>Ingresa la información de tu proyecto</p>
+            <p
+              className={`${
+                view === 1 ? ' text-black' : 'text-gray-500'
+              } font-bold`}
+            >
+              Ingresa la información de tu proyecto
+            </p>
           </div>
           <MdOutlineArrowForwardIos />
           <div className='flex gap-1'>
             <span
-              className={
-                ' grid place-items-center w-7 h-7 bg-gray-400 text-gray-500 rounded-full font-bold'
-              }
+              className={`grid place-items-center w-7 h-7 ${
+                view === 2 ? 'bg-purple-700' : 'bg-gray-400'
+              }  text-white rounded-full font-bold`}
             >
               2
             </span>
-            <p>Revisa la información que ingresaste</p>
+            <p
+              className={`${
+                view === 2 ? ' text-black' : 'text-gray-500'
+              } font-bold`}
+            >
+              Revisa la información que ingresaste
+            </p>
           </div>
           <MdOutlineArrowForwardIos />
         </div>
