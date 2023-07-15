@@ -4,21 +4,18 @@ const BaseRepository = require("./contracts/BaseRepository");
 class UserRepository extends BaseRepository {
   constructor(userModel) {
     super(userModel);
-    this.userModel = userModel;
   }
 
   async findUserByEmail(email) {
-    const user = await this.userModel.findOne({ mail: email });
-    return user;
+    return await this.model.findOne({ email: email });
   }
 
   async findUserByUsername(username) {
-    const user = await this.userModel.findOne({ userName: username });
-    return user;
+    return  await this.model.findOne({ userName: username });
   }
 
   async changePassword(email, newPassword) {
-    const user = await this.userModel.findOne({ mail: email });
+    const user = await this.model.findOne({ email: email });
     user.password = newPassword;
     await user.save();
     return user;
