@@ -51,21 +51,20 @@ const login = async (req, res = response) => {
         msg: 'Incorrect password',
       })
     } else {
-      console.log(user)
       const token = await authServices.generateJWT({
         id: user.id,
         username: user.userName,
         email: user.email,
       })
 
-      // const serialized = serialize('devCollabToken', token, {
-      //   httpOnly: true,
-      //   secure: process.env.NODE_ENV !== 'production',
-      //   sameSite: 'none',
-      //   maxAge: 60 * 60 * 24,
-      // })
-      //
-      // res.setHeader('Set-Cookie', serialized)
+      const serialized = serialize('devCollabToken', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== 'production',
+        sameSite: 'none',
+        maxAge: 60 * 60 * 24,
+      })
+
+      res.setHeader('Set-Cookie', serialized)
 
       res.status(200).json({
         msg: 'Login success',
