@@ -1,7 +1,7 @@
 const {
   checkEmailNotInUse,
   checkUserNameNotInUse
-} = require('../../helpers/usersValidators')
+} = require('../../helpers/usersValidations')
 
 const userCreateSchema = {
   email: {

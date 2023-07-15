@@ -25,16 +25,17 @@ const register = async (req, res = response) => {
 }
 
 const login = async (req, res = response) => {
-  const { username, email, password } = req.body
+  // console.log(req.body);
+  const { userName, email, password } = req.body
   const authServices = new AuthServices()
 
   try {
     let user
 
-    if (username.length === 0) {
+    if (userName.length === 0) {
       user = await userRepository.findUserByEmail(email)
     } else {
-      user = await userRepository.findUserByUsername(username)
+      user = await userRepository.findUserByUsername(userName)
     }
 
     if (!user) {
@@ -57,14 +58,14 @@ const login = async (req, res = response) => {
         email: user.email,
       })
 
-      const serialized = serialize('devCollabToken', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV !== 'production',
-        sameSite: 'none',
-        maxAge: 60 * 60 * 24,
-      })
-
-      res.setHeader('Set-Cookie', serialized)
+      // const serialized = serialize('devCollabToken', token, {
+      //   httpOnly: true,
+      //   secure: process.env.NODE_ENV !== 'production',
+      //   sameSite: 'none',
+      //   maxAge: 60 * 60 * 24,
+      // })
+      //
+      // res.setHeader('Set-Cookie', serialized)
 
       res.status(200).json({
         msg: 'Login success',
