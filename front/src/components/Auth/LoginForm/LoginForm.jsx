@@ -57,7 +57,6 @@ const LoginForm = () => {
       dispatch(setUser(verifyResponse.data.user))
       navigate('/')
     } catch (error) {
-      console.log({ error })
       if (error.response.data.msg.includes('User')) {
         setErrors({ ...errors, mailOrUserName: error.response.data.msg })
       }
