@@ -85,6 +85,7 @@ function FormProject() {
         ) : (
           <ReviewPostProject
             form={form}
+            setForm={setForm}
             errors={errors}
             setView={setView}
             setErrors={setErrors}

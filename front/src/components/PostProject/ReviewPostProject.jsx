@@ -1,7 +1,8 @@
 import validateProject from '@/libs/validationProject'
+import axios from 'axios'
 import { useState } from 'react'
 
-function ReviewPostProject({ form, errors, setErrors, setView }) {
+function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
   const [terms, setTerms] = useState(false)
   const [notifications, setNotifications] = useState(false)
 
@@ -9,7 +10,7 @@ function ReviewPostProject({ form, errors, setErrors, setView }) {
     setView(1)
   }
 
-  const handleSendForm = (e) => {
+  const handleSendForm = async (e) => {
     e.preventDefault()
     validateProject(form, errors, setErrors)
     const isValidate = Object.values(errors).every((error) => error === '')
@@ -18,7 +19,9 @@ function ReviewPostProject({ form, errors, setErrors, setView }) {
         title: form.title,
         category: form.category,
         description: form.description,
-        technologies: form.technologies,
+        technologies: form.technologies.map((technology) => {
+          return technology.stackName
+        }),
         requiredRols: form.rols,
         connectionLinks: form.links,
         terms,
@@ -28,7 +31,23 @@ function ReviewPostProject({ form, errors, setErrors, setView }) {
         admins: ['idAdmin1'],
       }
 
-      console.log('enviar formulario', body)
+      const send = await axios.post(
+        `${import.meta.env.VITE_API_URL}/projects`,
+        body
+      )
+
+      if (send.status === 201) {
+        alert('Proyecto publicado')
+        setView(1)
+        setForm({
+          title: '',
+          category: '',
+          description: '',
+          technologies: [],
+          rols: [],
+          links: [],
+        })
+      }
     }
   }
 
