@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import SearchBar from '../../components/SearchBar/SearchBar'
+// import SearchBar from '../../components/SearchBar/SearchBar'
 import CardMiniProject from '../../components/CardMiniProject/CardMiniProject'
 
 const Landing = () => {
   const [howto, setHowto] = useState('post')
 
-  // projects
+  // * projects
   const projects = [
     {
       title: 'Project 1',
@@ -57,84 +57,132 @@ const Landing = () => {
     },
   ]
 
-  // categories
+  // * categories
   const categories = [
     {
-      name: 'Eccomerce',
+      name: 'Desarrollo web',
       id: 1,
     },
     {
-      name: 'Eccomerce',
+      name: 'Ciencia de datos',
       id: 2,
     },
     {
-      name: 'Eccomerce',
+      name: 'Telecomunicaciones',
       id: 3,
     },
     {
-      name: 'Eccomerce',
+      name: 'Inteligencia artificial',
       id: 4,
     },
     {
-      name: 'Eccomerce',
+      name: 'Ciberseguridad ',
       id: 5,
     },
     {
-      name: 'Eccomerce',
+      name: 'Salud y bienestar',
       id: 6,
     },
     {
-      name: 'Eccomerce',
+      name: 'Sin fines de lucro',
       id: 7,
     },
     {
-      name: 'Eccomerce',
+      name: 'Internet de las cosas',
       id: 8,
     },
     {
-      name: 'Eccomerce',
+      name: 'Finanzas',
       id: 9,
     },
     {
-      name: 'Eccomerce',
+      name: 'Comercio',
       id: 10,
     },
     {
-      name: 'Eccomerce',
+      name: 'Transporte',
       id: 11,
     },
     {
-      name: 'Eccomerce',
+      name: 'Entretenimiento',
       id: 12,
     },
+    {
+      name: 'Educación',
+      id: 13,
+    },
   ]
+
+  const ImageCalltoAction = () => {
+    return (
+      <div className=' w-[662px] h-[653px] relative'>
+        <div className=' w-[662px] h-[653px] bg-[#E9DFFD] grid place-items-center font-black text-3xl rounded-full'>
+          <h2>{'<Desarrollo Front-End>'}</h2>
+        </div>
+        <div className=' absolute top-0 grid grid-cols-2 grid-rows-2  w-[662px] h-[653px]'>
+          <div className=' flex justify-start'>
+            <div className=' w-[270px] h-[282px] bg-white rounded-full'>
+              <img src='src/assets/desktop.png' alt='desktop' />
+            </div>
+          </div>
+          <div className=' flex  justify-end  relative bottom-16'>
+            <div className=' w-[243px] h-[243px] bg-white rounded-full'>
+              <img
+                src='src/assets/components.png'
+                alt='components'
+                className=' scale-110'
+              />
+            </div>
+          </div>
+          <div className=' flex justify-start items-end'>
+            <div className=' w-[200px] h-[200px] bg-white rounded-full bottom-10 left-6 relative'>
+              <img
+                src='src/assets/laptop.png'
+                alt='laptop'
+                className=' scale-[1.2] bottom-8 left-4 relative'
+              />
+            </div>
+          </div>
+          <div className=' flex justify-end  items-end'>
+            <div className=' w-[166px] h-[166px] bg-white rounded-full relative bottom-24 right-10'>
+              <img
+                src='src/assets/stats.png'
+                alt='stats'
+                className=' scale-[1.25] bottom-3 relative'
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <main className='flex flex-col items-center w-full gap-40 pt-20 pb-52'>
       {/* search bar */}
-      <SearchBar />
+      {/* <SearchBar /> */}
 
       {/* call to action */}
-      <section className='flex flex-col max-w-6xl gap-20'>
-        <h1 className='text-6xl font-bold text-center'>
-          Lorem ipsum dolor sit amet consectetur. Iaculis arcu pulvinar
+      <section className='flex flex-col max-w-7xl gap-20 bg-gradient items-center'>
+        <h1 className='text-6xl font-bold text-center title w-10/12'>
+          Encuentra el mejor equipo de trabajo para proyectos innovadores
         </h1>
-        <article className=' bg-slate-600 flex p-20 w-full gap-10'>
-          <div className='flex flex-col gap-10 text-white'>
-            <h3 className='text-3xl'>
-              Lorem ipsum dolor sit amet consectetur. Cursus fringilla
-            </h3>
-            <p className='text-2xl' style={{ width: '420px' }}>
-              Lorem ipsum dolor sit amet consectetur. A iaculis cras faucibus
-              nisl quisque duis pretium. In donec
-            </p>
-            <button className=' w-80 h-10 bg-white rounded-lg text-black'>
+        <article className=' bg-slate-600 flex p-20 gap-10 justify-between'>
+          <div className='flex flex-col gap-16 justify-center w-[35%]'>
+            <div className='flex flex-col gap-8'>
+              <h3 className=' text-4xl text-darkpurple font-landing font-bold'>
+                Trabajando en equipo multiplicamos nuestros logros.
+              </h3>
+              <p className='text-3xl w-full leading-[2.8rem]'>
+                Conecta con otros talentos e impulsa tus habilidades colaborando
+                en proyectos innovadores.
+              </p>
+            </div>
+            <a href='/home' className='btn-call-to-action'>
               Empezar
-            </button>
+            </a>
           </div>
-          <div className=' w-full bg-white'>
-            <img src='./' alt='image' />
-          </div>
+          <ImageCalltoAction />
         </article>
       </section>
 
