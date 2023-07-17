@@ -11,6 +11,7 @@ export default {
       border: '#5526b378',
       container: '#FFFFFF',
       gradient: 'linear-gradient(155deg, #29278D 0%, #6D11CC 100%);',
+      transparent: 'transparent',
     },
     fontFamily: {
       landing: ['Source Sans 3', 'sans-serif'],

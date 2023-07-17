@@ -4,7 +4,7 @@ import { MdNotifications } from 'react-icons/md'
 
 const Header = () => {
   return (
-    <header className='h-[80px] flex justify-between items-center px-40 py-5 bg-[#4E5A65]'>
+    <header className=' w-full max-w-6xl h-[80px] flex justify-between items-center pt-20'>
       <div>
         <UvaLogo className='h-[44px] w-[120px]' />
       </div>
@@ -38,12 +38,12 @@ const Header = () => {
         </ul>
         <ul className='flex gap-8 items-center'>
           <li>
-            <Link to='/login' className='text-white'>
+            <Link to='/login' className='btn-login'>
               Iniciar sesión
             </Link>
           </li>
-          <li className='h-[44px] w-[120px] rounded-lg bg-[#E1E5EA] flex items-center justify-center'>
-            <Link to='/register' className='text-black font-semibold'>
+          <li>
+            <Link to='/register' className='btn-register'>
               Registrarse
             </Link>
           </li>

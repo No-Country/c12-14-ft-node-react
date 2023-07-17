@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 function SearchBar() {
   const [search, setSearch] = useState('')
+  const [type, setType] = useState('projects')
 
   const handleInput = (e) => {
     setSearch(e.target.value)
@@ -13,17 +14,25 @@ function SearchBar() {
     }
   }
 
+  const handleType = (e) => {
+    setType(e.target.value)
+  }
+
   return (
-    <div className='flex w-full justify-center max-w-screen-lg'>
+    <div className='flex w-1/2 justify-center max-w-screen-lg rounded-full border-2 border-purple p-2'>
       <input
         value={search}
-        className=' w-1/2 border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-l-2xl text-sm focus:outline-none '
+        className=' w-full bg-transparent h-10 px-10 pr-16 text-xl focus:outline-none '
         type='text'
-        placeholder='Search . . .'
+        placeholder='Buscar . . .'
         onKeyDown={handleSearch}
         onChange={handleInput}
       />
-      <select className='w-1/4 h-10 rounded-r-2xl px-4 border-2 border-gray-300'>
+      <select
+        className='text-xl w-1/4 h-10 px-4 focus:outline-none border-l-2 border-l-purple text-purple font-bold'
+        onChange={handleType}
+        value={type}
+      >
         <option value='projects'>Projects</option>
         <option value='tecnologies'>Tecnologies</option>
         <option value='categories'>Categories</option>
