@@ -60,7 +60,7 @@ const login = async (req, res = response) => {
 
       const serialized = serialize('devCollabToken', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'production',
+        // secure: process.env.NODE_ENV !== 'production',
         sameSite: 'none',
         maxAge: 60 * 60 * 24,
       })
