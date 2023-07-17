@@ -9,34 +9,14 @@ import {
 
 const Footer = () => {
   return (
-    <footer className='bg-[#1D2830]'>
+    <footer className='bg-[#5627B4] w-full'>
       {/* Header */}
       <div className='py-10 flex justify-between px-40'>
         <div className='flex flex-col gap-3'>
-          <p className='text-white font-semibold'>Company</p>
+          <p className='text-white font-semibold'>Compañiá</p>
           <ul className='flex flex-col gap-3'>
-            <li className='text-white font-thin text-sm'>About Us</li>
-            <li className='text-white font-thin text-sm'>Blog</li>
-            <li className='text-white font-thin text-sm'>Careers</li>
-            <li className='text-white font-thin text-sm'>Contact Us</li>
-          </ul>
-        </div>
-
-        <div className='flex flex-col gap-3'>
-          <p className='text-white font-semibold'>Support</p>
-          <ul className='flex flex-col gap-3'>
-            <li className='text-white font-thin text-sm'>Help Center</li>
-            <li className='text-white font-thin text-sm'>Safety Center</li>
-            <li className='text-white font-thin text-sm'>Community</li>
-          </ul>
-        </div>
-
-        <div className='flex flex-col gap-3'>
-          <p className='text-white font-semibold'>Legal</p>
-          <ul className='flex flex-col gap-3'>
-            <li className='text-white font-thin text-sm'>Cookies Policy</li>
-            <li className='text-white font-thin text-sm'>Privacy Policy</li>
-            <li className='text-white font-thin text-sm'>Terms of Service</li>
+            <li className='text-white font-thin text-sm'>Acerca de Nosotros</li>
+            <li className='text-white font-thin text-sm'>Contáctanos</li>
           </ul>
         </div>
 
