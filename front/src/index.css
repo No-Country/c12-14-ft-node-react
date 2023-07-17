@@ -39,7 +39,7 @@
   color: #fff;
   font-weight: bold;
   width: 223px;
-  padding: 18px 56px;
+  padding: 18px 0;
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -47,4 +47,28 @@
 
 .btn-call-to-action:hover {
   background: #1f1d68;
+}
+
+.btn-call2 {
+  border-radius: 16px;
+  background: transparent;
+  color: #5526B3;
+  border: 2px solid #29278D;
+  font-weight: bold;
+  width: 223px;
+  padding: 18px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-call2:hover {
+  border: 2px solid #1f1d68;
+}
+
+.conic-gradient {
+  background: conic-gradient(from 16deg at 50.00% 50.00%, #5728B4 0deg, #5526B3 177.04047203063965deg, #29278D 360deg);
+}
+.gradient {
+  background: linear-gradient(180deg, #060453 1.04%, #29278D 29.32%, #5526B3 46.91%, #8E69D9 92.71%, #8E69D9 100%);
 }
