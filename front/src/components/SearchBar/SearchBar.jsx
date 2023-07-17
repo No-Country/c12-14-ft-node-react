@@ -19,7 +19,7 @@ function SearchBar() {
   }
 
   return (
-    <div className='flex w-1/2 justify-center max-w-screen-lg rounded-full border-2 border-purple p-2'>
+    <div className='flex w-1/2 justify-center max-w-screen-lg rounded-full border-2 border-primary p-2'>
       <input
         value={search}
         className=' w-full bg-transparent h-10 px-10 pr-16 text-xl focus:outline-none '
@@ -29,7 +29,7 @@ function SearchBar() {
         onChange={handleInput}
       />
       <select
-        className='text-xl w-1/4 h-10 px-4 focus:outline-none border-l-2 border-l-purple text-purple font-bold'
+        className='text-xl w-1/4 h-10 px-4 focus:outline-none border-l-2 border-l-primary text-primary font-bold'
         onChange={handleType}
         value={type}
       >

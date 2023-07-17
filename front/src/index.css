@@ -99,3 +99,7 @@
 .gradient {
   background: linear-gradient(180deg, #060453 1.04%, #29278D 29.32%, #5526B3 46.91%, #8E69D9 92.71%, #8E69D9 100%);
 }
+
+.logo path {
+  transform: scale(.6);
+}

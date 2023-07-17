@@ -253,10 +253,10 @@ const Landing = () => {
         <h1 className='text-6xl font-bold text-center title w-[90%]'>
           Encuentra el mejor equipo de trabajo para proyectos innovadores
         </h1>
-        <article className=' bg-slate-600 flex gap-10 justify-between'>
+        <article className='  flex gap-10 justify-between'>
           <div className='flex flex-col gap-16 justify-center w-[35%]'>
             <div className='flex flex-col gap-8'>
-              <h3 className=' text-4xl text-darkpurple font-landing font-bold'>
+              <h3 className=' text-4xl text-primaryDark font-landing font-bold'>
                 Trabajando en equipo multiplicamos nuestros logros.
               </h3>
               <p className='text-3xl w-full leading-[2.8rem]'>
@@ -273,10 +273,10 @@ const Landing = () => {
       </section>
 
       {/* how to use */}
-      <section className=' bg-slate-600 flex w-full max-w-6xl gap-40'>
+      <section className='  flex w-full max-w-6xl gap-40'>
         <div className='flex flex-col gap-20 mt-24'>
           <div className='flex flex-col gap-5'>
-            <h4 className=' text-2xl font-bold text-purple'>
+            <h4 className=' text-2xl font-bold text-primary'>
               Lleva tus proyectos al siguiente nivel
             </h4>
           </div>
