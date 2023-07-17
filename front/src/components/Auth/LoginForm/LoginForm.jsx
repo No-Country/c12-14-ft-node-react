@@ -36,7 +36,6 @@ const LoginForm = () => {
     try {
       let loginResponse
       if (mailOrUserName.value.includes('@')) {
-        console.log(mailOrUserName.value)
         loginResponse = await uvaApi.post('/auth/login', {
           email: mailOrUserName.value,
           userName: '',
@@ -50,11 +49,11 @@ const LoginForm = () => {
         })
       }
 
-      const verifyResponse = await uvaApi.post('/auth/verify', {
-        devCollabToken: loginResponse.data.token,
-      })
+      // const verifyResponse = await uvaApi.post('/auth/verify', {
+      //   devCollabToken: loginResponse.data.token,
+      // })
 
-      dispatch(setUser(verifyResponse.data.user))
+      dispatch(setUser(loginResponse.data))
       navigate('/')
     } catch (error) {
       if (error.response.data.msg.includes('User')) {
