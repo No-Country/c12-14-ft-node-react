@@ -3,26 +3,43 @@ import UvaLogo from '@/assets/UvaLogo.jsx'
 import { MdNotifications } from 'react-icons/md'
 
 const Header = () => {
+  const { _id, id } = JSON.parse(localStorage.getItem('user'))
   return (
-    <header className=' w-full max-w-6xl h-[80px] flex justify-between items-center pt-20'>
+    <header className=' flex h-[80px] w-full max-w-6xl items-center justify-between pt-20'>
       <div>
-        <UvaLogo className="logo grid place-items-center" width={120} height={44} />
+        <UvaLogo
+          className='logo grid place-items-center'
+          width={120}
+          height={44}
+        />
       </div>
       <nav className='flex gap-12'>
-        <ul className='flex gap-4 justify-between items-center text-primary font-bold'>
+        <ul className='flex items-center justify-between gap-4 font-bold text-primary'>
           <li>
-            <Link className='hover:underline decoration-primary' to='/post-project'>Publicar un proyecto</Link>
+            <Link
+              className='decoration-primary hover:underline'
+              to='/post-project'
+            >
+              Publicar un proyecto
+            </Link>
           </li>
           <li>
-            <Link className='hover:underline decoration-primary' to='/home'>Proyectos</Link>
+            <Link className='decoration-primary hover:underline' to='/home'>
+              Proyectos
+            </Link>
           </li>
           <li>
-            <Link className='hover:underline decoration-primary' to={`/profile/${'Aqui va esta el id'}`}>Mi perfil</Link>
+            <Link
+              className='decoration-primary hover:underline'
+              to={`/profile/${_id || id}`}
+            >
+              Mi perfil
+            </Link>
           </li>
         </ul>
-        <ul className='flex gap-8 justify-between items-center'>
+        <ul className='flex items-center justify-between gap-8'>
           <li>
-            <MdNotifications size={24} className='text-primary'/>
+            <MdNotifications size={24} className='text-primary' />
           </li>
           <li>
             <img
@@ -36,7 +53,7 @@ const Header = () => {
             />
           </li>
         </ul>
-        <ul className='flex gap-8 items-center'>
+        <ul className='flex items-center gap-8'>
           <li>
             <Link to='/login' className='btn-login'>
               Iniciar sesión
