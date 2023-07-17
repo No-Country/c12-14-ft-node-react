@@ -6,9 +6,19 @@ class UserRepository extends BaseRepository {
     super(userModel);
   }
 
-  async create(data) {
-    data.pass = bycrypt(data.pass, 545);
-    return super.create(data);
+  async findUserByEmail(email) {
+    return await this.model.findOne({ email: email });
+  }
+
+  async findUserByUsername(username) {
+    return  await this.model.findOne({ userName: username });
+  }
+
+  async changePassword(email, newPassword) {
+    const user = await this.model.findOne({ email: email });
+    user.password = newPassword;
+    await user.save();
+    return user;
   }
 }
 

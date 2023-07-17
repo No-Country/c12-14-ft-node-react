@@ -1,26 +1,55 @@
 import { Link } from 'react-router-dom'
+import UvaLogo from '@/assets/UvaLogo.jsx'
+import { MdNotifications } from 'react-icons/md'
 
 const Header = () => {
   return (
-    <nav className='h-[80px] flex justify-between items-center px-40 bg-[#4E5A65]'>
+    <header className=' w-full max-w-6xl h-[80px] flex justify-between items-center pt-20'>
       <div>
-        <p className='text-white text-2xl font-bold'>Logo</p>
+        <UvaLogo className="logo grid place-items-center" width={120} height={44} />
       </div>
-      <div>
+      <nav className='flex gap-12'>
+        <ul className='flex gap-4 justify-between items-center text-primary font-bold'>
+          <li>
+            <Link className='hover:underline decoration-primary' to='/post-project'>Publicar un proyecto</Link>
+          </li>
+          <li>
+            <Link className='hover:underline decoration-primary' to='/home'>Proyectos</Link>
+          </li>
+          <li>
+            <Link className='hover:underline decoration-primary' to={`/profile/${'Aqui va esta el id'}`}>Mi perfil</Link>
+          </li>
+        </ul>
+        <ul className='flex gap-8 justify-between items-center'>
+          <li>
+            <MdNotifications size={24} className='text-primary'/>
+          </li>
+          <li>
+            <img
+              src='assets/default.png'
+              onError={(e) => {
+                e.target.src = '/src/assets/default.png'
+              }}
+              width={48}
+              height={48}
+              alt='foto de perfil'
+            />
+          </li>
+        </ul>
         <ul className='flex gap-8 items-center'>
           <li>
-            <Link to='/login' className='text-white'>
+            <Link to='/login' className='btn-login'>
               Iniciar sesión
             </Link>
           </li>
-          <li className='h-[44px] w-[120px] rounded-lg bg-[#E1E5EA] flex items-center justify-center'>
-            <Link to='/register' className='text-black font-semibold'>
+          <li>
+            <Link to='/register' className='btn-register'>
               Registrarse
             </Link>
           </li>
         </ul>
-      </div>
-    </nav>
+      </nav>
+    </header>
   )
 }
 

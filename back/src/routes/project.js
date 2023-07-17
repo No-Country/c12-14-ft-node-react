@@ -1,6 +1,3 @@
-const {
-  projectDataValidation,
-} = require('../pruebasFacu/middelwares/validations')
 const { Router } = require('express')
 const {
   getProjects,

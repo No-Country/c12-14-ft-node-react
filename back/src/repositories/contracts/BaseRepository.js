@@ -11,6 +11,8 @@ class BaseRepository {
       .then((data) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
         return data
+        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
+        return data
       })
       .catch((err) => {
         Logger.error(
@@ -50,11 +52,6 @@ class BaseRepository {
         )
         throw new Error(err)
       })
-  }
-
-  async UpdateById(id, data) {
-    return await this.model
-      .findByIdAndUpdate(id, data, { new: true })
       .then((dataUpdated) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
         return dataUpdated
@@ -70,9 +67,9 @@ class BaseRepository {
   async deleteById(id) {
     return await this.model
       .findByIdAndDelete(id)
-      .then(() => {
+      .then((data) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
-        return true
+        return data ? true : false
       })
       .catch((err) => {
         Logger.error(

@@ -16,20 +16,28 @@ const loginWithSlice = createSlice({
   reducers: {
     loginWithGoogle() {
       async function loginwWithGoogle() {
-        const googleProvider = await new GoogleAuthProvider()
-        const access = await signInWithPopup(auth, googleProvider)
-        // TODO: add logic to save user data in redux
-        console.log('proof loginGoogle', access)
+        try {
+          const googleProvider = new GoogleAuthProvider()
+          const access = await signInWithPopup(auth, googleProvider)
+          // TODO: add logic to save user data in redux
+          console.log('proof loginGoogle', access)
+        } catch (error) {
+          console.log(error.message)
+        }
       }
 
       loginwWithGoogle()
     },
     loginWithGithub() {
       async function loginwWithGithub() {
-        const githubProvider = await new GithubAuthProvider()
-        const access = await signInWithPopup(auth, githubProvider)
-        // TODO: add logic to save user data in redux
-        console.log('proof loginGithub', access)
+        try {
+          const githubProvider = new GithubAuthProvider()
+          const access = await signInWithPopup(auth, githubProvider)
+          // TODO: add logic to save user data in redux
+          console.log('proof loginGithub', access)
+        } catch (error) {
+          console.log(error.message)
+        }
       }
 
       loginwWithGithub()

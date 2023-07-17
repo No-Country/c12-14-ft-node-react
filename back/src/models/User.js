@@ -5,7 +5,7 @@ const connection = require('../../config/database/mongo/connection')
 //a continuacion instancio la clase "User"
 const userSchema = new Schema(
   {
-    mail: {
+    email: {
       type: String,
       unique: true,
       required: true,
@@ -27,9 +27,8 @@ const userSchema = new Schema(
     description: {
       type: String,
     },
-    rols: [
+    roles: [
       {
-        //--> un array de strings
         type: Object,
         required: true,
       },
@@ -37,7 +36,7 @@ const userSchema = new Schema(
     stack: [
       {
         //--> un array de strings
-        type: String,
+        type: Object,
         required: true,
       },
     ],
@@ -68,14 +67,6 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-
-    // //bills es una lista de elementos, en lo que cada elemento es un Objecto del tipo "ObjectID" que se refiere a documentos de Bill.
-    // bills: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Bill",
-    //   },
-    // ],
   },
   {
     versionKey: false,
