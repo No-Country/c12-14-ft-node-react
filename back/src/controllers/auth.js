@@ -55,6 +55,7 @@ const login = async (req, res = response) => {
         id: user.id,
         username: user.userName,
         email: user.email,
+        photo: user.photo
       })
 
       const serialized = serialize('devCollabToken', token, {
