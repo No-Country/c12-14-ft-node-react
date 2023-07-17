@@ -78,6 +78,19 @@ class BaseRepository {
         throw new Error(err)
       })
   }
+
+async UpdateById(id, data) {
+    return await this.model.findByIdAndUpdate(id, data, {new: true})
+      .then((dataUpdated) => {
+        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`);
+        return dataUpdated
+      })
+      .catch(err => {
+        Logger.error(`[${this.model.collection.collectionName}]: Operation error ${err.message}`);
+        throw new Error(err);
+      });
+  }
+  
 }
 
 module.exports = BaseRepository
