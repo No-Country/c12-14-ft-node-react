@@ -18,6 +18,12 @@ const userSchema = new Schema(
       unique: true, //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
       required: true,
     },
+    type: {
+      type: String,
+      unique: false,
+      default: "user", //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
+      required: true,
+    },
     description: {
       type: String,
     },
