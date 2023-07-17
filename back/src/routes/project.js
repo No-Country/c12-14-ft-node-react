@@ -21,7 +21,7 @@ router.get('/filter/category/:category', getProjectByCategory)
 router.get('/filter/technology/:technology', getProjectByTechnology)
 
 router.post('/', createProjects)
-router.patch('/:id', projectDataValidation, updateProject)
+router.patch('/:id', updateProject)
 router.delete('/:id', deleteProject)
 
 module.exports = router
