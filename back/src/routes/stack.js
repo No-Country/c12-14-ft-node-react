@@ -1,17 +1,18 @@
-const {Router} = require('express');
+const { Router } = require('express')
 const {
   getStacks,
   createStack,
   updateStack,
-  deleteStack
-} = require('../controllers/stack');
+  deleteStack,
+  lookStack,
+} = require('../controllers/stack')
 
-const router = new Router();
+const router = new Router()
 
+router.get('/', getStacks)
+router.get('/:stack', lookStack)
+router.post('/', createStack) 
+router.patch('/:id', updateStack)
+router.delete('/:id', deleteStack)
 
-router.get('/' , getStacks);
-router.post('/', createStack);
-router.patch('/:id',updateStack)
-router.delete('/:id', deleteStack);
-
-module.exports = router;
+module.exports = router

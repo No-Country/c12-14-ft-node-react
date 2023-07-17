@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { userCheck } from '@/libs/userCheck'
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  user: await userCheck(),
 }
 
 const authSlice = createSlice({
@@ -11,6 +12,7 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload
       localStorage.setItem('user', JSON.stringify(action.payload))
+
     },
   },
 })

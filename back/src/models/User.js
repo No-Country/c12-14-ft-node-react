@@ -15,7 +15,13 @@ const userSchema = new Schema(
     },
     userName: {
       type: String,
-      unique: true, //--> ver si esto está bien que sea asi, pq el email podria ser el identificador
+      unique: true, //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
+      required: true,
+    },
+    type: {
+      type: String,
+      unique: false,
+      default: "user", //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
       required: true,
     },
     description: {
@@ -29,13 +35,16 @@ const userSchema = new Schema(
     ],
     stack: [
       {
+        //--> un array de strings
         type: Object,
         required: true,
       },
     ],
-    socialsMedia: {
-      type: Object,
-    },
+    socialsMedia: [
+      {
+        type: Object,
+      },
+    ],
     adminProjects: [
       {
         type: String,
@@ -48,6 +57,7 @@ const userSchema = new Schema(
     ],
     photo: {
       type: String,
+      default: '',
     },
     lastConnection: {
       type: Date,
