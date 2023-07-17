@@ -1,34 +1,74 @@
-import { Link } from 'react-router-dom'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '@/firebase/firebase.js'
+import { Link, useNavigate } from 'react-router-dom'
 import { RegisterInput } from './RegisterInput'
 import { useState } from 'react'
+import { validateRegister } from '@/libs/validationRegister'
+import { uvaApi } from '@/api'
+import { setUser } from '@/redux/slices/authSlice'
+import { useDispatch } from 'react-redux'
 
 const RegisterForm = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [errors, setErrors] = useState({
     mail: '',
-    username: '',
+    userName: '',
+    phone: '',
     password: '',
+    confirmPassword: '',
   })
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    const { mail, username, password } = e.target.elements
+    const { mail, userName, phone, password, confirmPassword } =
+      e.target.elements
 
     // TODO: Validar los campos
+    validateRegister(
+      {
+        mail: mail.value,
+        userName: userName.value,
+        phone: phone.value,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
+      },
+      errors,
+      setErrors
+    )
+
+    if (
+      errors.mail ||
+      errors.userName ||
+      errors.phone ||
+      errors.password ||
+      errors.confirmPassword
+    ) {
+      return
+    }
+
     try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        mail.value,
-        password.value
-      )
-      // TODO: Crear el usuario en backend con el id de firebase y el username
-      // TODO: Guardar el usuario en el estado global
-      // TODO: Redireccionar al usuario a la pagina de inicio
-      console.log(userCredentials)
+      const { data } = await uvaApi.post('/auth/register', {
+        email: mail.value,
+        userName: userName.value,
+        phone: phone.value,
+        password: password.value,
+        password_confirmation: confirmPassword.value,
+      })
+
+      dispatch(setUser(data.newUser))
+      navigate('/')
     } catch (error) {
-      // TODO: Mostrar el error al usuario en el input
-      console.log(error)
+      error.response.data.errors.forEach((error) => {
+        if (error.msg.includes('email')) {
+          setErrors((prev) => ({ ...prev, mail: error.msg }))
+        }
+
+        if (error.msg.includes('usuario')) {
+          setErrors((prev) => ({
+            ...prev,
+            userName: error.msg,
+          }))
+        }
+      })
     }
   }
 
@@ -61,10 +101,10 @@ const RegisterForm = () => {
         <div className='flex gap-4'>
           <RegisterInput
             label='Tu nombre de usuario'
-            name='username'
+            name='userName'
             type='text'
             placeholder='Usuario'
-            errors={errors.username}
+            errors={errors.userName}
           />
 
           <RegisterInput
@@ -72,6 +112,7 @@ const RegisterForm = () => {
             name='phone'
             type='tel'
             placeholder='Número de contacto'
+            errors={errors.phone}
           />
         </div>
 
@@ -88,6 +129,7 @@ const RegisterForm = () => {
           name='confirmPassword'
           type='password'
           placeholder='Repetir contraseña'
+          errors={errors.confirmPassword}
         />
 
         <button
