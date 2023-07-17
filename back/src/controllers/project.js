@@ -2,14 +2,17 @@ const { response, request } = require('express')
 const projectRepository = require('../repositories/project')
 
 const getProjects = async (req = request, res = response) => {
-  await projectRepository
-    .all()
-    .then((data) => {
-      res.status(200).json({ msg: 'Projects found', project: data })
-    })
-    .catch((err) => {
-      res.status(500).json({ msg: 'Projects find error', error: err.message })
-    })
+  try {
+    const { limit, page, getPages } = req.query
+    const data = await projectRepository.allPagination(
+      +limit,
+      +page,
+      +getPages
+    )
+    res.send({ msg: 'data founded', ...data })
+  } catch (err) {
+    res.status(500).send({ msg: 'Project missing error', error: err.message })
+  }
 }
 
 const getProject = async (req, res = response) => {
@@ -52,7 +55,6 @@ const updateProject = async (req, res = response) => {
 
 const deleteProject = async (req, res = response) => {
   const { id } = req.params
-
   await projectRepository
     .deleteById(id)
     .then((data) => {
@@ -69,14 +71,18 @@ const getProjectsFilteredByTechAndCat = async (
   res = response
 ) => {
   try {
-    console.log('entre en la funcion de la ruta')
+    const { limit, page, getPages } = req.query
     const categories = req.body.categories
     const technologies = req.body.technologies
-    const projects = await projectRepository.filterCrossTechAndCat({
+    const data = await projectRepository.filterCrossTechAndCat({
       categories,
       technologies,
+      limit,
+      page,
+      getPages,
     })
-    res.send({ msg: 'Projects founded', projects: projects })
+
+    res.send({ msg: 'Projects founded', ...data })
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
   }
@@ -85,9 +91,16 @@ const getProjectsFilteredByTechAndCat = async (
 //filtro de proyectos por titulo
 const getProjectByTitle = async (req = request, res = response) => {
   try {
+    const { limit, page, getPages } = req.query
+
     const { title } = req.params
-    const projects = await projectRepository.filterByTitle(title)
-    res.send({ msg: 'Projects founded', projects: projects })
+    const data = await projectRepository.filterByTitle(
+      title,
+      limit,
+      page,
+      getPages
+    )
+    res.send({ msg: 'Projects founded', ...data })
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
   }
@@ -96,10 +109,15 @@ const getProjectByTitle = async (req = request, res = response) => {
 //filtro de proyectos por titulo
 const getProjectByCategory = async (req = request, res = response) => {
   try {
+    const { limit, page, getPages } = req.query
     const { category } = req.params
-    console.log('esta es la categoria:', category)
-    const projects = await projectRepository.filterByCategory(category)
-    res.send({ msg: 'Projects founded', projects: projects })
+    const data = await projectRepository.filterByCategory(
+      category,
+      limit,
+      page,
+      getPages
+    )
+    res.send({ msg: 'Projects founded', ...data })
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
   }
@@ -108,9 +126,15 @@ const getProjectByCategory = async (req = request, res = response) => {
 //filtro de proyectos por titulo
 const getProjectByTechnology = async (req = request, res = response) => {
   try {
+    const { limit, page, getPages } = req.query
     const { technology } = req.params
-    const projects = await projectRepository.filterByTechnology(technology)
-    res.send({ msg: 'Projects founded', projects: projects })
+    const data = await projectRepository.filterByTechnology(
+      technology,
+      limit,
+      page,
+      getPages
+    )
+    res.send({ msg: 'Projects founded', ...data })
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
   }
