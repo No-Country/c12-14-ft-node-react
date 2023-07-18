@@ -3,9 +3,9 @@ import UvaLogo from '@/assets/UvaLogo.jsx'
 import { MdNotifications } from 'react-icons/md'
 
 const Header = () => {
-  const { _id, id } = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(localStorage.getItem('user'))
   return (
-    <header className=' flex h-[80px] w-full max-w-6xl items-center justify-between pt-20'>
+    <header className=' mt-20 flex h-[80px] w-full max-w-6xl items-center justify-between'>
       <div>
         <UvaLogo
           className='logo grid place-items-center'
@@ -29,12 +29,14 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link
-              className='decoration-primary hover:underline'
-              to={`/profile/${_id || id}`}
-            >
-              Mi perfil
-            </Link>
+            {user && (
+              <Link
+                className='decoration-primary hover:underline'
+                to={`/profile/${user.user._id || user.user.id}`}
+              >
+                Mi perfil
+              </Link>
+            )}
           </li>
         </ul>
         <ul className='flex items-center justify-between gap-8'>
