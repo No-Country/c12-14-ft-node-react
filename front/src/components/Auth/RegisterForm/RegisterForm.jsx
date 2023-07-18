@@ -73,7 +73,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <div className='m-5 bg-white w-[539px] p-10 rounded-xl flex flex-col gap-10 formShadow'>
+    <div className='formShadow m-5 flex w-[539px] flex-col gap-10 rounded-xl bg-white p-10'>
       <section className='flex w-full justify-between'>
         <p className='text-xl font-semibold'>Bienvenido</p>
 
@@ -89,7 +89,7 @@ const RegisterForm = () => {
         <h1 className='text-4xl font-bold'>Registrarme</h1>
       </section>
 
-      <form className='flex flex-col gap-7 w-full' onSubmit={onSubmit}>
+      <form className='flex w-full flex-col gap-7' onSubmit={onSubmit}>
         <RegisterInput
           label='Email'
           name='mail'
@@ -134,7 +134,7 @@ const RegisterForm = () => {
 
         <button
           type='submit'
-          className='min-w-[333px] bg-[#4E5A65] h-[55px] rounded-lg text-white self-center'
+          className='h-[55px] min-w-[333px] self-center rounded-lg bg-primary text-lg font-semibold text-white'
         >
           Registrarme
         </button>
