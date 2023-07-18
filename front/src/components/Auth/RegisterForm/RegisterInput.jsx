@@ -8,7 +8,7 @@ export const RegisterInput = ({ name, type, placeholder, label, errors }) => {
         name={name}
         type={type}
         placeholder={placeholder}
-        className='h-[55px] rounded-lg border border-[#ADADAD] pl-5 font-normal placeholder:text-sm'
+        className='h-[55px] rounded-lg border border-[#ADADAD] pl-5 font-normal outline-primary transition-all duration-300 placeholder:text-sm'
       />
       {errors && <p className='text-sm text-red-500'>{errors}</p>}
     </div>

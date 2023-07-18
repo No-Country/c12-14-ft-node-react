@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         gradient: 'linear-gradient(155deg, #29278D 0%, #6D11CC 100%);',
+        authGradient: 'linear-gradient(161.27deg, #25095E -14%, #37049D 46.03%, #61268F 109.14%)',
         primary: '#6C33F2',
         primaryDark: '#29278D',
         secondaryBackground: '#FAFAFA',

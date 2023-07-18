@@ -72,7 +72,7 @@ const LoginForm = () => {
 
         <p className='text-sm text-gray-400'>
           No tienes una cuenta? <br />{' '}
-          <Link to='/register' className='underline'>
+          <Link to='/register' className='font-semibold underline'>
             Registrarme
           </Link>
         </p>
@@ -104,7 +104,7 @@ const LoginForm = () => {
             type='text'
             name='mailOrUserName'
             placeholder='Usuario o correo electrónico'
-            className='h-[55px] w-full rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
+            className='h-[55px] w-full rounded-lg border border-[#ADADAD] pl-5 outline-primary placeholder:text-sm'
             onBlur={(e) => {
               validateLogin(
                 {
@@ -130,7 +130,7 @@ const LoginForm = () => {
             type='password'
             name='password'
             placeholder='Contraseña'
-            className='h-[55px] w-full rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
+            className='h-[55px] w-full rounded-lg border border-[#ADADAD] pl-5 outline-primary placeholder:text-sm'
             onBlur={(e) => {
               validateLogin(
                 {

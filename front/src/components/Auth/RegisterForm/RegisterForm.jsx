@@ -77,9 +77,9 @@ const RegisterForm = () => {
       <section className='flex w-full justify-between'>
         <p className='text-xl font-semibold'>Bienvenido</p>
 
-        <p className='text-sm text-gray-400'>
+        <p className='text-sm font-normal text-gray-400'>
           Tienes una cuenta? <br />{' '}
-          <Link to='/login' className='underline'>
+          <Link to='/login' className='font-semibold underline'>
             Iniciar sesión
           </Link>
         </p>
