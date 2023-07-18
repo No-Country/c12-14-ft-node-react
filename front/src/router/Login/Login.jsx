@@ -9,11 +9,12 @@ const Login = () => {
         <LoginForm />
       </div>
 
-      <section className='relative -z-10 flex flex-1 flex-col justify-evenly px-20'>
+      <section className='relative -z-10 flex flex-1 select-none flex-col justify-evenly px-20'>
         <img
           src={AuthBG}
           alt='authBg'
           className='absolute left-0 top-0 h-full w-full object-cover object-left'
+          draggable={false}
         />
       </section>
       <section className='flex flex-1 items-center gap-4 bg-white pl-20'>
