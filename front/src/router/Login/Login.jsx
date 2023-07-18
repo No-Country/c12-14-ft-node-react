@@ -5,11 +5,11 @@ import AuthBG from '@/assets/authBg.svg'
 const Login = () => {
   return (
     <main className='relative flex h-screen flex-col'>
-      <div className='absolute right-40 top-[calc(50%-340px)]'>
+      <div className='absolute right-40 flex h-screen items-center'>
         <LoginForm />
       </div>
 
-      <section className='justify-evenlypx-20 relative -z-10 flex flex-1 flex-col'>
+      <section className='relative -z-10 flex flex-1 flex-col justify-evenly px-20'>
         <img
           src={AuthBG}
           alt='authBg'
