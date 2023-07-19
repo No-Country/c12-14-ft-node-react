@@ -1,6 +1,20 @@
-const { createUser, createProject } = require("./database/CRUD/create");
-const find = require("./database/CRUD/find");
-const update = require("./database/CRUD/update");
+console.log("prueba mailer class")
+const { createUser, createProject } = require('./database/CRUD/create')
+const find = require('./database/CRUD/find')
+const update = require('./database/CRUD/update')
+const MailerService = require('../back/src/services/mailer.service')
+
+const mailerService = new MailerService()
+
+const mail = {
+  to: ['castellanofacundo@gmail.com'],
+  subject: 'mailer class',
+  html: `<b> Hola desde UVA TEAM</b> </br> </hr>
+        Espero tengas un buen dia,
+        saludos cordiales.`,
+}
+
+mailerService.sendMail(mail)
 
 //creo un usuario
 // createUser({
@@ -308,7 +322,7 @@ const update = require("./database/CRUD/update");
 // async function agregarStackAlUsuario() {
 //   const userId = "64a4be1a3e7bce02d30430cf";
 //   const stack = "paint";
-  
+
 //   console.log(await update.addStackToUser(userId, stack));
 // }
 
@@ -317,7 +331,7 @@ const update = require("./database/CRUD/update");
 // async function agregarProjectoAlAminProjectDelUsuario() {
 //   const userId = "64a4be1a3e7bce02d30430cf";
 //   const projectId = "64a4be1a3e7bce02d30430d0";
-  
+
 //   console.log(await update.addProjectToUserAdminProjects(userId, projectId));
 // }
 
@@ -326,22 +340,21 @@ const update = require("./database/CRUD/update");
 // async function agregarProjectoAlCollaboratorProjectDelUsuario() {
 //   const userId = "64a4be1a3e7bce02d30430cf";
 //   const projectId = "el id de unprojecto q estoy colaborando.";
-  
+
 //   console.log(await update.addProjectToUserCollaboratorProjects(userId, projectId));
 // }
 // agregarProjectoAlCollaboratorProjectDelUsuario()
 
-
 // async function setearNuevaUrlImagenUsuario() {
 //   const userId = "64a4be1a3e7bce02d30430cf";
 //   const ImageUrl = "esta/es/una/nueva/ruta/de/imagen";
-  
+
 //   console.log(await update.setPhotoToUser(userId, ImageUrl ));
 // }
 // setearNuevaUrlImagenUsuario()
 
 // async function actualizarUltimaConeccionUsuario() {
-//   const userId = "64a4be1a3e7bce02d30430cf";  
+//   const userId = "64a4be1a3e7bce02d30430cf";
 //   console.log(await update.updateLastConnectionToUser(userId));
 // }
 // actualizarUltimaConeccionUsuario()
