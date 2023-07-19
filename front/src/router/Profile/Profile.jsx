@@ -1,77 +1,48 @@
 import { Link, useParams } from 'react-router-dom'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { openModal } from '../../redux/slices/modalSlice'
 import { MdModeEdit } from 'react-icons/md'
-import { uvaApi } from '../../api'
 import Modal from '../../components/Modals/Modal'
 import ModalEditPhoto from '../../components/Modals/ModalEditPhoto/ModalEditPhoto'
 import ModalEditProfile from '../../components/Modals/ModalEditProfile/ModalEditProfile'
-import { useDispatch, useSelector } from 'react-redux'
-import { openModal } from '../../redux/slices/modalSlice'
-
-const fetchData = async (id) => {
-  const response = await axios.get(
-    `${import.meta.env.VITE_API_URL}/users/${id}`
-  )
-  const data = await response.data.user
-  return data
-}
-
-const fetchUserProfile = async (id, setUser, setAdmin) => {
-  const user = await fetchData(id)
-  const adminProjectsData = user.adminProjects.map((project) =>
-    uvaApi.get(`/projects/${project}`)
-  )
-
-  const collaboratorProjectsData = user.collaboratorProjects.map((project) =>
-    uvaApi.get(`/projects/${project}`)
-  )
-
-  const adminProjects = await axios.all(adminProjectsData)
-  const collaboratorProjects = await axios.all(collaboratorProjectsData)
-
-  const adminProjectsData2 = adminProjects.map(
-    (project) => project.data.project
-  )
-
-  const collaboratorProjectsData2 = collaboratorProjects.map(
-    (project) => project.data.project
-  )
-
-  const localuser = JSON.parse(localStorage.getItem('user'))
-  localuser.user.id === id && setAdmin(true)
-
-  setUser({
-    ...user,
-    adminProjects: adminProjectsData2,
-    collaboratorProjects: collaboratorProjectsData2,
-  })
-}
+import ModalEditInfo from '../../components/Modals/ModalEditInfo/ModalEditInfo'
+import { setUser } from '../../redux/slices/userSlice'
+import getUser from '../../redux/libs/getUser'
 
 function Profile() {
-  const { id } = useParams()
-  const [user, setUser] = useState(null)
-  const [admin, setAdmin] = useState(false)
-  const [edit, setEdit] = useState({
-    photo: false,
-    profile: false,
-  })
-  // traer estado de redux toolkit
   const dispatch = useDispatch()
-  const { modal } = useSelector((state) => state)
+
+  const { id } = useParams()
+  const [admin, setAdmin] = useState(false)
+  const {
+    modal,
+    user: { user },
+  } = useSelector((state) => state)
+
+  const User = async (id) => {
+    const data = await getUser(id)
+    dispatch(setUser(data))
+  }
 
   useEffect(() => {
-    console.log(modal)
-    fetchUserProfile(id, setUser, setAdmin)
+    const userCurrent = JSON.parse(localStorage.getItem('user'))
+    if (userCurrent._id === id) {
+      setAdmin(true)
+    }
+    User(id)
   }, [id])
 
   const handleEditPhoto = () => {
     dispatch(openModal('photo'))
-    console.log('edit photo')
   }
 
   const handleEditProfile = () => {
-    console.log('edit profile')
+    dispatch(openModal('profile'))
+  }
+
+  const handleEditInfo = () => {
+    dispatch(openModal('info'))
   }
 
   return (
@@ -81,14 +52,21 @@ function Profile() {
           {/* Modal Edit Photo */}
           {modal.photo && (
             <Modal>
-              <ModalEditPhoto edit={edit} setEdit={setEdit} user={user} />
+              <ModalEditPhoto user={user} />
             </Modal>
           )}
 
           {/* Modal Edit Profile */}
           {modal.profile && (
             <Modal>
-              <ModalEditProfile edit={edit} setEdit={setEdit} user={user} />
+              <ModalEditProfile user={user} />
+            </Modal>
+          )}
+
+          {/* Modal Edit Info (Stack and About me) */}
+          {modal.info && (
+            <Modal>
+              <ModalEditInfo user={user} />
             </Modal>
           )}
 
@@ -132,7 +110,7 @@ function Profile() {
                 ))}
               </p>
               <div className=' flex gap-4'>
-                {user.socialsMedia.map((item) => (
+                {user?.socialsMedia.map((item) => (
                   <Link
                     target='_blank'
                     to={item.link}
@@ -159,11 +137,19 @@ function Profile() {
             style={{ gridArea: 'stack' }}
           >
             <div className='flex flex-col gap-5'>
-              <h3 className=' text-xl font-bold text-primary'>
-                Stack tecnológico
-              </h3>
+              <div className=' flex justify-between'>
+                <h3 className=' text-xl font-bold text-primary'>
+                  Stack tecnológico
+                </h3>
+                <button
+                  onClick={handleEditInfo}
+                  className='rounded-full border-2 border-primary bg-white p-1'
+                >
+                  <MdModeEdit />
+                </button>
+              </div>
               <div className='flex flex-wrap gap-4'>
-                {user.stack.map((item) => (
+                {user?.stack.map((item) => (
                   <span
                     key={item.id}
                     className=' rounded-2xl bg-[#C5E8D7] px-4 py-2'
@@ -176,7 +162,7 @@ function Profile() {
 
             <div className='flex flex-col gap-5'>
               <h3 className=' text-xl font-bold text-primary'>Sobre mí</h3>
-              <p>{user.description}</p>
+              <p>{user?.description}</p>
             </div>
           </section>
 
@@ -189,8 +175,8 @@ function Profile() {
               Proyectos publicados
             </h2>
             <ol className=' list-decimal'>
-              {user.adminProjects.length > 0 &&
-                user.adminProjects.map((project) => (
+              {user?.adminProjects.length > 0 &&
+                user?.adminProjects.map((project) => (
                   <li key={project._id}>
                     <p
                       value={project._id}
@@ -210,8 +196,8 @@ function Profile() {
           >
             <h2 className=' text-xl font-bold text-primary'>Colaboraciones</h2>
             <ol className=' flex list-decimal flex-col gap-5'>
-              {user.collaboratorProjects.length > 0 &&
-                user.collaboratorProjects.map((project, index) => (
+              {user?.collaboratorProjects.length > 0 &&
+                user?.collaboratorProjects.map((project, index) => (
                   <li key={project._id + index}>
                     <h3
                       value={project._id}
