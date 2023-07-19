@@ -14,8 +14,8 @@ class AuthServices {
   }
 
   async generateJWT(user) {
-    const { id, username, email } = user;
-    const payload = { id, username, email };
+    const { id, username, email, photo } = user;
+    const payload = { id, username, email, photo };
     return jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "24h",
     });
