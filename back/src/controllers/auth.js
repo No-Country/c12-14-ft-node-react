@@ -32,11 +32,12 @@ const login = async (req, res = response) => {
   try {
     let user
 
-    if (userName.length === 0) {
+    if(userName){
+      if (userName.length !== 0)
+        user = await userRepository.findUserByUsername(userName)
+    }else
       user = await userRepository.findUserByEmail(email)
-    } else {
-      user = await userRepository.findUserByUsername(userName)
-    }
+
 
     if (!user) {
       return res.status(400).json({

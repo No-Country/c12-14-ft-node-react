@@ -1,8 +1,8 @@
 const { Router } = require('express')
 const { register, login, logout, verify } = require('../controllers/auth')
 const {checkSchema} = require("express-validator");
-const userCreateSchema = require("./schemas/user");
-const logInCreateSchema = require("./schemas/logIn");
+const registerValidation = require("./schemas/auth/register");
+const logInValidation = require("./schemas/auth/logIn");
 const {validate} = require("../middlewares/validator");
 
 const router = new Router()
@@ -76,7 +76,7 @@ const router = new Router()
  *                         example: 2023-07-15T00:37:07.299Z
  *
  */
-router.post('/register', [checkSchema(userCreateSchema), validate], register)
+router.post('/register', [checkSchema(registerValidation), validate], register)
 
 /**
  * @swagger
@@ -119,7 +119,7 @@ router.post('/register', [checkSchema(userCreateSchema), validate], register)
  *                   type: string
  *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
  */
-router.post('/login', [checkSchema(logInCreateSchema), validate],login)
+router.post('/login', [checkSchema(logInValidation), validate],login)
 
 router.post('/logout', logout)
 

@@ -11,8 +11,6 @@ class BaseRepository {
       .then((data) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
         return data
-        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
-        return data
       })
       .catch((err) => {
         Logger.error(
@@ -69,7 +67,7 @@ class BaseRepository {
       .findByIdAndDelete(id)
       .then((data) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
-        return data ? true : false
+        return !!data
       })
       .catch((err) => {
         Logger.error(
@@ -79,7 +77,7 @@ class BaseRepository {
       })
   }
 
-async UpdateById(id, data) {
+  async UpdateById(id, data) {
     return await this.model.findByIdAndUpdate(id, data, {new: true})
       .then((dataUpdated) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`);
@@ -90,7 +88,35 @@ async UpdateById(id, data) {
         throw new Error(err);
       });
   }
-  
+
+
+  async allPaginated(limit, page, getPages = 0) {
+    try {
+      const documentToReturn = await this.model
+        .find()
+        .limit(+limit)
+        .skip((+page - 1) * limit)
+        .sort({createdAt: -1})
+
+      if (getPages) {
+        const totalDocuments = await this.model.countDocuments()
+        const totalPages = Math.ceil(totalDocuments / limit)
+        return {
+          totalPages: totalPages,
+          documentsCurrentPage: documentToReturn,
+        }
+      }
+      return {documentsCurrentPage: documentToReturn}
+    } catch (err) {
+      console.log(err)
+      Logger.error(
+        `[${this.model.collection.collectionName}]: Operation error ${err.message}`
+      )
+      throw new Error(err)
+    }
+  }
+
 }
+
 
 module.exports = BaseRepository
