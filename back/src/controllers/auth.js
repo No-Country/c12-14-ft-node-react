@@ -118,7 +118,7 @@ const verify = async (req, res = response) => {
     if (token) {
       const authServices = new AuthServices()
       const {
-        user: { id, username, email },
+        user: { id, username, email, photo },
       } = await authServices.verifyJWT(token)
       res.status(200).json({
         msg: 'User verified',
@@ -126,6 +126,7 @@ const verify = async (req, res = response) => {
           id,
           username,
           email,
+          photo
         },
       })
     }
