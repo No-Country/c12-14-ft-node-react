@@ -27,7 +27,7 @@ function Profile() {
 
   useEffect(() => {
     const userCurrent = JSON.parse(localStorage.getItem('user'))
-    if (userCurrent._id === id) {
+    if (userCurrent.user.id === id) {
       setAdmin(true)
     }
     User(id)
