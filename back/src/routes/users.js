@@ -7,6 +7,11 @@ const {
   deleteUser,
   forgotPassword,
 } = require("../controllers/user");
+const {checkSchema} = require("express-validator");
+const updateValidation = require("./schemas/users/update");
+const deleteValidation = require("./schemas/users/delete");
+const getOneValidation = require("./schemas/users/getOne");
+const {validate} = require("../middlewares/validator");
 
 /**
  * @swagger
@@ -164,7 +169,7 @@ router.get("/",  getUsers);
  *                         example: 2023-07-15T00:37:07.299Z
  *
  */
-router.get("/:id", getUser);
+router.get("/:id", [checkSchema(getOneValidation), validate], getUser);
 
 
 
@@ -229,7 +234,7 @@ router.patch("/forgot-password", forgotPassword);
  *                         example: 2023-07-15T00:37:07.299Z
  *
  */
-router.patch("/:id", updateUser);
+router.patch("/:id",[checkSchema(updateValidation), validate], updateUser);
 
 /**
  * @swagger
@@ -264,6 +269,6 @@ router.patch("/:id", updateUser);
  *
  *
  */
-router.delete("/:id", deleteUser);
+router.delete("/:id", [checkSchema(deleteValidation), validate], deleteUser);
 
 module.exports = router;

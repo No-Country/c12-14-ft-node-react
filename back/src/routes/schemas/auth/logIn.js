@@ -1,7 +1,7 @@
-const {
-  checkEmailRegistered,
-  checkUserNameRegistered
-} = require('../../helpers/usersValidations')
+// const {
+//   checkEmailRegistered,
+//   checkUserNameRegistered
+// } = require('../../../helpers/usersValidations')
 
 const logInSchema = {
   // email: {
