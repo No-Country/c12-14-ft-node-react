@@ -8,30 +8,31 @@ import ModalEditPhoto from '../../components/Modals/ModalEditPhoto/ModalEditPhot
 import ModalEditProfile from '../../components/Modals/ModalEditProfile/ModalEditProfile'
 import ModalEditInfo from '../../components/Modals/ModalEditInfo/ModalEditInfo'
 import { setUser } from '../../redux/slices/userSlice'
-import getUser from '../../redux/libs/getUser'
+import getUser from '../../libs/getUser'
 
 function Profile() {
   const dispatch = useDispatch()
-
   const { id } = useParams()
+
   const [admin, setAdmin] = useState(false)
   const {
     modal,
     user: { user },
   } = useSelector((state) => state)
 
-  const User = async (id) => {
-    const data = await getUser(id)
-    dispatch(setUser(data))
-  }
-
   useEffect(() => {
+    const User = async (id) => {
+      const data = await getUser(id)
+      dispatch(setUser(data))
+    }
+
     const userCurrent = JSON.parse(localStorage.getItem('user'))
     if (userCurrent.user.id === id) {
       setAdmin(true)
     }
+
     User(id)
-  }, [id])
+  }, [id, dispatch])
 
   const handleEditPhoto = () => {
     dispatch(openModal('photo'))

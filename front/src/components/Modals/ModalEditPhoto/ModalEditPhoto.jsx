@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { GrClose } from 'react-icons/gr'
 import { closeModal } from '@/redux/slices/modalSlice'
@@ -6,8 +6,9 @@ import { uploadImage } from '@/libs/uploadImage'
 import { uvaApi } from '../../../api/index'
 import { setUser } from '../../../redux/slices/userSlice'
 
-function ModalEditPhoto({ user }) {
+function ModalEditPhoto() {
   const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.user)
   const [image, setImage] = useState({
     preview: null,
     upload: null,
@@ -20,37 +21,27 @@ function ModalEditPhoto({ user }) {
   const handleUploadImage = async (e) => {
     const file = e.target.files[0]
     setImage({
-      ...image,
+      upload: file,
       preview: URL.createObjectURL(file),
     })
-
-    try {
-      const imageUrl = await uploadImage(file, 500, 500)
-      if (imageUrl) {
-        console.log(
-          'Se ha subido la imagen con exito aqui esta el link: ',
-          imageUrl
-        )
-        setImage({
-          ...image,
-          upload: imageUrl,
-        })
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
   }
 
   const saveChanges = async () => {
-    try {
-      const req = await uvaApi.patch(`/users/${user._id}`, {
-        photo: image.upload,
-      })
-      console.log('Se han guardado los cambios', req.data.user)
-      dispatch(setUser(req.data.user))
-      dispatch(closeModal('photo'))
-    } catch (error) {
-      console.log(error.message)
+    if (image.upload) {
+      try {
+        const imageUrl = await uploadImage(image.upload, 500, 500)
+        const req = await uvaApi.patch(`/users/${user._id}`, {
+          photo: imageUrl,
+        })
+        const userData = {
+          ...user,
+          photo: req.data.user.photo,
+        }
+        dispatch(setUser(userData))
+        dispatch(closeModal('photo'))
+      } catch (error) {
+        console.log(error.message)
+      }
     }
   }
 
@@ -66,7 +57,7 @@ function ModalEditPhoto({ user }) {
       </h2>
       <div className='flex justify-between'>
         <img
-          src={image.upload || user.photo}
+          src={image.preview || user.photo}
           alt='me'
           className=' h-40 w-40 rounded-full'
         />
