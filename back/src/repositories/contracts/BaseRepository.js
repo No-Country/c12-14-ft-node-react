@@ -92,14 +92,14 @@ class BaseRepository {
 
   async allPaginated(limit, page, getPages = 0) {
     try {
-      const documentToReturn = await this.modell
+      const documentToReturn = await this.model
         .find()
         .limit(+limit)
         .skip((+page - 1) * limit)
         .sort({createdAt: -1})
 
       if (getPages) {
-        const totalDocuments = await this.modell.find().count()
+        const totalDocuments = await this.model.countDocuments()
         const totalPages = Math.ceil(totalDocuments / limit)
         return {
           totalPages: totalPages,
