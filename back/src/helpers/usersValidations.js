@@ -17,7 +17,6 @@ const checkUserNameNotInUse =  async (userName = '') =>{
   if(existe)
     throw new Error('User name already taken');
 
-
 }
 
 const checkEmailRegistered =  async (email = '') =>{
@@ -40,6 +39,16 @@ const checkUserNameRegistered =  async (userName = '') =>{
 
 }
 
+const checkUserRegisteredById =  async (id = '') =>{
+
+  const existe = await userRepository.findById(id);
+
+  if(!existe)
+    throw new Error("User doesn't exist");
+
+
+}
+
 //TODO: Stack validation
 
 
@@ -49,5 +58,6 @@ module.exports = {
   checkUserNameNotInUse,
   checkEmailRegistered,
   checkUserNameRegistered,
+  checkUserRegisteredById,
 }
 
