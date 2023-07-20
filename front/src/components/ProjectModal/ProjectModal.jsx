@@ -1,5 +1,5 @@
 import { GrStatusGoodSmall } from 'react-icons/gr'
-import { MdArrowBackIos, MdDateRange } from 'react-icons/md'
+import { MdDateRange } from 'react-icons/md'
 import { LuClock4 } from 'react-icons/lu'
 import {
   BsFillExclamationOctagonFill,
@@ -26,10 +26,10 @@ export const ProjectModal = ({ project, setShowModal }) => {
         className='relative flex gap-5 text-white'
         onClick={(e) => e.stopPropagation()}
       >
-        <MdArrowBackIos
-          className='absolute -top-14 left-0 cursor-pointer text-5xl  text-white'
+        {/* <IoIosArrowBack
+          className='absolute -top-14 left-0 cursor-pointer text-5xl text-primary'
           onClick={() => setShowModal(false)}
-        />
+        /> */}
         <div className='flex w-[680px] flex-col gap-5 text-primaryDark'>
           <div className='flex items-center justify-between rounded-lg border-2 border-secondaryContainerBorder bg-white px-10 py-8 text-2xl'>
             <h4 className='font-extrabold'>Titulo de proyecto</h4>
