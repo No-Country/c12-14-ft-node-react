@@ -25,7 +25,7 @@ export const ProjectCard = ({ project }) => {
           Activo
         </div>
       </div>
-      <div className='border-y-2 px-8'>
+      <div className='border-y-2 border-primary border-opacity-10 px-8'>
         <div className='flex gap-4 py-3 text-xs'>
           <div className='rounded-full border border-secondaryContainerBorder bg-primaryDark bg-opacity-50 px-6 py-1 text-white'>
             Tecnologias
