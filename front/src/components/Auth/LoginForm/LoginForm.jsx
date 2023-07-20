@@ -49,11 +49,7 @@ const LoginForm = () => {
         })
       }
 
-      const verifyResponse = await uvaApi.post('/auth/verify', {
-        devCollabToken: loginResponse.data.token,
-      })
-
-      dispatch(setUser(verifyResponse.data))
+      dispatch(setUser(loginResponse.data))
       navigate('/')
     } catch (error) {
       if (error.response.data.msg.includes('User')) {

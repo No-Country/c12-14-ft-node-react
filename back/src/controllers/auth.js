@@ -30,12 +30,10 @@ const login = async (req, res = response) => {
   try {
     let user
 
-    if(userName){
+    if (userName) {
       if (userName.length !== 0)
         user = await userRepository.findUserByUsername(userName)
-    }else
-      user = await userRepository.findUserByEmail(email)
-
+    } else user = await userRepository.findUserByEmail(email)
 
     if (!user) {
       return res.status(400).json({
@@ -116,7 +114,7 @@ const verify = async (req, res = response) => {
     if (token) {
       const authServices = new AuthServices()
       const {
-        user: { id, username, email },
+        user: { id, username, email, photo },
       } = await authServices.verifyJWT(token)
       res.status(200).json({
         msg: 'User verified',
@@ -124,6 +122,7 @@ const verify = async (req, res = response) => {
           id,
           username,
           email,
+          photo,
         },
       })
     }

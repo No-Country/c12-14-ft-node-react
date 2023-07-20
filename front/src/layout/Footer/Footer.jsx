@@ -9,24 +9,24 @@ import {
 
 const Footer = () => {
   return (
-    <footer className='bg-[#5627B4] w-full'>
+    <footer className='w-full bg-[#5627B4]'>
       {/* Header */}
-      <div className='py-10 flex justify-between px-40'>
+      <div className='flex justify-between px-40 py-10'>
         <div className='flex flex-col gap-3'>
-          <p className='text-white font-semibold'>Compañiá</p>
+          <p className='font-semibold text-white'>Compañía</p>
           <ul className='flex flex-col gap-3'>
-            <li className='text-white font-thin text-sm'>Acerca de Nosotros</li>
-            <li className='text-white font-thin text-sm'>Contáctanos</li>
+            <li className='text-sm font-thin text-white'>Acerca de Nosotros</li>
+            <li className='text-sm font-thin text-white'>Contáctanos</li>
           </ul>
         </div>
 
         <div className='flex flex-col gap-3'>
-          <p className='text-white font-semibold'>Install App</p>
+          <p className='font-semibold text-white'>Install App</p>
           <ul className='flex flex-col gap-3'>
-            <li className='text-white font-thin text-sm'>
+            <li className='text-sm font-thin text-white'>
               <img src={GooglePlay} alt='Download on Google Play' />
             </li>
-            <li className='text-white font-thin text-sm'>
+            <li className='text-sm font-thin text-white'>
               <img src={AppStore} alt='Download on App Store' />
             </li>
           </ul>
@@ -34,20 +34,20 @@ const Footer = () => {
       </div>
 
       {/* Footer */}
-      <div className='flex justify-between items-center py-6 text-white border-t-gray-600 border-t px-40'>
+      <div className='flex items-center justify-between border-t border-t-gray-600 px-40 py-6 text-white'>
         <p>© 2023 - All rights reserved</p>
         <ul className='flex gap-6'>
-          <li className='w-[40px] h-[40px] bg-gray-600 rounded-full flex justify-center items-center'>
-            <AiOutlineInstagram className='w-[25px] h-[25px]' />
+          <li className='flex h-[40px] w-[40px] items-center justify-center rounded-full bg-gray-600'>
+            <AiOutlineInstagram className='h-[25px] w-[25px]' />
           </li>
-          <li className='w-[40px] h-[40px] bg-gray-600 rounded-full flex justify-center items-center'>
-            <AiOutlineDribbble className='w-[25px] h-[25px]' />
+          <li className='flex h-[40px] w-[40px] items-center justify-center rounded-full bg-gray-600'>
+            <AiOutlineDribbble className='h-[25px] w-[25px]' />
           </li>
-          <li className='w-[40px] h-[40px] bg-gray-600 rounded-full flex justify-center items-center'>
-            <AiOutlineTwitter className='w-[25px] h-[25px]' />
+          <li className='flex h-[40px] w-[40px] items-center justify-center rounded-full bg-gray-600'>
+            <AiOutlineTwitter className='h-[25px] w-[25px]' />
           </li>
-          <li className='w-[40px] h-[40px] bg-gray-600 rounded-full flex justify-center items-center'>
-            <AiFillYoutube className='w-[25px] h-[25px]' />
+          <li className='flex h-[40px] w-[40px] items-center justify-center rounded-full bg-gray-600'>
+            <AiFillYoutube className='h-[25px] w-[25px]' />
           </li>
         </ul>
       </div>
