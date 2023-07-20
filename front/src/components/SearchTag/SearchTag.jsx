@@ -45,7 +45,7 @@ function SearchTag({ data, datastate, setDatastate, errors, setErrors }) {
       <input
         className={`border-2 border-purple-600 focus-visible:outline-0 ${
           result !== '' ? '  rounded-t-3xl' : 'rounded-full'
-        } p-8 h-14 w-full `}
+        } h-14 w-full p-8 `}
         type='search'
         placeholder='Ej: react.js'
         onChange={handleSearch}
@@ -55,7 +55,7 @@ function SearchTag({ data, datastate, setDatastate, errors, setErrors }) {
       <div
         className={
           result !== ''
-            ? 'w-full p-4 absolute top-17 bg-slate-300 rounded-b-md border-2 border-purple-600'
+            ? 'top-17 absolute w-full rounded-b-md border-2 border-purple-600 bg-slate-300 p-4'
             : ''
         }
       >
@@ -65,7 +65,7 @@ function SearchTag({ data, datastate, setDatastate, errors, setErrors }) {
             return (
               <div
                 key={tag._id}
-                className='cursor-pointer p-1 bg-white rounded-lg w-1/3'
+                className='w-1/3 cursor-pointer rounded-lg bg-white p-1'
               >
                 <p
                   className='flex justify-center'

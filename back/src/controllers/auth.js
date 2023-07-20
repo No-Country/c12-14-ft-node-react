@@ -7,7 +7,6 @@ const register = async (req, res = response) => {
   const authServices = new AuthServices()
 
   try {
-
     const hash = await authServices.encryptPassword(password)
     const newUser = await userRepository.create({
       userName: userName,
@@ -25,18 +24,16 @@ const register = async (req, res = response) => {
 }
 
 const login = async (req, res = response) => {
-  // console.log(req.body);
   const { userName, email, password } = req.body
   const authServices = new AuthServices()
 
   try {
     let user
 
-    if (userName.length === 0) {
-      user = await userRepository.findUserByEmail(email)
-    } else {
-      user = await userRepository.findUserByUsername(userName)
-    }
+    if (userName) {
+      if (userName.length !== 0)
+        user = await userRepository.findUserByUsername(userName)
+    } else user = await userRepository.findUserByEmail(email)
 
     if (!user) {
       return res.status(400).json({
@@ -55,12 +52,12 @@ const login = async (req, res = response) => {
         id: user.id,
         username: user.userName,
         email: user.email,
-        photo: user.photo
+        photo: user.photo,
       })
 
       const serialized = serialize('devCollabToken', token, {
         httpOnly: true,
-        // secure: process.env.NODE_ENV !== 'production',
+        secure: process.env.NODE_ENV !== 'production',
         sameSite: 'none',
         maxAge: 60 * 60 * 24,
       })
@@ -117,7 +114,7 @@ const verify = async (req, res = response) => {
     if (token) {
       const authServices = new AuthServices()
       const {
-        user: { id, username, email },
+        user: { id, username, email, photo },
       } = await authServices.verifyJWT(token)
       res.status(200).json({
         msg: 'User verified',
@@ -125,6 +122,7 @@ const verify = async (req, res = response) => {
           id,
           username,
           email,
+          photo,
         },
       })
     }

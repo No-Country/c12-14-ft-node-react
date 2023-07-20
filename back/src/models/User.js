@@ -21,11 +21,12 @@ const userSchema = new Schema(
     type: {
       type: String,
       unique: false,
-      default: "user", //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
+      default: 'user', //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
       required: true,
     },
     description: {
       type: String,
+      default: '',
     },
     roles: [
       {
@@ -73,5 +74,10 @@ const userSchema = new Schema(
     timestamps: true,
   }
 )
+
+userSchema.methods.toJSON = function (){
+  const {password, ...user} = this.toObject();
+  return user;
+}
 
 module.exports = connection.model('User', userSchema)
