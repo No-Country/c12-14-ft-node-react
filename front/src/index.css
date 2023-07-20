@@ -33,6 +33,12 @@
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .btn-call-to-action {
   border-radius: 16px;
   background: #29278D;
@@ -93,6 +99,22 @@
   color: #1f1d68;
 }
 
+.btn-edit-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 159px;
+  height: 35px;
+  padding: 8px 15px;
+  background-color: #5526B3;
+  color: #fff;
+  border-radius: 16px;
+}
+
+.btn-edit-profile:hover {
+  background-color: #1f1d68;
+}
+
 .conic-gradient {
   background: conic-gradient(from 16deg at 50.00% 50.00%, #5728B4 0deg, #5526B3 177.04047203063965deg, #29278D 360deg);
 }
@@ -102,4 +124,22 @@
 
 .logo path {
   transform: scale(.6);
+}
+
+.container {
+  border-radius: 8px;
+  border: 1px solid rgba(85, 38, 179, 0.40);
+  background: #FFF;
+  padding: 40px;
+}
+
+.grid-profile {
+  display: grid;
+  grid-template-areas: "user user user user user"
+                       "stack stack projects projects projects"
+                       "stack stack projects projects projects"
+                       "stack stack collaborations collaborations collaborations"
+                       "stack stack collaborations collaborations collaborations"
+                       "stack stack collaborations collaborations collaborations";
+  gap: 20px;
 }

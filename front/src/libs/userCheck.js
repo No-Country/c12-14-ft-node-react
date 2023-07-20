@@ -9,7 +9,6 @@ export const userCheck = async () => {
       })
       if (verifyResponse.data.user.id) {
         return verifyResponse.data.user
-        
       }
     } catch {}
   }

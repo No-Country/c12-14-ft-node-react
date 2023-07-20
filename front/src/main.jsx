@@ -9,6 +9,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <AppRoutes />
+      {/* //modal */}
+      <div id='modal'></div>
     </Provider>
   </React.StrictMode>
 )
