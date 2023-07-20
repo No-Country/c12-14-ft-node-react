@@ -1,6 +1,7 @@
 // import LoginAs from '@/components/Auth/LoginAs/LoginAs'
 import LoginForm from '@/components/Auth/LoginForm/LoginForm'
 import AuthBG from '@/assets/authBg.svg'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   return (
@@ -17,6 +18,10 @@ const Login = () => {
           draggable={false}
         />
       </section>
+      <Link
+        to='/'
+        className='absolute left-12 top-8 z-50 h-28 w-60 cursor-pointer'
+      />
       <section className='flex flex-1 items-center gap-4 bg-white pl-20'>
         {/* <LoginAs />
         <LoginAs /> */}
