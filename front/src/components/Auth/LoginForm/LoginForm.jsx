@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 // import { FcGoogle } from 'react-icons/fc'
 import { BsLinkedin, BsGithub } from 'react-icons/bs'
 import { useState } from 'react'
@@ -9,7 +9,6 @@ import { setUser } from '@/redux/slices/authSlice'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [errors, setErrors] = useState({
     mailOrUserName: '',
     password: '',
@@ -50,7 +49,7 @@ const LoginForm = () => {
       }
 
       dispatch(setUser(loginResponse.data))
-      navigate('/')
+      window.location.href = '/'
     } catch (error) {
       if (error.response.data.msg.includes('User')) {
         setErrors({ ...errors, mailOrUserName: error.response.data.msg })
