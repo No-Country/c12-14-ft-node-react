@@ -67,7 +67,7 @@ class BaseRepository {
       .findByIdAndDelete(id)
       .then((data) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
-        return !!data
+        return data ? true : false
       })
       .catch((err) => {
         Logger.error(
@@ -116,7 +116,7 @@ class BaseRepository {
     }
   }
 
-}
 
+}
 
 module.exports = BaseRepository
