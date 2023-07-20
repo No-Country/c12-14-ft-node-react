@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { GrClose } from 'react-icons/gr'
 import { closeModal } from '@/redux/slices/modalSlice'
@@ -6,9 +6,8 @@ import { uploadImage } from '@/libs/uploadImage'
 import { uvaApi } from '../../../api/index'
 import { setUser } from '../../../redux/slices/userSlice'
 
-function ModalEditPhoto() {
+function ModalEditPhoto({ user }) {
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.user)
   const [image, setImage] = useState({
     preview: null,
     upload: null,

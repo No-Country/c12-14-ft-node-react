@@ -9,6 +9,7 @@ import ModalEditProfile from '../../components/Modals/ModalEditProfile/ModalEdit
 import ModalEditInfo from '../../components/Modals/ModalEditInfo/ModalEditInfo'
 import { setUser } from '../../redux/slices/userSlice'
 import getUser from '../../libs/getUser'
+import ModalEditStack from '../../components/Modals/ModalEditStack/ModalEditStack'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -19,6 +20,7 @@ function Profile() {
     modal,
     user: { user },
   } = useSelector((state) => state)
+  const userId = useSelector((state) => state.auth.user.id)
 
   useEffect(() => {
     const User = async (id) => {
@@ -26,8 +28,7 @@ function Profile() {
       dispatch(setUser(data))
     }
 
-    const userCurrent = JSON.parse(localStorage.getItem('user'))
-    if (userCurrent.user.id === id) {
+    if (userId === id) {
       setAdmin(true)
     }
 
@@ -46,6 +47,10 @@ function Profile() {
     dispatch(openModal('info'))
   }
 
+  const handleEditStack = () => {
+    dispatch(openModal('stack'))
+  }
+
   return (
     <>
       {user && (
@@ -56,18 +61,22 @@ function Profile() {
               <ModalEditPhoto user={user} />
             </Modal>
           )}
-
           {/* Modal Edit Profile */}
           {modal.profile && (
             <Modal>
               <ModalEditProfile user={user} />
             </Modal>
           )}
-
           {/* Modal Edit Info (Stack and About me) */}
           {modal.info && (
             <Modal>
               <ModalEditInfo user={user} />
+            </Modal>
+          )}
+          {/* Modal Edit Info (Stack and About me) */}
+          {modal.stack && (
+            <Modal>
+              <ModalEditStack user={user} />
             </Modal>
           )}
 
@@ -131,7 +140,6 @@ function Profile() {
               </button>
             )}
           </section>
-
           {/* stack and about me */}
           <section
             className='container flex flex-col justify-between'
@@ -143,7 +151,7 @@ function Profile() {
                   Stack tecnológico
                 </h3>
                 <button
-                  onClick={handleEditInfo}
+                  onClick={handleEditStack}
                   className='rounded-full border-2 border-primary bg-white p-1'
                 >
                   <MdModeEdit />
@@ -166,7 +174,6 @@ function Profile() {
               <p>{user?.description}</p>
             </div>
           </section>
-
           {/* project me */}
           <section
             className='container flex flex-col gap-5'
@@ -189,7 +196,6 @@ function Profile() {
                 ))}
             </ol>
           </section>
-
           {/* colaborations */}
           <section
             className='container flex flex-col gap-5'

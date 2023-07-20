@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { closeModal } from '../../../redux/slices/modalSlice'
 import { useState } from 'react'
 import { IoAddSharp } from 'react-icons/io5'
 import { uvaApi } from '../../../api/index'
 import { setUser } from '../../../redux/slices/userSlice'
+import { GrClose } from 'react-icons/gr'
 
-function ModalEditProfile() {
+function ModalEditProfile({ user }) {
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.user)
 
   const [form, setForm] = useState({
     userName: user.userName,
@@ -15,11 +15,15 @@ function ModalEditProfile() {
     socialsMedia: user.socialsMedia,
   })
 
-  const [rol, setRol] = useState('')
+  const [rol, setRol] = useState({
+    name: '',
+  })
+  const [rolAdd, setRolAdd] = useState(false)
   const [link, setLink] = useState({
     name: '',
     link: '',
   })
+  const [linkAdd, setLinkAdd] = useState(false)
 
   const handleClick = () => {
     dispatch(closeModal('profile'))
@@ -35,7 +39,9 @@ function ModalEditProfile() {
 
   const handleInputRols = (e) => {
     const value = e.target.value
-    setRol(value)
+    setRol({
+      name: value,
+    })
   }
 
   const addRols = (e) => {
@@ -51,13 +57,16 @@ function ModalEditProfile() {
           },
         ],
       })
-      setRol('')
+      setRol({
+        name: '',
+      })
     }
   }
 
   const handleDeleteRol = (e) => {
     const id = e.target.id
-    const newRols = form.roles.filter((rol) => rol.id !== id)
+    // TODO: cambiar name a id
+    const newRols = form.roles.filter((rol) => rol.name !== id)
     setForm({
       ...form,
       roles: newRols,
@@ -119,103 +128,170 @@ function ModalEditProfile() {
   }
 
   return (
-    <div>
-      <button onClick={handleClick}>x</button>
-      <h1>Editar mi información</h1>
-      <form action=''>
+    <div className='relative flex w-[558px] flex-col gap-8 rounded-2xl bg-white p-6'>
+      <GrClose
+        size={20}
+        className='absolute right-0 top-0 m-6 cursor-pointer'
+        onClick={handleClick}
+      />
+      <h1 className=' text-2xl font-bold text-primary'>
+        Editar mi información
+      </h1>
+      <form action='' className=' flex flex-col gap-8'>
         {/* name */}
-        <div>
-          <label htmlFor=''>Nombre</label>
-          <input type='text' value={form.userName} onChange={handleName} />
-          <span>
-            Tu nombre será publico y visible en la parte superior de tu perfil
-          </span>
+        <div className='flex flex-col gap-2'>
+          <label htmlFor='' className='font-bold text-gray-500'>
+            Nombre
+          </label>
+          <div className='flex flex-col gap-1'>
+            <input
+              className='h-14 w-full rounded-lg border-2 p-2 focus-visible:outline-[#4285F4]'
+              type='text'
+              value={form.userName}
+              onChange={handleName}
+            />
+            <span className=' pl-2 text-xs'>
+              Tu nombre será publico y visible en la parte superior de tu perfil
+            </span>
+          </div>
         </div>
 
         {/* // roles */}
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-4'>
           <label className=' font-bold'>Mis Roles</label>
 
-          <div className={`flex gap-2  rounded-lg border-2 p-5 `}>
+          <div className={`flex flex-wrap gap-2`}>
             {form.roles.map((rol) => (
               <div
                 key={rol.name}
                 id={rol.name}
-                className='rounded-sm bg-gray-200 p-2 font-bold text-gray-500'
-                onClick={handleDeleteRol}
+                className='flex items-center gap-1 rounded-xl bg-[#29278d65] bg-gray-200 p-2 font-bold text-white'
               >
-                {rol.name}
+                <p>{rol.name}</p>
+                <GrClose
+                  size={15}
+                  className='cursor-pointer'
+                  id={rol.name}
+                  onClick={handleDeleteRol}
+                />
               </div>
             ))}
-          </div>
 
-          <div className='flex gap-2'>
-            <div className='flex gap-2'>
-              <input
-                className='h-14 w-full rounded-lg border-2 p-2 '
-                type='text'
-                placeholder='Ej: Backend Developer'
-                value={rol.name}
-                name='name'
-                onChange={handleInputRols}
-              />
-            </div>
             <button
               className=' grid h-10 w-10 place-items-center rounded-lg bg-gray-500 p-2 font-bold text-white'
-              onClick={addRols}
+              onClick={(e) => {
+                e.preventDefault()
+                setRolAdd((prev) => !prev)
+              }}
             >
               <IoAddSharp />
             </button>
           </div>
+
+          {rolAdd && (
+            <div className='flex gap-2'>
+              <div className='flex gap-2'>
+                <input
+                  className={`h-14 w-full rounded-lg border-2 focus-visible:bg-white ${
+                    rol.name === '' ? 'bg-[#DADADA]' : 'bg-white'
+                  }  p-2 `}
+                  type='text'
+                  placeholder='Ej: Backend Developer'
+                  value={rol.name}
+                  name='name'
+                  onChange={handleInputRols}
+                />
+              </div>
+              <button
+                className=' grid place-items-center border-none bg-transparent font-bold text-primary underline'
+                onClick={addRols}
+              >
+                Agregar
+              </button>
+            </div>
+          )}
         </div>
 
         {/* // socialsMedia */}
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-4'>
           <label className=' font-bold'>Mis redes sociales</label>
 
-          <div className={`flex gap-2  rounded-lg border-2 p-5 `}>
+          <div className={`flex flex-wrap gap-2 `}>
             {form.socialsMedia.map((link) => (
               <div
                 key={link.name}
                 id={link.name}
-                className='rounded-sm bg-gray-200 p-2 font-bold text-gray-500'
-                onClick={handleDeleteLink}
+                className='flex items-center gap-1 rounded-xl bg-[#29278d65] bg-gray-200 p-2 font-bold text-white'
               >
-                {link.name}
+                <p>{link.name}</p>
+                <GrClose
+                  size={15}
+                  className='cursor-pointer'
+                  id={link.name}
+                  onClick={handleDeleteLink}
+                />
               </div>
             ))}
-          </div>
-
-          <div className='flex gap-2'>
-            <div className='flex gap-2'>
-              <input
-                className='h-14 w-full rounded-lg border-2 p-2 '
-                type='text'
-                placeholder='Ej: Github'
-                value={link.name}
-                name='name'
-                onChange={handleInputLink}
-              />
-              <input
-                className='h-14 w-full rounded-lg border-2 p-2 '
-                type='text'
-                placeholder='Ej: https://github.com/username'
-                value={link.link}
-                name='link'
-                onChange={handleInputLink}
-              />
-            </div>
             <button
               className=' grid h-10 w-10 place-items-center rounded-lg bg-gray-500 p-2 font-bold text-white'
-              onClick={addLink}
+              onClick={(e) => {
+                e.preventDefault()
+                setLinkAdd((prev) => !prev)
+              }}
             >
               <IoAddSharp />
             </button>
           </div>
+
+          {linkAdd && (
+            <div className='flex gap-2'>
+              <div className='flex gap-2'>
+                <input
+                  className={`h-14 w-full rounded-lg border-2 focus-visible:bg-white  ${
+                    link.name === '' ? 'bg-[#DADADA]' : 'bg-white'
+                  }  p-2`}
+                  type='text'
+                  placeholder='Ej: Github'
+                  value={link.name}
+                  name='name'
+                  onChange={handleInputLink}
+                />
+                <input
+                  className={`h-14 w-full rounded-lg border-2 focus-visible:bg-white ${
+                    link.link === '' ? 'bg-[#DADADA]' : 'bg-white '
+                  }  p-2`}
+                  type='text'
+                  placeholder='Ej: https://github.com/username'
+                  value={link.link}
+                  name='link'
+                  onChange={handleInputLink}
+                />
+              </div>
+              <button
+                className=' grid place-items-center border-none bg-transparent font-bold text-primary underline'
+                onClick={addLink}
+              >
+                Agregar
+              </button>
+            </div>
+          )}
         </div>
 
         {/* // skills */}
-        <button onClick={handleSubmit}>Send</button>
+        <div className='flex justify-around'>
+          <button
+            onClick={handleClick}
+            className=' grid cursor-pointer place-items-center py-2  font-bold text-primary'
+          >
+            volver
+          </button>
+          <button
+            onClick={handleSubmit}
+            className=' grid place-items-center rounded-lg bg-primary px-8 py-2 font-bold text-white'
+          >
+            Guardar cambios
+          </button>
+        </div>
       </form>
     </div>
   )
