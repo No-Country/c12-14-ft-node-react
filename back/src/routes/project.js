@@ -9,6 +9,8 @@ const {
   getProjectByTitle,
   getProjectByCategory,
   getProjectByTechnology,
+  postulantDesition
+  
 } = require('../controllers/project')
 
 const router = new Router()
@@ -20,8 +22,13 @@ router.get('/filter/title/:title', getProjectByTitle)
 router.get('/filter/category/:category', getProjectByCategory)
 router.get('/filter/technology/:technology', getProjectByTechnology)
 
+//ruta para aceptar/rechazar postulantes
+router.get('/postulant/accept-reject', postulantDesition)
+
+
+
 router.post('/', createProjects)
-router.patch('/:id', projectDataValidation, updateProject)
+router.patch('/:id', updateProject)
 router.delete('/:id', deleteProject)
 
 module.exports = router

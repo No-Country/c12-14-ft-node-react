@@ -4,11 +4,7 @@ const projectRepository = require('../repositories/project')
 const getProjects = async (req = request, res = response) => {
   try {
     const { limit, page, getPages } = req.query
-    const data = await projectRepository.allPagination(
-      +limit,
-      +page,
-      +getPages
-    )
+    const data = await projectRepository.allPagination(+limit, +page, +getPages)
     res.send({ msg: 'data founded', ...data })
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
@@ -140,6 +136,25 @@ const getProjectByTechnology = async (req = request, res = response) => {
   }
 }
 
+const postulantDesition = async (req = request, res = response) => {
+  try {
+    const {
+      projectId,
+      postulantId,
+      desition,
+    } = req.query
+
+    const data = await projectRepository.acceptRejectPostulant(
+      projectId,
+      postulantId,
+      desition
+    )
+    res.send({ msg: 'Projects founded', ...data })
+  } catch (err) {
+    res.status(500).send({ msg: 'Project missing error', error: err.message })
+  }
+}
+
 module.exports = {
   getProjects,
   createProjects,
@@ -150,4 +165,5 @@ module.exports = {
   getProjectByTitle,
   getProjectByCategory,
   getProjectByTechnology,
+  postulantDesition,
 }
