@@ -2,6 +2,7 @@ import { MdOutlineArrowForwardIos } from 'react-icons/md'
 import { useState } from 'react'
 import PostProject from '../../components/PostProject/PostProject'
 import ReviewPostProject from '../../components/PostProject/ReviewPostProject'
+import { BsCheck2 } from 'react-icons/bs'
 
 function FormProject() {
   // * states
@@ -29,22 +30,26 @@ function FormProject() {
   // * -----------------------------//
 
   return (
-    <main className='flex gap-20 py-20 w-full justify-center'>
-      <section className=' w-1/3 m-1 bg-gray-500'>
+    <main className='flex w-full justify-center gap-20 py-20'>
+      <section className=' m-1 w-1/3 pt-40'>
         <div className=''>
-          <img src='' alt='' />
+          {view === 1 ? (
+            <img src='src/assets/teamremote.png' alt='equipo remoto' />
+          ) : (
+            <img src='src/assets/salesteam.png' alt='equipo remoto' />
+          )}
         </div>
       </section>
 
       <section className='flex flex-col gap-20'>
-        <div className='flex gap-2 items-center'>
+        <div className='flex items-center gap-2'>
           <div className='flex gap-1'>
             <span
-              className={` grid place-items-center w-7 h-7 ${
-                view === 1 ? 'bg-purple-700' : 'bg-gray-600'
-              } text-white rounded-full font-bold`}
+              className={` grid h-7 w-7 place-items-center ${
+                view === 1 ? 'bg-primary' : 'bg-[#1D8841]'
+              } rounded-full font-bold text-white`}
             >
-              1
+              {view === 1 ? '1' : <BsCheck2 size={20} />}
             </span>
             <p
               className={`${
@@ -57,9 +62,9 @@ function FormProject() {
           <MdOutlineArrowForwardIos />
           <div className='flex gap-1'>
             <span
-              className={`grid place-items-center w-7 h-7 ${
-                view === 2 ? 'bg-purple-700' : 'bg-gray-400'
-              }  text-white rounded-full font-bold`}
+              className={`grid h-7 w-7 place-items-center ${
+                view === 2 ? 'bg-primary' : 'bg-gray-400'
+              }  rounded-full font-bold text-white`}
             >
               2
             </span>
