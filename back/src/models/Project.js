@@ -23,14 +23,14 @@ const projectSchema = new Schema(
         required: true,
       },
     ],
-    languaje: [
+    language: [
       {
         //--> un array de strings
         type: String,
         required: true,
       },
     ],
-    requiredRols: [
+    requiredRoles: [
       {
         //--> un array de objetos
         type: Object,
@@ -69,14 +69,14 @@ const projectSchema = new Schema(
         type: String,
       },
     ],
-    postulants: {
+    applicants: {
       type: Array,
       default: [],
       // aca se define la estructura del objeto dentro del array
       items: [{
-        postulantId: String,
+        applicantId: String,
         rol: String,
-        senority: String
+        seniority: String
       }]
     },
     hidden: {

@@ -14,18 +14,20 @@ class AuthServices {
   }
 
   async generateJWT(user) {
-    const { id, username, email, photo } = user;
-    const payload = { id, username, email, photo };
+    const { id } = user;
+    const payload = { id };
     return jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "24h",
     });
   }
 
-  async verifyJWT(token) {
-    const user = jwt.verify(token, process.env.SECRET_KEY);
-    return {
-      user,
-    };
+  verifyJWT(token) {
+    try {
+      return jwt.verify(token, process.env.SECRET_KEY);
+
+    }catch (err){
+      return false
+    }
   }
 }
 
