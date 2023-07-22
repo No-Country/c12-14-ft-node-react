@@ -68,6 +68,22 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    googleAuth: {
+      type: Boolean,
+      default: false,
+    },
+    gitHubAuth: {
+      type: Boolean,
+      default: false,
+    },
+    LinkedInAuth: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     versionKey: false,
@@ -76,7 +92,8 @@ const userSchema = new Schema(
 )
 
 userSchema.methods.toJSON = function (){
-  const {password, ...user} = this.toObject();
+  const {password,googleAuth,
+    gitHubAuth,LinkedInAuth, ...user} = this.toObject();
   return user;
 }
 
