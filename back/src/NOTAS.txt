@@ -1,0 +1,13 @@
+DB_URI =  "mongodb+srv://ColabDev:f4o9MOJO0HSCJc93@mycluster.8flqazj.mongodb.net/devColab"
+EKiivZlV0wvqitS3
+
+ID_CLIENTE = 845152909134-ptgr8dkgbv1mhgks3pvno6vjj5meufv8.apps.googleusercontent.com
+SECRETO = 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
+
+refrestoken: 1//04S_-S_hYY8sICgYIARAAGAQSNwF-L9Ir0sY9iYg_wezKzA9-11uLKWwnqM7VlQQh7eK1g2Oyq8gecBjiqQAwi3WlCfDlk822SpY
+
+
+mail: uva.team.no.country@gmail.com
+pass: arribaelequipouva100
+proyecto: uva-mail (esto es dentro del mail uva.team.no.country en los q es google)
+URI de redireccion autorizado: https://developers.google.comp/oauthplayground
