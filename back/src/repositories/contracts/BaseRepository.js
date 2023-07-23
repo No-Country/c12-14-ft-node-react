@@ -40,6 +40,21 @@ class BaseRepository {
   async findById(id) {
     return await this.model
       .findById(id)
+      .then((dataUpdated) => {
+        Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
+        return dataUpdated
+      })
+      .catch((err) => {
+        Logger.error(
+          `[${this.model.collection.collectionName}]: Operation error ${err.message}`
+        )
+        throw new Error(err)
+      })
+  }
+
+  async findOneBy(params= {}) {
+    return await this.model
+      .findOne(params)
       .then((data) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
         return data
@@ -50,9 +65,14 @@ class BaseRepository {
         )
         throw new Error(err)
       })
-      .then((dataUpdated) => {
+  }
+
+  async findBy(params= {}) {
+    return await this.model
+      .find(params)
+      .then((data) => {
         Logger.info(`[${this.model.collection.collectionName}]: Operation ok`)
-        return dataUpdated
+        return data
       })
       .catch((err) => {
         Logger.error(
@@ -90,23 +110,30 @@ class BaseRepository {
   }
 
 
-  async allPaginated(limit, page, getPages = 0) {
+  async allPaginated(limit, page, getPages = 0, criteria={}) {
     try {
-      const documentToReturn = await this.model
-        .find()
-        .limit(+limit)
-        .skip((+page - 1) * limit)
-        .sort({createdAt: -1})
+
+      const [documentToReturn,totalDocuments ] =await Promise.all([
+        this.model
+          .find(criteria)
+          .limit(+limit)
+          .skip((+page - 1) * limit)
+          .sort({createdAt: -1}),
+        this.model.countDocuments()
+      ]);
 
       if (getPages) {
-        const totalDocuments = await this.model.countDocuments()
         const totalPages = Math.ceil(totalDocuments / limit)
         return {
+          totalDocuments: totalDocuments,
           totalPages: totalPages,
           documentsCurrentPage: documentToReturn,
         }
       }
-      return {documentsCurrentPage: documentToReturn}
+      return {
+        totalDocuments: totalDocuments,
+        documentsCurrentPage: documentToReturn
+      }
     } catch (err) {
       console.log(err)
       Logger.error(
