@@ -1,6 +1,17 @@
 class TemplateMails {
+  postulationForProyect({ projectData, postulantData }) {
+    const { id, firstName, lastName, socialsMedia } = postulantData
+    const {projectId , title} = projectData
+    console.log("---A---")
+    console.log(id)
+    console.log("---A---")
+    let socialmediaLinks = ''
+    for(let media of socialsMedia){
+      console.log(media)
+      socialmediaLinks += `<p><a href=${media.url} target="_blank" >${media.name}</a></p>`
+    } 
 
-  postulationForProyect({ proyectId, postulantId }) {
+
     return `
             <!DOCTYPE html>
               <html>
@@ -34,16 +45,19 @@ class TemplateMails {
               </head>
               <body>
                 <h1>¡Hola!</h1>
-                <p>Has recibido una solicitud para un proyecto.</p>
-                <p>¿Deseas aceptar o rechazar la solicitud?</p>
-                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${proyectId}&postulantId=${postulantId}&desition=accepted" class="button button-accept" id="accept-button">Aceptar</a>
-                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${proyectId}&postulantId=${postulantId}&desition" class="button button-reject" id="reject-button">Rechazar</a>
+                <p>${firstName} ${lastName } ha postulado para tu proyecto:<b> ${title}</b> </p>
+                <p>Aca abajo te dejamos sus redes sociales para que puedas conocer mejor a este postulante.</p>
+                ${socialmediaLinks}
+
+                <p>¿Deseas aceptar o rechazar la solicitud de esta paresona como colaborador</p>
+                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition=accepted" class="button button-accept" id="accept-button">Aceptar</a>
+                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition" class="button button-reject" id="reject-button">Rechazar</a>
               </body>
             </html>
 `
   }
 
-  welcome(){
+  welcome() {
     return `
     <!DOCTYPE html>
     <html>
@@ -91,7 +105,7 @@ class TemplateMails {
     </html>`
   }
 
-  postulantAccepted(projectTitle,projectId){
+  postulantAccepted(projectTitle, projectId) {
     return `
     <!DOCTYPE html>
     <html>
@@ -139,13 +153,7 @@ class TemplateMails {
         </div>
       </body>
     </html>`
-
   }
-
-
-
-
-
 }
 
 module.exports = TemplateMails

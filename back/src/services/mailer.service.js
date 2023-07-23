@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 const OAuth2 = google.auth.OAuth2
-const accountTransport = require('../../../config/nodemailer/account.transport.json')
+const accountTransport = require('../../config/nodemailer/account.transport.json')
 
 const TemplateMails = require('../helpers/templateMails')
 const templates = new TemplateMails()
@@ -71,9 +71,8 @@ class MailService {
 
   async sendPostulationToProjectOwner({
     to,
-    subject = '¡Hay un postulante para tu proyecto! ',
-    proyectId,
-    postulantId,
+    projectData,
+    postulantData,
   }) {
     try {
       //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
@@ -81,8 +80,8 @@ class MailService {
       const mailOptions = {
         from: 'UVA <uva.team.no.country@gmail.com>',
         to: to,
-        subject: subject,
-        html: templates.postulationForProyect({ proyectId, postulantId }),
+        subject: `¡Hey! Alguien ha postulado para tu proyecto: ${projectData.title}!`,
+        html: templates.postulationForProyect({ projectData, postulantData }),
       }
 
       return await this.transporter.sendMail(mailOptions)
@@ -92,8 +91,10 @@ class MailService {
   }
 }
 
-const mailService = new MailService()
+module.exports = MailService
 
-mailService.sendWelcome({ to: ['castellanofacundo@gmail.com'] })
+//const mailService = new MailService()
 
-mailService.sendPostulationToProjectOwner({to:["castellanofacundo@gmail.com"],postulantId:"AAAAAAAAaA",postulantId:"BBBBBBBBBBB"})
+// mailService.sendWelcome({ to: ['castellanofacundo@gmail.com'] })
+
+// mailService.sendPostulationToProjectOwner({to:["castellanofacundo@gmail.com"],postulantId:"AAAAAAAAaA",postulantId:"BBBBBBBBBBB"})

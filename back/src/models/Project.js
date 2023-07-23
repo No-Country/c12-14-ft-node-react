@@ -61,7 +61,7 @@ const projectSchema = new Schema(
     ],
     admins: [
       {
-        type: String,
+        type:  Object,
       },
     ],
     collaborators: [

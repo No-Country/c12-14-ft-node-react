@@ -200,6 +200,28 @@ class ProjectRepository extends BaseRepository {
     }
   }
 
+  async addPostulant({ proyectId, postulantData }) {
+    try {
+      const newPostulant = {
+        postulantId: postulantData.id,
+        rol: postulantData.rol,
+        senority: postulantData.senority,
+      }
+
+      return await projectModel.findOneAndUpdate(
+        { id: proyectId },
+        { $push: { postulants: newPostulant } },
+        { new: true }
+      )
+    } catch (err) {
+      console.log(err)
+      Logger.error(
+        `[${this.model.collection.collectionName}]: Operation error ${err.message}`
+      )
+      throw new Error(err)
+    }
+  }
+
   async acceptRejectPostulant(projectId, postulantId, desition) {
     const project = await this.findById(projectId)
     const postulants = project.postulants
@@ -240,7 +262,6 @@ class ProjectRepository extends BaseRepository {
     })
 
     //habria que ver como diferenciar si el proyecto fue modificado o no.. pero  ver bien el return
-    
   }
 }
 

@@ -13,6 +13,14 @@ const userSchema = new Schema(
     password: {
       type: String,
     },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
     userName: {
       type: String,
       unique: true, //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
@@ -21,7 +29,7 @@ const userSchema = new Schema(
     type: {
       type: String,
       unique: false,
-      default: "user", //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
+      default: 'user', //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
       required: true,
     },
     description: {
