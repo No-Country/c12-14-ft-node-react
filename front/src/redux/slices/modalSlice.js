@@ -4,6 +4,7 @@ const initialState = {
   photo: false,
   profile: false,
   info: false,
+  stack: '',
 }
 
 const modalSlice = createSlice({

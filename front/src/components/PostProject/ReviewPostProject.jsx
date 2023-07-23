@@ -52,82 +52,89 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
   }
 
   return (
-    <form className='flex flex-col gap-10 roun'>
-      {/* // title */}
-      <div className='flex flex-col gap-2'>
-        <h2 className=' font-bold'>Titulo de proyecto</h2>
-        <p>{form.title}</p>
-      </div>
+    <form className='flex flex-col gap-10'>
+      <div className='container flex flex-col gap-10'>
+        {/* // title */}
+        <div className='flex flex-col gap-2'>
+          <h2 className=' font-bold  text-primary'>Titulo de proyecto</h2>
+          <p>{form.title}</p>
+        </div>
 
-      {/* // category */}
-      <div className='flex flex-col gap-2'>
-        <h2 className=' font-bold'>Categoria</h2>
-        <p>{form.category}</p>
-        <span className='text-red-500'>{errors.category}</span>
-      </div>
+        {/* // category */}
+        <div className='flex flex-col gap-2'>
+          <h2 className=' font-bold  text-primary'>Categoria</h2>
+          <p>{form.category}</p>
+          <span className='text-red-500'>{errors.category}</span>
+        </div>
 
-      {/* // description */}
-      <div className='flex flex-col gap-2'>
-        <h2 className=' font-bold'>Descripción</h2>
-        <p>{form.description}</p>
-      </div>
+        {/* // description */}
+        <div className='flex flex-col gap-2'>
+          <h2 className=' font-bold  text-primary'>Descripción</h2>
+          <p>{form.description}</p>
+        </div>
 
-      {/* // technologies */}
-      <div className='flex flex-col gap-2'>
-        <h2 className=' font-bold'>Tecnologias requeridas</h2>
-        <div className='flex gap-2  border-2 rounded-lg p-5'>
-          {form.technologies.map((tecnology) => (
-            <div
-              key={tecnology.id}
-              className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
-            >
-              {tecnology.stackName}
-            </div>
-          ))}
+        {/* // technologies */}
+        <div className='flex flex-col gap-2'>
+          <h2 className=' font-bold  text-primary'>Tecnologias requeridas</h2>
+          <div className='flex gap-2  rounded-lg border-2 border-[#6CB5FF] p-5'>
+            {form.technologies.map((tecnology) => (
+              <div
+                key={tecnology.id}
+                className='rounded-xl bg-[#6CB5FF] p-2 font-bold'
+              >
+                {tecnology.stackName}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* // rols */}
+        <div className='flex flex-col gap-2'>
+          <label className='  font-bold  text-primary'>Roles solicitados</label>
+          <div className='flex gap-2  rounded-lg border-2 border-[#BBA9E1] p-5'>
+            {form.rols.map((rol) => (
+              <div
+                key={rol.id}
+                className='rounded-xl bg-[#BBA9E1] p-2 font-bold'
+              >
+                {`${rol.name} | ${rol.senority} | ${rol.number}`}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* // links */}
+        <div className='flex flex-col gap-2'>
+          <label className=' font-bold  text-primary'>Enlaces</label>
+          <div className='flex gap-2  rounded-lg border-2 border-[#C1F2E3] p-5'>
+            {form.links.map((link) => (
+              <p
+                key={link.id}
+                className='rounded-xl bg-[#C1F2E3] p-2 font-bold'
+              >
+                {link.name}
+              </p>
+            ))}
+            <span className='text-red-500'>{errors.links}</span>
+          </div>
         </div>
       </div>
-
-      {/* // rols */}
-      <div className='flex flex-col gap-2'>
-        <label className=' font-bold'>Roles solicitados</label>
-        <div className='flex gap-2  border-2 rounded-lg p-5'>
-          {form.rols.map((rol) => (
-            <div
-              key={rol.id}
-              className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
-            >
-              {`${rol.name} | ${rol.senority} | ${rol.number}`}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* // links */}
-      <div className='flex flex-col gap-2'>
-        <label className=' font-bold'>Enlaces</label>
-        <div className='flex gap-2  border-2 rounded-lg p-5'>
-          {form.links.map((link) => (
-            <p
-              key={link.id}
-              className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
-            >
-              {link.name}
-            </p>
-          ))}
-          <span className='text-red-500'>{errors.links}</span>
-        </div>
-      </div>
-
       {/* // términos y condiciones */}
       <div className='flex gap-3'>
         <input
+          className=' h-6 w-6'
           type='checkbox'
           onChange={() => setTerms((prevTerms) => !prevTerms)}
         />
         <p>
           He leído y comprendido los{' '}
           <b>
-            <a href='/' target='_blank' rel='noopener noreferrer'>
+            <a
+              className='underline'
+              href='/'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               términos y condiciones.
             </a>
           </b>
@@ -137,6 +144,7 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
       {/* // accept notifications */}
       <div className='flex gap-3'>
         <input
+          className=' h-6 w-6'
           type='checkbox'
           onChange={() =>
             setNotifications((prevNotifications) => !prevNotifications)
@@ -150,16 +158,10 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
 
       {/* button */}
       <div className='flex justify-between gap-5'>
-        <button
-          onClick={handleEditForm}
-          className='bg-gray-500 text-white font-bold rounded p-2'
-        >
+        <button onClick={handleEditForm} className='btn-login'>
           EDITAR
         </button>
-        <button
-          onClick={handleSendForm}
-          className='bg-gray-500 text-white font-bold rounded p-2'
-        >
+        <button onClick={handleSendForm} className='btn-register'>
           PUBLICAR
         </button>
       </div>

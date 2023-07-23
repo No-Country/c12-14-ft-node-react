@@ -2,7 +2,6 @@ import { Link, useLocation } from 'react-router-dom'
 import UvaLogo from '@/assets/UvaLogo.jsx'
 import { MdNotifications } from 'react-icons/md'
 import { useSelector } from 'react-redux'
-import { useState } from 'react'
 
 const Header = () => {
   const user = useSelector((state) => state.auth.user)
