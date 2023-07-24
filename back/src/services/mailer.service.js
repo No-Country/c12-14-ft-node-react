@@ -69,11 +69,7 @@ class MailService {
     }
   }
 
-  async sendPostulationToProjectOwner({
-    to,
-    projectData,
-    postulantData,
-  }) {
+  async sendPostulationToProjectOwner({ to, projectData, postulantData }) {
     try {
       //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
 
@@ -92,9 +88,3 @@ class MailService {
 }
 
 module.exports = MailService
-
-//const mailService = new MailService()
-
-// mailService.sendWelcome({ to: ['castellanofacundo@gmail.com'] })
-
-// mailService.sendPostulationToProjectOwner({to:["castellanofacundo@gmail.com"],postulantId:"AAAAAAAAaA",postulantId:"BBBBBBBBBBB"})

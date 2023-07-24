@@ -240,7 +240,7 @@ class ProjectRepository extends BaseRepository {
       }
       if (id && rol && senority) {
         if (desition) {
-          console.log('entre al 2do if')
+          
           collaborators.push(id)
           for (let [index, vacant] of requiredRols.entries()) {
             if (vacant.rol == rol && vacant.senority == senority) {

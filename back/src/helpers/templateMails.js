@@ -1,16 +1,11 @@
 class TemplateMails {
   postulationForProyect({ projectData, postulantData }) {
     const { id, firstName, lastName, socialsMedia } = postulantData
-    const {projectId , title} = projectData
-    console.log("---A---")
-    console.log(id)
-    console.log("---A---")
+    const { projectId, title } = projectData
     let socialmediaLinks = ''
-    for(let media of socialsMedia){
-      console.log(media)
+    for (let media of socialsMedia) {
       socialmediaLinks += `<p><a href=${media.url} target="_blank" >${media.name}</a></p>`
-    } 
-
+    }
 
     return `
             <!DOCTYPE html>
@@ -24,34 +19,40 @@ class TemplateMails {
                   .button {
                     background-color: #4caf50;
                     border: none;
-                    color: white;
-                    padding: 15px 32px;
+                    padding: 10px 25px;
                     text-align: center;
                     text-decoration: none;
                     display: inline-block;
-                    font-size: 16px;
+                    font-size: 17px;
                     margin: 4px 2px;
+                    margin-left:15px;
                     cursor: pointer;
+                    font-weight: 600;
+                    border-radius:15px;
+                    
+                  }
+                  .button:active{
+                    transform: scale(0.9);
                   }
                   .button-accept {
                     background-color: #4caf50;
-                    color: white;
+                    
                   }
                   .button-reject {
-                    background-color: #f44336;
-                    color: white;
+                    background-color: tomato;
+                    
                   }
                 </style>
               </head>
               <body>
                 <h1>¡Hola!</h1>
-                <p>${firstName} ${lastName } ha postulado para tu proyecto:<b> ${title}</b> </p>
+                <p>${firstName} ${lastName} ha postulado para tu proyecto:<b> ${title}</b> </p>
                 <p>Aca abajo te dejamos sus redes sociales para que puedas conocer mejor a este postulante.</p>
                 ${socialmediaLinks}
 
                 <p>¿Deseas aceptar o rechazar la solicitud de esta paresona como colaborador</p>
-                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition=accepted" class="button button-accept" id="accept-button">Aceptar</a>
-                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition" class="button button-reject" id="reject-button">Rechazar</a>
+                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition=accepted" class="button button-accept" id="accept-button"  style="color: white">Aceptar</a>
+                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition" class="button button-reject" id="reject-button" style="color: white">Rechazar</a>
               </body>
             </html>
 `

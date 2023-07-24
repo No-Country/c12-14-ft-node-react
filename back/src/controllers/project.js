@@ -149,7 +149,16 @@ const postulantDesition = async (req = request, res = response) => {
       postulantId,
       desition
     )
-    res.send({ msg: 'Projects founded', ...data })
+    //console.log(data)
+    res.status(200)
+    if(desition){
+      //habria q mandarle un mail de que fue aceptado
+      res.redirect("https://www.123rf.com/photo_85202177_grunge-green-accepted-rubber-seal-stamp-on-white-background.html")
+    }else{
+      //habria que mandarle un mail que fue rechazado
+      res.redirect("https://www.istockphoto.com/es/foto/rechazado-gm533935463-56723578")
+    }
+    
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
   }
@@ -159,7 +168,7 @@ const postulantDesition = async (req = request, res = response) => {
 
 const sentMailToProjectOwner = async (req = request, res = response) => {
   try {
-    console.log('sendMailToPrjectOwne Funcionando...')
+    
     const { projectId, postulantId, rol } = req.body
     const project = await projectRepository.findById(projectId)
     const adminMail = project.admins[0].email
@@ -182,7 +191,7 @@ const sentMailToProjectOwner = async (req = request, res = response) => {
       socialsMedia: postulant.socialsMedia,
       rol:rol
     }
-
+    
     await projectRepository.addPostulant({projectId,postulantData:postulantData1})
     await mailService.sendPostulationToProjectOwner({to:adminMail, projectData, postulantData:postulantData2 })
 
