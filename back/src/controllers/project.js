@@ -149,16 +149,41 @@ const postulantDesition = async (req = request, res = response) => {
       postulantId,
       desition
     )
-    //console.log(data)
-    res.status(200)
-    if(desition){
-      //habria q mandarle un mail de que fue aceptado
-      res.redirect("https://www.123rf.com/photo_85202177_grunge-green-accepted-rubber-seal-stamp-on-white-background.html")
-    }else{
-      //habria que mandarle un mail que fue rechazado
-      res.redirect("https://www.istockphoto.com/es/foto/rechazado-gm533935463-56723578")
+    const project = await projectRepository.findById(projectId)
+    const postulant = await userRepository.findById(postulantId)
+
+    const projectData = {
+      title: project.title,
+      id: projectId,
     }
-    
+
+    const postulantData = {
+      firstname: postulant.firstName,
+      lastname: postulant.lasttName,
+      email: postulant.email,
+    }
+
+    if (desition) {
+      await mailService.sendAcceptedConfirmation({
+        projectData,
+        postulantData,
+      })
+
+      //habria q mandarle un mail de que fue aceptado
+      res.redirect(
+        'https://previews.123rf.com/images/mahmud7/mahmud71709/mahmud7170900011/85202177-grunge-green-accepted-rubber-seal-stamp-on-white-background.jpg'
+      )
+    } else {
+
+      await mailService.sendRejectedConfirmation({
+        projectData,
+        postulantData,
+      })
+      //habria que mandarle un mail que fue rechazado
+      res.redirect(
+        'https://media.istockphoto.com/id/533935463/es/foto/rechazado.webp?s=2048x2048&w=is&k=20&c=vT3raukmOIiVqRScTGKevsfqwcbmTKK--Qo3Ti2MW_I='
+      )
+    }
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
   }
@@ -168,7 +193,6 @@ const postulantDesition = async (req = request, res = response) => {
 
 const sentMailToProjectOwner = async (req = request, res = response) => {
   try {
-    
     const { projectId, postulantId, rol } = req.body
     const project = await projectRepository.findById(projectId)
     const adminMail = project.admins[0].email
@@ -180,20 +204,27 @@ const sentMailToProjectOwner = async (req = request, res = response) => {
       adminMail: adminMail,
     }
     const postulantData1 = {
-      id:postulantId,
+      id: postulantId,
       rol: rol.rol,
-      senority:rol.senority
+      senority: rol.senority,
     }
     const postulantData2 = {
-      id:postulantId,
+      id: postulantId,
       firstName: postulant.firstName,
       lastName: postulant.lastName,
       socialsMedia: postulant.socialsMedia,
-      rol:rol
+      rol: rol,
     }
-    
-    await projectRepository.addPostulant({projectId,postulantData:postulantData1})
-    await mailService.sendPostulationToProjectOwner({to:adminMail, projectData, postulantData:postulantData2 })
+
+    await projectRepository.addPostulant({
+      projectId,
+      postulantData: postulantData1,
+    })
+    await mailService.sendPostulationToProjectOwner({
+      to: adminMail,
+      projectData,
+      postulantData: postulantData2,
+    })
 
     res.send({ msg: 'Mail sended' })
   } catch (err) {

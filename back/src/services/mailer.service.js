@@ -85,6 +85,40 @@ class MailService {
       console.log(e)
     }
   }
+
+  async sendAcceptedConfirmation({ projectData, postulantData }) {
+    try {
+      //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
+
+      const mailOptions = {
+        from: 'UVA <uva.team.no.country@gmail.com>',
+        to: postulantData.email,
+        subject: `¡Felicitaciones! Has sido aceptado para colaborar en el proyecto: ${projectData.title}!`,
+        html: templates.postulantAccepted({ projectData, postulantData }),
+      }
+
+      return await this.transporter.sendMail(mailOptions)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async sendRejectedConfirmation({ projectData, postulantData }) {
+    try {
+      //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
+
+      const mailOptions = {
+        from: 'UVA <uva.team.no.country@gmail.com>',
+        to: postulantData.email,
+        subject: `Lamentamos informarte que tu solicitud para colaborar en el proyecto: ${projectData.title} ha sido rechazada.`,
+        html: templates.postulantRejected({ projectData, postulantData }),
+      }
+
+      return await this.transporter.sendMail(mailOptions)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
 
 module.exports = MailService

@@ -106,7 +106,7 @@ class TemplateMails {
     </html>`
   }
 
-  postulantAccepted(projectTitle, projectId) {
+  postulantAccepted({ projectData, postulantData }) {
     return `
     <!DOCTYPE html>
     <html>
@@ -146,10 +146,61 @@ class TemplateMails {
       </head>
       <body>
         <div class="container">
-          <h1>Felicitaciones!</h1>
-          <p>Has sido aceptado como colaborador para el proyecto ${projectTitle}! </p>
+          <h1>¡Felicitaciones ${postulantData.firstname} !</h1>
+          <p>Has sido aceptado como colaborador para el proyecto ${projectData.title}! </p>
           <p>Esperamos tengas una gran experiencia en el desarrollo del mismo!</p>
-          <p><a href="#ACAPORNER EL LINK DE ACCESO al Proyecto${projectId}">Clickea para ir al proyecto ${projectTitle}</a></p>
+          <p><a href="#ACAPORNER EL LINK DE ACCESO al Proyecto${projectData.id}">Clickea para ir al proyecto! ${projectData.title}</a></p>
+          
+        </div>
+      </body>
+    </html>`
+  }
+
+  postulantRejected({ projectData, postulantData }) {
+    return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Bienvenida a UVA</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #F1F1F1;
+          }
+          .container {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+          }
+          h1 {
+            margin-top: 0;
+            color: #333333;
+          }
+          p {
+            color: #666666;
+          }
+          a {
+            color: #FFFFFF;
+            background-color: #0099CC;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Estimado/a ${postulantData.firstname} </h1>
+          <p>Lamentamos informarte que no has sido aceptado como colaborador del proyecto  ${projectData.title}! </p>
+          <p>Esperamos que no te desanimes</p>
+          <p>Queremos invitarte a que pruebas aplicar a otros proyectos!</p>
+          <p><a href="#aca poner las pagina principal de proyectos."> Ver otros proyectos</a></p>
           
         </div>
       </body>
