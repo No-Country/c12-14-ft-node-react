@@ -15,7 +15,11 @@ const Header = () => {
           height={44}
         />
       </div>
-      <nav className='flex w-2/3 items-center justify-between gap-12'>
+      <nav
+        className={`flex w-2/3 items-center ${
+          user ? 'justify-between' : 'justify-end'
+        } gap-12`}
+      >
         {user && (
           <>
             <ul className='flex items-center justify-between gap-20 font-bold text-primaryDark'>
@@ -52,10 +56,12 @@ const Header = () => {
               </li>
               <li
                 className={`relative
-              ${location.pathname === `/profile/${user.id}` && 'text-primary'}`}
+              ${
+                location.pathname === `/profile/${user._id}` && 'text-primary'
+              }`}
               >
-                <Link to={`/profile/${user.id}`}>Mi perfil</Link>
-                {location.pathname === `/profile/${user.id}` && (
+                <Link to={`/profile/${user._id}`}>Mi perfil</Link>
+                {location.pathname === `/profile/${user._id}` && (
                   <div
                     className='absolute -bottom-1 h-1 w-full rounded-full bg-primary'
                     style={{ left: 0 }}

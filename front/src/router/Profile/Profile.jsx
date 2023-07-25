@@ -20,7 +20,7 @@ function Profile() {
     modal,
     user: { user },
   } = useSelector((state) => state)
-  const userId = useSelector((state) => state.auth.user.id)
+  const userId = useSelector((state) => state.auth.user._id)
 
   useEffect(() => {
     const User = async (id) => {
@@ -96,12 +96,14 @@ function Profile() {
                 className=' h-40 w-40 rounded-full'
               />
               <div className=' absolute bottom-4 right-2 h-6 w-6 rounded-full border-2 bg-green-400'></div>
-              <button
-                onClick={handleEditPhoto}
-                className='absolute top-6 rounded-full border-2 border-primary bg-white p-1'
-              >
-                <MdModeEdit />
-              </button>
+              {admin && (
+                <button
+                  onClick={handleEditPhoto}
+                  className='absolute top-6 rounded-full border-2 border-primary bg-white p-1'
+                >
+                  <MdModeEdit />
+                </button>
+              )}
             </div>
 
             {/* info */}
@@ -150,12 +152,14 @@ function Profile() {
                 <h3 className=' text-xl font-bold text-primary'>
                   Stack tecnológico
                 </h3>
-                <button
-                  onClick={handleEditStack}
-                  className='rounded-full border-2 border-primary bg-white p-1'
-                >
-                  <MdModeEdit />
-                </button>
+                {admin && (
+                  <button
+                    onClick={handleEditStack}
+                    className='rounded-full border-2 border-primary bg-white p-1'
+                  >
+                    <MdModeEdit />
+                  </button>
+                )}
               </div>
               <div className='flex flex-wrap gap-4'>
                 {user?.stack.map((item) => (
