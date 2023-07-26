@@ -70,7 +70,7 @@ const getProjectsFilteredByTechAndCat = async (
   res = response
 ) => {
   try {
-    const { limit, page, getPages } = req.query
+    const { limit, page, getPages,sort } = req.query
     const categories = req.body.categories
     const technologies = req.body.technologies
     const data = await projectRepository.filterCrossTechAndCat({
@@ -79,6 +79,7 @@ const getProjectsFilteredByTechAndCat = async (
       limit,
       page,
       getPages,
+      sort:-1
     })
 
     res.send({ msg: 'Projects founded', ...data })
