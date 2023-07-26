@@ -1,14 +1,13 @@
 const { response, request } = require('express')
 const projectRepository = require('../repositories/project')
+const userRepository = require('../repositories/user')
+const MailService = require('../services/mailer.service')
+const mailService = new MailService()
 
 const getProjects = async (req = request, res = response) => {
   try {
     const { limit, page, getPages } = req.query
-    const data = await projectRepository.allPagination(
-      +limit,
-      +page,
-      +getPages
-    )
+    const data = await projectRepository.allPagination(+limit, +page, +getPages)
     res.send({ msg: 'data founded', ...data })
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
@@ -140,6 +139,99 @@ const getProjectByTechnology = async (req = request, res = response) => {
   }
 }
 
+// esta funcion es para ruta del boton aceptar/rechazar dentro del mail enviado.
+const postulantDesition = async (req = request, res = response) => {
+  try {
+    const { projectId, postulantId, desition } = req.query
+
+    const data = await projectRepository.acceptRejectPostulant(
+      projectId,
+      postulantId,
+      desition
+    )
+    const project = await projectRepository.findById(projectId)
+    const postulant = await userRepository.findById(postulantId)
+
+    const projectData = {
+      title: project.title,
+      id: projectId,
+    }
+
+    const postulantData = {
+      firstname: postulant.firstName,
+      lastname: postulant.lasttName,
+      email: postulant.email,
+    }
+
+    if (desition) {
+      await mailService.sendAcceptedConfirmation({
+        projectData,
+        postulantData,
+      })
+
+      //habria q mandarle un mail de que fue aceptado
+      res.redirect(
+        'https://previews.123rf.com/images/mahmud7/mahmud71709/mahmud7170900011/85202177-grunge-green-accepted-rubber-seal-stamp-on-white-background.jpg'
+      )
+    } else {
+
+      await mailService.sendRejectedConfirmation({
+        projectData,
+        postulantData,
+      })
+      //habria que mandarle un mail que fue rechazado
+      res.redirect(
+        'https://media.istockphoto.com/id/533935463/es/foto/rechazado.webp?s=2048x2048&w=is&k=20&c=vT3raukmOIiVqRScTGKevsfqwcbmTKK--Qo3Ti2MW_I='
+      )
+    }
+  } catch (err) {
+    res.status(500).send({ msg: 'Project missing error', error: err.message })
+  }
+}
+
+//esta funcion agrega un postulante, a un proyecto y mando el mail al dueño del proyecto
+
+const sentMailToProjectOwner = async (req = request, res = response) => {
+  try {
+    const { projectId, postulantId, rol } = req.body
+    const project = await projectRepository.findById(projectId)
+    const adminMail = project.admins[0].email
+    const postulant = await userRepository.findById(postulantId)
+
+    const projectData = {
+      projectId: projectId,
+      title: project.title,
+      adminMail: adminMail,
+    }
+    const postulantData1 = {
+      id: postulantId,
+      rol: rol.rol,
+      senority: rol.senority,
+    }
+    const postulantData2 = {
+      id: postulantId,
+      firstName: postulant.firstName,
+      lastName: postulant.lastName,
+      socialsMedia: postulant.socialsMedia,
+      rol: rol,
+    }
+
+    await projectRepository.addPostulant({
+      projectId,
+      postulantData: postulantData1,
+    })
+    await mailService.sendPostulationToProjectOwner({
+      to: adminMail,
+      projectData,
+      postulantData: postulantData2,
+    })
+
+    res.send({ msg: 'Mail sended' })
+  } catch (err) {
+    res.status(500).send({ msg: 'Project missing error', error: err.message })
+  }
+}
+
 module.exports = {
   getProjects,
   createProjects,
@@ -150,4 +242,6 @@ module.exports = {
   getProjectByTitle,
   getProjectByCategory,
   getProjectByTechnology,
+  postulantDesition,
+  sentMailToProjectOwner,
 }

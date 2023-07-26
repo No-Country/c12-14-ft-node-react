@@ -13,6 +13,14 @@ const userSchema = new Schema(
     password: {
       type: String,
     },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
     userName: {
       type: String,
       unique: true, //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador

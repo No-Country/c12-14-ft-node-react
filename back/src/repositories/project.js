@@ -199,6 +199,89 @@ class ProjectRepository extends BaseRepository {
       throw new Error(err)
     }
   }
+
+  async addPostulant({ proyectId, postulantData }) {
+    try {
+      const project = await projectModel.findById(proyectId)
+
+      //verifico que no haya sido rechazado o que este aceptado.
+      const collaborators = project.collaborators
+      for (let collaborator of collaborators) {
+        if (collaborator.id === postulantData.id) {
+          return collaborator.status
+        }
+      }
+
+      //verifico que no postule dos veces
+      const postulants = project.postulants
+      for (let postulant of postulants) {
+        if (postulant.id === postulantData.id) {
+          return postulant.status
+        }
+      }
+
+      const newPostulant = {
+        postulantId: postulantData.id,
+        rol: postulantData.rol,
+        senority: postulantData.senority,
+        status: 'pending',
+        date: new Date(),
+      }
+
+      return await projectModel.findOneAndUpdate(
+        { id: proyectId },
+        { $push: { postulants: newPostulant } },
+        { new: true }
+      )
+    } catch (err) {
+      console.log(err)
+      Logger.error(
+        `[${this.model.collection.collectionName}]: Operation error ${err.message}`
+      )
+      throw new Error(err)
+    }
+  }
+
+  async acceptRejectPostulant(projectId, postulantId, desition) {
+    const project = await this.findById(projectId)
+    const postulants = project.postulants
+    const collaborators = project.collaborators
+    const requiredRols = project.requiredRols
+
+    for (let [indexPostulant, postulant] of postulants.entries()) {
+      let id
+      let rol
+      let senority
+
+      if (postulant.postulantId === postulantId) {
+        id = postulant.postulantId
+        rol = postulant.rol
+        senority = postulant.senority
+      }
+      if (id && rol && senority) {
+        if (desition) {
+          collaborators.push(id)
+          for (let [index, vacant] of requiredRols.entries()) {
+            if (vacant.rol == rol && vacant.senority == senority) {
+              vacant.ocupados += 1
+              requiredRols.splice(index, 1, vacant)
+
+              break
+            }
+          }
+        }
+        postulants.splice(indexPostulant, 1)
+        break
+      }
+    }
+    return await this.UpdateById(projectId, {
+      postulants,
+      collaborators,
+      requiredRols,
+    })
+
+    //habria que ver como diferenciar si el proyecto fue modificado o no.. pero  ver bien el return
+  }
 }
 
 module.exports = new ProjectRepository(projectModel)
