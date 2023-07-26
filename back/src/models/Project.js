@@ -69,7 +69,7 @@ const projectSchema = new Schema(
         type: Object,
       },
     ],
-    applicants: {
+    postulants: {
       type: Array,
       default: [],
       // aca se define la estructura del objeto dentro del array
