@@ -34,6 +34,7 @@ const userSchema = new Schema(
     },
     description: {
       type: String,
+      default: '',
     },
     roles: [
       {
@@ -75,11 +76,33 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    googleAuth: {
+      type: Boolean,
+      default: false,
+    },
+    gitHubAuth: {
+      type: Boolean,
+      default: false,
+    },
+    LinkedInAuth: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     versionKey: false,
     timestamps: true,
   }
 )
+
+userSchema.methods.toJSON = function (){
+  const {password,googleAuth,
+    gitHubAuth,LinkedInAuth, ...user} = this.toObject();
+  return user;
+}
 
 module.exports = connection.model('User', userSchema)

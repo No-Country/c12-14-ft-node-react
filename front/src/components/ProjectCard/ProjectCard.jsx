@@ -1,6 +1,6 @@
 import { GrStatusGoodSmall } from 'react-icons/gr'
 import { BiSolidUser } from 'react-icons/bi'
-import { MdOutlineDateRange } from 'react-icons/md'
+import { MdDateRange } from 'react-icons/md'
 import { useState } from 'react'
 import { ProjectModal } from '../ProjectModal/ProjectModal'
 
@@ -9,27 +9,34 @@ export const ProjectCard = ({ project }) => {
   const [showModal, setShowModal] = useState(false)
 
   return (
-    <div className='bg-gray-600 text-white w-[680px] font-sans ml-1 rounded-lg relative'>
+    <div className='font-sans relative ml-1 w-[680px] rounded-lg border border-secondaryContainerBorder bg-white text-primaryDark'>
       {showModal && (
         <ProjectModal project={project} setShowModal={setShowModal} />
       )}
-      <div className='flex items-center justify-between px-8 pt-6 pb-4 text-xl'>
-        <h4 className='cursor-pointer' onClick={() => setShowModal(true)}>
+      <div className='flex items-center justify-between px-8 pb-4 pt-6 text-xl'>
+        <h4
+          className='cursor-pointer font-bold '
+          onClick={() => setShowModal(true)}
+        >
           Titulo de proyecto
         </h4>
-        <div className='flex items-center gap-2 text-sm pr-12'>
-          <GrStatusGoodSmall />
+        <div className='flex items-center gap-2 pr-12 text-sm font-semibold text-primary'>
+          <GrStatusGoodSmall className='text-green-400' />
           Activo
         </div>
       </div>
-      <div className='border-y-2 px-8'>
+      <div className='border-y-2 border-primary border-opacity-10 px-8'>
         <div className='flex gap-4 py-3 text-xs'>
-          <div className='bg-[#35414B] rounded-full py-1 px-6'>Tecnologias</div>
-          <div className='bg-[#35414B] rounded-full py-1 px-6'>Tecnologias</div>
+          <div className='rounded-full border border-secondaryContainerBorder bg-primaryDark bg-opacity-50 px-6 py-1 text-white'>
+            Tecnologias
+          </div>
+          <div className='rounded-full border border-secondaryContainerBorder bg-primaryDark bg-opacity-50 px-6 py-1 text-white'>
+            Tecnologias
+          </div>
         </div>
-        <div className='py-4 text-sm'>
+        <div className='py-4 text-sm text-secondaryText'>
           <span className='font-semibold'>Descripción de este proyecto:</span>
-          <p className={`py-1 line-clamp-2 ${showMore && 'line-clamp-none'}`}>
+          <p className={`line-clamp-2 py-1 ${showMore && 'line-clamp-none'}`}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus,
             molestiae illum accusantium nobis, tempora nostrum tenetur vero
             perspiciatis officia quos cum architecto explicabo sapiente dolorem
@@ -43,9 +50,9 @@ export const ProjectCard = ({ project }) => {
             minima nobis animi iste iusto, similique aliquam minus in.
           </p>
         </div>
-        <div className='flex justify-between items-center text-sm'>
+        <div className='flex items-center justify-between text-sm'>
           <p
-            className='underline font-semibold mb-8 cursor-pointer'
+            className='mb-8 cursor-pointer font-bold underline'
             onClick={() => setShowMore(!showMore)}
           >
             Leer más
@@ -56,13 +63,13 @@ export const ProjectCard = ({ project }) => {
           </div>
         </div>
       </div>
-      <div className='h-16 px-8 flex justify-between font-semibold text-sm'>
+      <div className='flex h-16 justify-between px-8 text-sm font-semibold'>
         <div className='flex items-center gap-4'>
-          <MdOutlineDateRange className='text-lg' />
+          <MdDateRange className='text-lg' />
           Fecha de comienzo
         </div>
         <div className='flex items-center gap-4'>
-          <MdOutlineDateRange className='text-lg' />
+          <MdDateRange className='text-lg' />
           Fecha de publicación
         </div>
       </div>

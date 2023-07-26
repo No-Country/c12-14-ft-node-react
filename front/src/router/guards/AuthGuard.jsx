@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from 'react-router'
+import { useSelector } from 'react-redux'
 
 export const AuthGuard = () => {
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = useSelector((state) => state.auth)
 
-  if (!(user.id || user._id)) {
+  if (!user?.user?.id) {
     return <Navigate to='/login' />
   }
 

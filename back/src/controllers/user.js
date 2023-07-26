@@ -26,6 +26,18 @@ const getUser = async (req, res = response) => {
     });
 };
 
+const getProfile = async (req, res = response) => {
+
+  await userRepository
+    .findById(req.body.user)
+    .then((data) => {
+      res.status(200).json({ msg: "User profile", user: data });
+    })
+    .catch((err) => {
+      res.status(500).json({ msg: "User profile error", error: err.message });
+    });
+};
+
 const updateUser = async (req, res = response) => {
   const { id } = req.params;
   await userRepository
@@ -71,5 +83,6 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  getProfile,
   forgotPassword,
 };

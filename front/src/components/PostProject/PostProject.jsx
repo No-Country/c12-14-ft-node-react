@@ -232,11 +232,11 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
   }
 
   return (
-    <form className='flex flex-col gap-10 roun'>
-      <div className=' border-2 rounded-lg p-5 flex flex-col gap-5  pt-10'>
+    <form className='roun flex flex-col gap-10'>
+      <div className=' container flex flex-col gap-5'>
         {/* // title */}
         <div className='flex flex-col gap-2'>
-          <label className=' font-bold'>Titulo de proyecto</label>
+          <label className=' font-bold  text-primary'>Titulo de proyecto</label>
           <input
             className={classInput('title')}
             type='text'
@@ -250,7 +250,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
         {/* // category */}
         <div className='flex flex-col gap-2'>
-          <label className=' font-bold'>Categoria</label>
+          <label className=' font-bold  text-primary'>Categoria</label>
           <select
             className={classInput('category')}
             name='category'
@@ -276,7 +276,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
         {/* // description */}
         <div className='flex flex-col gap-2'>
-          <label className=' font-bold'>Descripción</label>
+          <label className=' font-bold  text-primary'>Descripción</label>
           <textarea
             className={classInput('description')}
             type='text'
@@ -291,7 +291,9 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
         {/* // technologies */}
         <div className='flex flex-col gap-2'>
-          <label className=' font-bold'>Tecnologias requeridas</label>
+          <label className=' font-bold  text-primary'>
+            Tecnologias requeridas
+          </label>
           <SearchTag
             data={stack}
             setDatastate={setForm}
@@ -300,7 +302,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
             setErrors={setErrors}
           />
           <div
-            className={`flex gap-2  border-2 rounded-lg p-5 ${
+            className={`flex gap-2  rounded-lg border-2 border-[#6CB5FF] p-5 ${
               writing &&
               (errors.technologies !== ''
                 ? ' border-red-500  focus-visible:outline-red-500'
@@ -311,7 +313,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
               <div
                 key={tecnology.id}
                 id={tecnology.id}
-                className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
+                className='rounded-xl bg-[#6CB5FF] p-2 font-bold'
                 onClick={handleDeleteTecnology}
               >
                 {tecnology.stackName}
@@ -323,11 +325,11 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
         {/* // rols */}
         <div className='flex flex-col gap-2'>
-          <label className=' font-bold'>Roles solicitados</label>
+          <label className=' font-bold  text-primary'>Roles solicitados</label>
           <div className='flex gap-2'>
             <div className='flex gap-2'>
               <input
-                className='border-2 rounded-lg p-2 h-14 w-full '
+                className='h-14 w-full rounded-lg border-2 border-[#BBA9E1] p-2 '
                 type='text'
                 placeholder='Ej: Backend'
                 value={rol.name}
@@ -335,7 +337,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
                 onChange={handleInputRols}
               />
               <input
-                className='border-2 rounded-lg p-2 h-14 w-full '
+                className='h-14 w-full rounded-lg border-2 border-[#BBA9E1] p-2 '
                 type='text'
                 placeholder='Ej: Junior'
                 value={rol.senority}
@@ -343,7 +345,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
                 onChange={handleInputRols}
               />
               <input
-                className='border-2 rounded-lg p-2 h-14 w-full '
+                className='h-14 w-full rounded-lg border-2 border-[#BBA9E1] p-2 '
                 type='number'
                 placeholder='Ej: 1'
                 value={rol.number}
@@ -352,14 +354,14 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
               />
             </div>
             <button
-              className=' bg-gray-500 text-white font-bold rounded-lg p-2 w-10 h-10 grid place-items-center'
+              className=' grid h-full w-14 place-items-center rounded-lg border-2 border-[#BBA9E1] p-2 font-bold text-white'
               onClick={addRols}
             >
-              <IoAddSharp />
+              <IoAddSharp color={'#5526B3'} />
             </button>
           </div>
           <div
-            className={`flex gap-2  border-2 rounded-lg p-5 ${
+            className={`flex gap-2  rounded-lg border-2 border-[#BBA9E1] p-5 ${
               writing &&
               (errors.rols !== ''
                 ? ' border-red-500  focus-visible:outline-red-500'
@@ -370,7 +372,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
               <div
                 key={rol.id}
                 id={rol.id}
-                className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
+                className='rounded-xl bg-[#BBA9E1] p-2 font-bold'
                 onClick={handleDeleteRol}
               >
                 {`${rol.name} | ${rol.senority} | ${rol.number}`}
@@ -382,11 +384,11 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
         {/* // links */}
         <div className='flex flex-col gap-2'>
-          <label className=' font-bold'>Enlaces</label>
+          <label className=' font-bold  text-primary'>Enlaces</label>
           <div className='flex gap-2'>
-            <div className='flex gap-2'>
+            <div className='flex w-full gap-2'>
               <input
-                className={classInput('links')}
+                className='h-14 w-full rounded-lg border-2 border-[#C1F2E3] p-2 '
                 type='text'
                 placeholder='Ej: Repositorio'
                 value={link.name}
@@ -394,7 +396,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
                 onChange={handleInputLinks}
               />
               <input
-                className={classInput('links')}
+                className='h-14 w-full rounded-lg border-2 border-[#C1F2E3] p-2 '
                 type='text'
                 placeholder='Ej: https://github.com/Jefersonsteven'
                 value={link.url}
@@ -403,18 +405,18 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
               />
             </div>
             <button
-              className=' bg-gray-500 text-white font-bold rounded-lg p-2 w-10 h-10 grid place-items-center'
+              className=' grid h-full w-14 place-items-center rounded-lg border-2 border-[#C1F2E3] p-2 font-bold text-white'
               onClick={addLinks}
             >
-              <IoAddSharp />
+              <IoAddSharp color={'#5526B3'} />
             </button>
           </div>
-          <div className='flex gap-2  border-2 rounded-lg p-5'>
+          <div className='flex gap-2  rounded-lg border-2 p-5'>
             {form.links.map((link) => (
               <p
                 key={link.id}
                 id={link.id}
-                className='bg-gray-200 text-gray-500 font-bold rounded-sm p-2'
+                className='rounded-xl bg-[#C1F2E3] p-2 font-bold'
                 onClick={handleDeleteLink}
               >
                 {link.name}
@@ -429,7 +431,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
       <div className='flex justify-end gap-5'>
         <button
           onClick={handleNext}
-          className='bg-gray-500 text-white font-bold rounded p-2'
+          className=' rounded-md  bg-[#DADADA] px-6 py-4 font-bold text-[#35414B] hover:bg-[#9f9f9f] hover:text-[#111417]'
         >
           CONTINUAR
         </button>

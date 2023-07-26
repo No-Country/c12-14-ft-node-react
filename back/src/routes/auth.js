@@ -1,9 +1,11 @@
 const { Router } = require('express')
-const { register, login, logout, verify } = require('../controllers/auth')
+const { register, login, logout, googleLogIn, googleRegister} = require('../controllers/auth')
 const {checkSchema} = require("express-validator");
-const userCreateSchema = require("./schemas/user");
-const logInCreateSchema = require("./schemas/logIn");
+const registerValidation = require("./schemas/auth/register");
+const logInValidation = require("./schemas/auth/logIn");
+const  loginGoogleValidation= require("./schemas/auth/logInGoogle");
 const {validate} = require("../middlewares/validator");
+const {validateGoogleLogInToken, validateGoogleRegisterToken} = require("../middlewares/thirdPartyAuthValidator");
 
 const router = new Router()
 
@@ -76,7 +78,7 @@ const router = new Router()
  *                         example: 2023-07-15T00:37:07.299Z
  *
  */
-router.post('/register', [checkSchema(userCreateSchema), validate], register)
+router.post('/register', [checkSchema(registerValidation), validate], register)
 
 /**
  * @swagger
@@ -119,13 +121,91 @@ router.post('/register', [checkSchema(userCreateSchema), validate], register)
  *                   type: string
  *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
  */
-router.post('/login', [checkSchema(logInCreateSchema), validate],login)
+router.post('/login', [checkSchema(logInValidation), validate],login)
 
 router.post('/logout', logout)
 
-router.post('/verify', verify)
 
-router.post('/loginwithgoogle', login)
-router.post('/registerwithgoogle', register)
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: User token login
+ * /api/auth/google/login:
+ *   post:
+ *     summary: Retrieve a token app .
+ *     tags: [Auth]
+ *     description: Retrieve token user using google token.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               token:
+ *                 type: string
+ *                 description: Google token.
+ *                 example: eyJhbGciOiJSUzI1NiIsImtpZCI6ImEz...
+ *     responses:
+ *       200:
+ *         description: Login token app.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: User found
+ *                 session:
+ *                   type: string
+ *                   example: created
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ */
+router.post('/google/login', [checkSchema(loginGoogleValidation), validate, validateGoogleLogInToken], googleLogIn)
+
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: User token login
+ * /api/auth/google/register:
+ *   post:
+ *     summary: Retrieve a token app .
+ *     tags: [Auth]
+ *     description: Retrieve token user using google token.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               token:
+ *                 type: string
+ *                 description: Google token.
+ *                 example: eyJhbGciOiJSUzI1NiIsImtpZCI6ImEz...
+ *     responses:
+ *       200:
+ *         description: Login token app.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: User found
+ *                 session:
+ *                   type: string
+ *                   example: created
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ */
+router.post('/google/register', [checkSchema(loginGoogleValidation), validate, validateGoogleRegisterToken], googleRegister)
 
 module.exports = router

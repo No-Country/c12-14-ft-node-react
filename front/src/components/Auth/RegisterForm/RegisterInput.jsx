@@ -1,6 +1,6 @@
 export const RegisterInput = ({ name, type, placeholder, label, errors }) => {
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex w-full flex-col gap-3'>
       <label htmlFor={name} className='text-md font-medium'>
         {label}
       </label>
@@ -8,9 +8,9 @@ export const RegisterInput = ({ name, type, placeholder, label, errors }) => {
         name={name}
         type={type}
         placeholder={placeholder}
-        className='w-full h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
+        className='h-[55px] rounded-lg border border-[#ADADAD] pl-5 font-normal outline-primary transition-all duration-300 placeholder:text-sm'
       />
-      {errors && <p className='text-red-500 text-sm'>{errors}</p>}
+      {errors && <p className='text-sm text-red-500'>{errors}</p>}
     </div>
   )
 }

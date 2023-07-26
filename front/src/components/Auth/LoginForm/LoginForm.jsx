@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { FcGoogle } from 'react-icons/fc'
-import { BsLinkedin } from 'react-icons/bs'
+import { Link } from 'react-router-dom'
+// import { FcGoogle } from 'react-icons/fc'
+import { BsLinkedin, BsGithub } from 'react-icons/bs'
 import { useState } from 'react'
 import { validateLogin } from '@/libs/validationLogin'
 import { uvaApi } from '@/api'
@@ -9,7 +9,6 @@ import { setUser } from '@/redux/slices/authSlice'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [errors, setErrors] = useState({
     mailOrUserName: '',
     password: '',
@@ -49,12 +48,8 @@ const LoginForm = () => {
         })
       }
 
-      // const verifyResponse = await uvaApi.post('/auth/verify', {
-      //   devCollabToken: loginResponse.data.token,
-      // })
-
       dispatch(setUser(loginResponse.data))
-      navigate('/')
+      window.location.href = '/'
     } catch (error) {
       if (error.response.data.msg.includes('User')) {
         setErrors({ ...errors, mailOrUserName: error.response.data.msg })
@@ -66,13 +61,13 @@ const LoginForm = () => {
   }
 
   return (
-    <div className='bg-white w-[539px] p-10 rounded-xl flex flex-col gap-10 formShadow'>
+    <div className='formShadow flex w-[539px] flex-col gap-10 rounded-xl bg-white p-10 text-primaryDark'>
       <section className='flex w-full justify-between'>
-        <p className='text-xl font-semibold'>Bienvenido</p>
+        <p className='text-xl'>Bienvenido</p>
 
         <p className='text-sm text-gray-400'>
           No tienes una cuenta? <br />{' '}
-          <Link to='/register' className='underline'>
+          <Link to='/register' className='font-semibold underline'>
             Registrarme
           </Link>
         </p>
@@ -82,18 +77,20 @@ const LoginForm = () => {
         <h1 className='text-4xl font-bold'>Iniciar sesión</h1>
       </section>
 
-      <section className='flex gap-5 text-white h-[55px]'>
-        <button className='flex-1 bg-[#808080] relative rounded-xl'>
-          <FcGoogle className='absolute top-4 left-8 text-2xl' />
+      <section className='flex h-[55px] gap-5 font-semibold text-white'>
+        <button className='relative flex-1 rounded-xl bg-[#0089ED] drop-shadow-sm'>
+          {/* <FcGoogle className='absolute left-8 top-4 text-2xl' /> */}
           Iniciar con Google
         </button>
-        <button className='bg-[#808080] min-w-[60px] rounded-xl flex items-center justify-center'>
-          <BsLinkedin className='text-2xl' />
+        <button className='flex min-w-[60px] items-center justify-center rounded-xl border border-[#0089ED] drop-shadow-sm'>
+          <BsLinkedin className='text-2xl text-[#0089ED]' />
         </button>
-        <button className='bg-[#808080] min-w-[60px] rounded-xl'> </button>
+        <button className='flex min-w-[60px] items-center justify-center rounded-xl border border-black drop-shadow-sm'>
+          <BsGithub className='text-2xl text-black' />
+        </button>
       </section>
 
-      <form className='flex flex-col gap-7 w-full' onSubmit={onSubmit}>
+      <form className='flex w-full flex-col gap-7' onSubmit={onSubmit}>
         <div className='flex flex-col gap-3'>
           <label htmlFor='email' className='text-md'>
             Ingresa con tu nombre de usuario o correo electrónico
@@ -102,7 +99,7 @@ const LoginForm = () => {
             type='text'
             name='mailOrUserName'
             placeholder='Usuario o correo electrónico'
-            className='w-full h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
+            className='h-[55px] w-full rounded-lg border border-[#ADADAD] pl-5 outline-primary placeholder:text-sm'
             onBlur={(e) => {
               validateLogin(
                 {
@@ -116,7 +113,7 @@ const LoginForm = () => {
             }}
           />
           {errors.mailOrUserName && (
-            <p className='text-red-500 text-sm'>{errors.mailOrUserName}</p>
+            <p className='text-sm text-red-500'>{errors.mailOrUserName}</p>
           )}
         </div>
 
@@ -128,7 +125,7 @@ const LoginForm = () => {
             type='password'
             name='password'
             placeholder='Contraseña'
-            className='w-full h-[55px] rounded-lg border border-[#ADADAD] pl-5 placeholder:text-sm'
+            className='h-[55px] w-full rounded-lg border border-[#ADADAD] pl-5 outline-primary placeholder:text-sm'
             onBlur={(e) => {
               validateLogin(
                 {
@@ -142,17 +139,17 @@ const LoginForm = () => {
             }}
           />
           {errors.password && (
-            <p className='text-red-500 text-sm'>{errors.password}</p>
+            <p className='text-sm text-red-500'>{errors.password}</p>
           )}
         </div>
 
-        <p className='text-sm underline self-end cursor-pointer'>
+        <p className='cursor-pointer self-end text-sm font-bold underline'>
           Olvidé mi contraseña
         </p>
 
         <button
           type='submit'
-          className='min-w-[333px] bg-[#4E5A65] h-[55px] rounded-lg text-white self-center'
+          className='h-12 w-5/6 self-center rounded-lg bg-primary text-lg font-semibold text-white'
         >
           Iniciar sesión
         </button>

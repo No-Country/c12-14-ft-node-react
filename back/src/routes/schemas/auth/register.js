@@ -1,9 +1,9 @@
 const {
   checkEmailNotInUse,
   checkUserNameNotInUse
-} = require('../../helpers/usersValidations')
+} = require('../../../helpers/usersValidations')
 
-const userCreateSchema = {
+const createUser = {
   email: {
     notEmpty:{
       errorMessage: 'El correo es requerido',
@@ -33,4 +33,4 @@ const userCreateSchema = {
   }
 };
 
-module.exports = userCreateSchema
+module.exports = createUser
