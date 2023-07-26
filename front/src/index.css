@@ -13,15 +13,27 @@
     -webkit-box-shadow: 0px 1px 14px 0px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 0px 1px 14px 0px rgba(0, 0, 0, 0.4);
   }
+
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
 }
 
 .title {
-  background: linear-gradient(155deg, #29278D 0%, #6D11CC 100%);
+  background: linear-gradient(155deg, #29278d 0%, #6d11cc 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 
 @layer base {
   h1 {
@@ -41,7 +53,7 @@
 
 .btn-call-to-action {
   border-radius: 16px;
-  background: #29278D;
+  background: #29278d;
   color: #fff;
   font-weight: bold;
   width: 223px;
@@ -58,8 +70,8 @@
 .btn-call2 {
   border-radius: 16px;
   background: transparent;
-  color: #5526B3;
-  border: 2px solid #29278D;
+  color: #5526b3;
+  border: 2px solid #29278d;
   font-weight: bold;
   width: 223px;
   padding: 18px 0;
@@ -76,7 +88,7 @@
   display: flex;
   padding: 16px 23px;
   border-radius: 4px;
-  background: #5526B3;
+  background: #5526b3;
   color: #fff;
   font-weight: bold;
   cursor: pointer;
@@ -90,7 +102,7 @@
   display: flex;
   align-items: center;
   background: transparent;
-  color: #5526B3;
+  color: #5526b3;
   font-weight: bold;
   cursor: pointer;
 }
@@ -106,7 +118,7 @@
   width: 159px;
   height: 35px;
   padding: 8px 15px;
-  background-color: #5526B3;
+  background-color: #5526b3;
   color: #fff;
   border-radius: 16px;
 }
@@ -116,30 +128,43 @@
 }
 
 .conic-gradient {
-  background: conic-gradient(from 16deg at 50.00% 50.00%, #5728B4 0deg, #5526B3 177.04047203063965deg, #29278D 360deg);
+  background: conic-gradient(
+    from 16deg at 50% 50%,
+    #5728b4 0deg,
+    #5526b3 177.04047203063965deg,
+    #29278d 360deg
+  );
 }
 .gradient {
-  background: linear-gradient(180deg, #060453 1.04%, #29278D 29.32%, #5526B3 46.91%, #8E69D9 92.71%, #8E69D9 100%);
+  background: linear-gradient(
+    180deg,
+    #060453 1.04%,
+    #29278d 29.32%,
+    #5526b3 46.91%,
+    #8e69d9 92.71%,
+    #8e69d9 100%
+  );
 }
 
 .logo path {
-  transform: scale(.6);
+  transform: scale(0.6);
 }
 
 .container {
   border-radius: 8px;
-  border: 1px solid rgba(85, 38, 179, 0.40);
-  background: #FFF;
+  border: 1px solid rgba(85, 38, 179, 0.4);
+  background: #fff;
   padding: 40px;
 }
 
 .grid-profile {
   display: grid;
-  grid-template-areas: "user user user user user"
-                       "stack stack projects projects projects"
-                       "stack stack projects projects projects"
-                       "stack stack collaborations collaborations collaborations"
-                       "stack stack collaborations collaborations collaborations"
-                       "stack stack collaborations collaborations collaborations";
+  grid-template-areas:
+    'user user user user user'
+    'stack stack projects projects projects'
+    'stack stack projects projects projects'
+    'stack stack collaborations collaborations collaborations'
+    'stack stack collaborations collaborations collaborations'
+    'stack stack collaborations collaborations collaborations';
   gap: 20px;
 }
