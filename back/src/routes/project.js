@@ -18,7 +18,7 @@ const router = new Router()
 
 router.get('/', getProjects)
 router.get('/:id', getProject)
-router.get('/filter/categories-stacks', getProjectsFilteredByTechAndCat) // --> enviar un body como este -> {"categories":["Ecologia","Sociales"],"technologies":["javascript","figma"]}
+router.post('/filter/categories-stacks', getProjectsFilteredByTechAndCat) // --> enviar un body como este -> {"categories":["Ecologia","Sociales"],"technologies":["javascript","figma"]}
 router.get('/filter/title/:title', getProjectByTitle)
 router.get('/filter/category/:category', getProjectByCategory)
 router.get('/filter/technology/:technology', getProjectByTechnology)
