@@ -66,7 +66,7 @@ const projectSchema = new Schema(
     ],
     collaborators: [
       {
-        type: String,
+        type: Object,
       },
     ],
     postulants: {

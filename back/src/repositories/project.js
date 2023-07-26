@@ -202,10 +202,30 @@ class ProjectRepository extends BaseRepository {
 
   async addPostulant({ proyectId, postulantData }) {
     try {
+      const project = await projectModel.findById(proyectId)
+
+      //verifico que no haya sido rechazado o que este aceptado.
+      const collaborators = project.collaborators
+      for (let collaborator of collaborators) {
+        if (collaborator.id === postulantData.id) {
+          return collaborator.status
+        }
+      }
+
+      //verifico que no postule dos veces
+      const postulants = project.postulants
+      for (let postulant of postulants) {
+        if (postulant.id === postulantData.id) {
+          return postulant.status
+        }
+      }
+
       const newPostulant = {
         postulantId: postulantData.id,
         rol: postulantData.rol,
         senority: postulantData.senority,
+        status: 'pending',
+        date: new Date(),
       }
 
       return await projectModel.findOneAndUpdate(
@@ -240,7 +260,6 @@ class ProjectRepository extends BaseRepository {
       }
       if (id && rol && senority) {
         if (desition) {
-          
           collaborators.push(id)
           for (let [index, vacant] of requiredRols.entries()) {
             if (vacant.rol == rol && vacant.senority == senority) {
