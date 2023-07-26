@@ -4,10 +4,13 @@ export const userCheck = async () => {
   const user = JSON.parse(localStorage.getItem('user'))
   if (user) {
     try {
-      const verifyResponse = await uvaApi.post('/auth/verify', {
-        devCollabToken: user.token,
+      const verifyResponse = await uvaApi.get('/users/profile', {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
       })
-      if (verifyResponse.data.user.id) {
+      if (verifyResponse.data.user._id) {
         return verifyResponse.data.user
       }
     } catch {}
