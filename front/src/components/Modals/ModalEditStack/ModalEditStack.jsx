@@ -86,7 +86,7 @@ function ModalEditStack({ user }) {
               <div
                 key={technology.id}
                 id={technology.id}
-                className='flex items-center gap-1 rounded-xl bg-[#29278d65] bg-gray-200 p-2 font-bold text-white'
+                className='flex items-center gap-1 rounded-xl bg-[#29278d65] p-2 font-bold text-white'
               >
                 <p>{technology.name}</p>
                 <GrClose

@@ -23,6 +23,8 @@ function Profile() {
   const userId = useSelector((state) => state.auth.user._id)
 
   useEffect(() => {
+    dispatch(setUser(null))
+
     const User = async (id) => {
       const data = await getUser(id)
       dispatch(setUser(data))
@@ -30,10 +32,12 @@ function Profile() {
 
     if (userId === id) {
       setAdmin(true)
+    } else {
+      setAdmin(false)
     }
 
     User(id)
-  }, [id, dispatch])
+  }, [id, dispatch, userId])
 
   const handleEditPhoto = () => {
     dispatch(openModal('photo'))
@@ -108,30 +112,42 @@ function Profile() {
 
             {/* info */}
             <div className='flex w-1/2 flex-col justify-evenly'>
-              <h2>{user?.userName}</h2>
+              <h2>{user.userName}</h2>
               <p className=' flex'>
-                {user.roles.map((item, index) => (
-                  <span
-                    key={item.name}
-                    className={` pr-2 ${
-                      index !== 0 ? 'border-l-2  border-gray-400 pl-2' : ''
-                    }`}
-                  >
-                    {item.name}
-                  </span>
-                ))}
+                {user.roles.length !== 0 ? (
+                  user.roles.map((item, index) => (
+                    <span
+                      key={item.name}
+                      className={` pr-2 ${
+                        index !== 0 ? 'border-l-2  border-gray-400 pl-2' : ''
+                      }`}
+                    >
+                      {item.name}
+                    </span>
+                  ))
+                ) : (
+                  <span>{admin ? 'Agrega tu rol' : 'Sin Rol'}</span>
+                )}
               </p>
               <div className=' flex gap-4'>
-                {user?.socialsMedia.map((item) => (
-                  <Link
-                    target='_blank'
-                    to={item.link}
-                    key={item.link}
-                    className='rounded-full bg-primary px-6 py-2 font-bold text-white'
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+                {user.socialsMedia.length !== 0 ? (
+                  user.socialsMedia.map((item) => (
+                    <Link
+                      target='_blank'
+                      to={item.link}
+                      key={item.link}
+                      className='rounded-full bg-primary px-6 py-2 font-bold text-white'
+                    >
+                      {item.name}
+                    </Link>
+                  ))
+                ) : (
+                  <span>
+                    {admin
+                      ? 'Agrega tus links de contacto'
+                      : 'Sin links de contacto'}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -142,6 +158,7 @@ function Profile() {
               </button>
             )}
           </section>
+
           {/* stack and about me */}
           <section
             className='container flex flex-col justify-between'
@@ -162,22 +179,45 @@ function Profile() {
                 )}
               </div>
               <div className='flex flex-wrap gap-4'>
-                {user?.stack.map((item) => (
-                  <span
-                    key={item.id}
-                    className=' rounded-2xl bg-[#C5E8D7] px-4 py-2'
-                  >
-                    {item.name}
+                {user.stack.length !== 0 ? (
+                  user.stack.map((item) => (
+                    <span
+                      key={item.id}
+                      className=' rounded-2xl bg-[#C5E8D7] px-4 py-2'
+                    >
+                      {item.name}
+                    </span>
+                  ))
+                ) : (
+                  <span>
+                    {admin ? 'Agrega tu stack de tecnologias' : 'Sin stack'}
                   </span>
-                ))}
+                )}
               </div>
             </div>
 
             <div className='flex flex-col gap-5'>
-              <h3 className=' text-xl font-bold text-primary'>Sobre mí</h3>
-              <p>{user?.description}</p>
+              <div className='flex justify-between'>
+                <h3 className=' text-xl font-bold text-primary'>Sobre mí</h3>
+                {admin && (
+                  <button
+                    onClick={handleEditInfo}
+                    className=' rounded-full border-2 border-primary bg-white p-1'
+                  >
+                    <MdModeEdit />
+                  </button>
+                )}
+              </div>
+              <p>
+                {user.description !== ''
+                  ? user.description
+                  : admin
+                  ? 'Cuentanos sobre tí ...'
+                  : 'Sin información'}
+              </p>
             </div>
           </section>
+
           {/* project me */}
           <section
             className='container flex flex-col gap-5'
@@ -187,8 +227,8 @@ function Profile() {
               Proyectos publicados
             </h2>
             <ol className=' list-decimal'>
-              {user?.adminProjects.length > 0 &&
-                user?.adminProjects.map((project) => (
+              {user.adminProjects.length !== 0 ? (
+                user.adminProjects.map((project) => (
                   <li key={project._id}>
                     <p
                       value={project._id}
@@ -197,9 +237,13 @@ function Profile() {
                       {project.title}
                     </p>
                   </li>
-                ))}
+                ))
+              ) : (
+                <span>Sin Proyectos Publicados</span>
+              )}
             </ol>
           </section>
+
           {/* colaborations */}
           <section
             className='container flex flex-col gap-5'
@@ -207,7 +251,7 @@ function Profile() {
           >
             <h2 className=' text-xl font-bold text-primary'>Colaboraciones</h2>
             <ol className=' flex list-decimal flex-col gap-5'>
-              {user?.collaboratorProjects.length > 0 &&
+              {user?.collaboratorProjects.length > 0 ? (
                 user?.collaboratorProjects.map((project, index) => (
                   <li key={project._id + index}>
                     <h3
@@ -218,7 +262,20 @@ function Profile() {
                     </h3>
                     <p>{project.description}</p>
                   </li>
-                ))}
+                ))
+              ) : (
+                <span>
+                  {admin ? (
+                    <>
+                      No has hecho ninguna colaboracion animate!! y busca donde
+                      puedes ayudar he aprender
+                      <Link to={'/home'}>Vamos</Link>
+                    </>
+                  ) : (
+                    'Sin Colaboraciones'
+                  )}
+                </span>
+              )}
             </ol>
           </section>
         </main>

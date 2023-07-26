@@ -134,9 +134,9 @@ function ModalEditProfile({ user }) {
         className='absolute right-0 top-0 m-6 cursor-pointer'
         onClick={handleClick}
       />
-      <h1 className=' text-2xl font-bold text-primary'>
+      <h2 className=' text-2xl font-bold text-primary'>
         Editar mi información
-      </h1>
+      </h2>
       <form action='' className=' flex flex-col gap-8'>
         {/* name */}
         <div className='flex flex-col gap-2'>
@@ -165,7 +165,7 @@ function ModalEditProfile({ user }) {
               <div
                 key={rol.name}
                 id={rol.name}
-                className='flex items-center gap-1 rounded-xl bg-[#29278d65] bg-gray-200 p-2 font-bold text-white'
+                className='flex items-center gap-1 rounded-xl bg-[#29278d65] p-2 font-bold text-white'
               >
                 <p>{rol.name}</p>
                 <GrClose
@@ -221,7 +221,7 @@ function ModalEditProfile({ user }) {
               <div
                 key={link.name}
                 id={link.name}
-                className='flex items-center gap-1 rounded-xl bg-[#29278d65] bg-gray-200 p-2 font-bold text-white'
+                className='flex items-center gap-1 rounded-xl bg-[#29278d65] p-2 font-bold text-white'
               >
                 <p>{link.name}</p>
                 <GrClose
@@ -277,7 +277,7 @@ function ModalEditProfile({ user }) {
           )}
         </div>
 
-        {/* // skills */}
+        {/* // buttons */}
         <div className='flex justify-around'>
           <button
             onClick={handleClick}
