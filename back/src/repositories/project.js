@@ -39,11 +39,13 @@ class ProjectRepository extends BaseRepository {
     limit,
     page,
     getPages,
+    sort
   }) {
     try {
       const limitAsNumber = +limit
       const pageAsNumber = +page
       const getPagesBoolean = +getPages
+      const sortAsNumber = +sort
       let criteriaArray
 
       if (categories.length > 0 && technologies.length > 0) {
@@ -56,7 +58,7 @@ class ProjectRepository extends BaseRepository {
           .find({ $and: criteriaArray })
           .limit(limitAsNumber)
           .skip((pageAsNumber - 1) * limitAsNumber)
-          .sort({ createdAt: -1 })
+          .sort({ createdAt: sortAsNumber })
 
         if (getPagesBoolean) {
           const totalDocuments = await projectModel
@@ -82,7 +84,7 @@ class ProjectRepository extends BaseRepository {
         .find(criteriaArray)
         .limit(limitAsNumber)
         .skip((pageAsNumber - 1) * limitAsNumber)
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: sortAsNumber })
 
       if (getPagesBoolean) {
         const totalDocuments = await projectModel.find(criteriaArray).count()
