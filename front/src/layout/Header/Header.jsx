@@ -95,10 +95,10 @@ const Header = () => {
               <li>
                 <img
                   className='rounded-full'
-                  src={user.photo}
-                  onError={(e) => {
-                    e.target.src = { imagedefault }
-                  }}
+                  src={user?.photo || imagedefault}
+                  // onError={(e) => {
+                  //   e.target.src = { imagedefault }
+                  // }}
                   width={48}
                   height={48}
                   alt='foto de perfil'
