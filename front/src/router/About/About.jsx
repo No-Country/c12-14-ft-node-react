@@ -8,6 +8,12 @@ const Member = (member) => {
       <h2 className=' font-bold text-primaryDark'>
         <b>{member.info.name}</b>
       </h2>
+      <div className='flex gap-2'>
+        {member.info.nationality && (
+          <img src={member.info.nationality} alt='soy' />
+        )}
+        <img src={member.info.ubication} alt='ubicacion' />
+      </div>
       <h3>{member.info.rol}</h3>
       <div className='flex gap-2'>
         <Link to={member.info.github} target='__blank'>
@@ -29,6 +35,7 @@ const members = [
     rol: 'Backend Developer',
     github: '',
     linkedin: '',
+    ubication: 'src/assets/argentina.png',
   },
 
   {
@@ -38,6 +45,8 @@ const members = [
     rol: 'UX|UI Designer',
     github: '',
     linkedin: '',
+    ubication: 'src/assets/italy.png',
+    nationality: 'src/assets/salvador.png',
   },
   {
     id: 1,
@@ -46,6 +55,7 @@ const members = [
     rol: 'Frontend Developer',
     github: '',
     linkedin: '',
+    ubication: 'src/assets/colombia.png',
   },
   {
     id: 3,
@@ -54,6 +64,7 @@ const members = [
     rol: 'Frontend Developer',
     github: '',
     linkedin: '',
+    ubication: 'src/assets/colombia.png',
   },
   {
     id: 4,
@@ -62,6 +73,7 @@ const members = [
     rol: 'Backend Developer',
     github: '',
     linkedin: '',
+    ubication: 'src/assets/mexico.png',
   },
 ]
 
