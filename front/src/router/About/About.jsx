@@ -1,5 +1,15 @@
 import { FaSquareGithub, FaLinkedin } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
+import facundo from '@/assets/images/facundo.png'
+import jeffer from '@/assets/images/jeffer.png'
+import luis from '@/assets/images/luis.png'
+import gabriela from '@/assets/images/gabriela.png'
+import saul from '@/assets/images/saul.png'
+import argentina from '@/assets/images/argentina.png'
+import colombia from '@/assets/images/colombia.png'
+import mexico from '@/assets/images/mexico.png'
+import salvador from '@/assets/images/salvador.png'
+import italy from '@/assets/images/italy.png'
 
 const Member = (member) => {
   return (
@@ -30,50 +40,50 @@ const Member = (member) => {
 const members = [
   {
     id: 5,
-    photo: 'src/assets/facundo.png',
+    photo: facundo,
     name: 'Facundo',
     rol: 'Backend Developer',
     github: '',
     linkedin: '',
-    ubication: 'src/assets/argentina.png',
+    ubication: argentina,
   },
 
   {
     id: 2,
-    photo: 'src/assets/gabriela.png',
+    photo: gabriela,
     name: 'Gabriela Salazar',
     rol: 'UX|UI Designer',
     github: '',
     linkedin: '',
-    ubication: 'src/assets/italy.png',
-    nationality: 'src/assets/salvador.png',
+    ubication: italy,
+    nationality: salvador,
   },
   {
     id: 1,
-    photo: 'src/assets/jeffer.png',
+    photo: jeffer,
     name: 'Jefferson Steven',
     rol: 'Frontend Developer',
     github: '',
     linkedin: '',
-    ubication: 'src/assets/colombia.png',
+    ubication: colombia,
   },
   {
     id: 3,
-    photo: 'src/assets/luis.png',
-    name: 'Luis',
+    photo: luis,
+    name: 'Luis Osio Chico',
     rol: 'Frontend Developer',
     github: '',
     linkedin: '',
-    ubication: 'src/assets/colombia.png',
+    ubication: colombia,
   },
   {
     id: 4,
-    photo: 'src/assets/saul.png',
+    photo: saul,
     name: 'Saul',
     rol: 'Backend Developer',
     github: '',
     linkedin: '',
-    ubication: 'src/assets/mexico.png',
+    ubication: mexico,
   },
 ]
 

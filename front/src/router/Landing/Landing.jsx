@@ -5,6 +5,17 @@ import Lottie from 'lottie-react'
 import animationData from '@/assets/rocketAnimation.json'
 import { useEffect, useState } from 'react'
 import { uvaApi } from '../../api/index'
+import laptop from '@/assets/images/laptop.png'
+import teamwork from '@/assets/images/teamwork.png'
+import check from '@/assets/images/check.png'
+import triangule from '@/assets/images/triangule.png'
+import stroke1 from '@/assets/images/stroke1.png'
+import stroke2 from '@/assets/images/stroke2.png'
+import cube from '@/assets/images/cube.png'
+import boxes from '@/assets/images/boxes.png'
+import desktop from '@/assets/images/desktop.png'
+import components from '@/assets/images/components.png'
+import stats from '@/assets/images/stats.png'
 
 const ImageCalltoAction = () => {
   return (
@@ -15,22 +26,18 @@ const ImageCalltoAction = () => {
       <div className=' absolute top-0 grid h-[653px] w-[662px]  grid-cols-2 grid-rows-2'>
         <div className=' flex justify-start'>
           <div className=' h-[282px] w-[270px] rounded-full bg-white'>
-            <img src='src/assets/desktop.png' alt='desktop' />
+            <img src={desktop} alt='desktop' />
           </div>
         </div>
         <div className=' relative  bottom-16  flex justify-end'>
           <div className=' h-[243px] w-[243px] rounded-full bg-white'>
-            <img
-              src='src/assets/components.png'
-              alt='components'
-              className=' scale-110'
-            />
+            <img src={components} alt='components' className=' scale-110' />
           </div>
         </div>
         <div className=' flex items-end justify-start'>
           <div className=' relative bottom-10 left-6 h-[200px] w-[200px] rounded-full bg-white'>
             <img
-              src='src/assets/laptop.png'
+              src={laptop}
               alt='laptop'
               className=' relative bottom-8 left-4 scale-[1.2]'
             />
@@ -39,7 +46,7 @@ const ImageCalltoAction = () => {
         <div className=' flex items-end  justify-end'>
           <div className=' relative bottom-24 right-10 h-[166px] w-[166px] rounded-full bg-white'>
             <img
-              src='src/assets/stats.png'
+              src={stats}
               alt='stats'
               className=' relative bottom-3 scale-[1.25]'
             />
@@ -63,12 +70,12 @@ const PathProjects = () => {
     <div className='absolute left-0 top-0 z-10 flex h-full w-full justify-center'>
       <div className='flex h-full w-full max-w-7xl justify-between'>
         <div className='flex flex-col justify-between'>
-          <img className=' rotate-180' src='src/assets/boxes.png' alt='boxes' />
-          <img className=' rotate-180' src='src/assets/boxes.png' alt='boxes' />
+          <img className=' rotate-180' src={boxes} alt='boxes' />
+          <img className=' rotate-180' src={boxes} alt='boxes' />
         </div>
         <div className='flex flex-col justify-between'>
-          <img src='src/assets/boxes.png' alt='boxes' />
-          <img src='src/assets/boxes.png' alt='boxes' />
+          <img src={boxes} alt='boxes' />
+          <img src={boxes} alt='boxes' />
         </div>
       </div>
     </div>
@@ -81,47 +88,47 @@ const PathCategories = () => {
       <img
         className=' z-20'
         style={{ gridColumn: '1/3', gridRow: '5/6' }}
-        src='src/assets/cube.png'
+        src={cube}
         alt='path'
       />
       <img
         className=' rotate-[70deg] scale-50'
         style={{ gridColumn: '1/3', gridRow: '2/3' }}
-        src='src/assets/cube.png'
+        src={cube}
         alt='path'
       />
       <img
         className=' rotate-[90deg] scale-50'
         style={{ gridColumn: '11/12', gridRow: '2/3' }}
-        src='src/assets/cube.png'
+        src={cube}
         alt='path'
       />
       <img
         className='z-10 w-full'
         style={{ gridColumn: '1/13', gridRow: '5/6' }}
-        src='src/assets/stroke1.png'
+        src={stroke1}
         alt='path'
       />
       <img
         className=' z-10 w-full translate-y-[-80%]'
         style={{ gridColumn: '1/13', gridRow: '6/7' }}
-        src='src/assets/stroke2.png'
+        src={stroke2}
         alt='path'
       />
       <img
         style={{ gridColumn: '4/6', gridRow: '1/2' }}
-        src='src/assets/triangule.png'
+        src={triangule}
         alt='path'
       />
       <img
         className=' rotate-[300deg]'
         style={{ gridColumn: '9/10', gridRow: '5/6' }}
-        src='src/assets/triangule.png'
+        src={triangule}
         alt='path'
       />
       <img
         style={{ gridColumn: '11/13', gridRow: '3/4' }}
-        src='src/assets/triangule.png'
+        src={triangule}
         alt='path'
       />
     </div>
@@ -186,11 +193,7 @@ const Landing = () => {
           </div>
           <ul className=' flex flex-col gap-8'>
             <li className='flex gap-5'>
-              <img
-                src='src/assets/check.png'
-                alt='icon'
-                className=' h-[26px] w-[30px]'
-              />
+              <img src={check} alt='icon' className=' h-[26px] w-[30px]' />
               <article className='flex flex-col gap-2'>
                 <h3 className=' text-xl font-bold'>
                   Registrarse es completamente gratis
@@ -202,11 +205,7 @@ const Landing = () => {
               </article>
             </li>
             <li className='flex gap-5'>
-              <img
-                src='src/assets/check.png'
-                alt='icon'
-                className=' h-[26px] w-[30px]'
-              />
+              <img src={check} alt='icon' className=' h-[26px] w-[30px]' />
               <article className='flex flex-col gap-2'>
                 <h3 className=' text-xl font-bold'>
                   Publica un proyecto o postúlate para colaborar
@@ -218,11 +217,7 @@ const Landing = () => {
               </article>
             </li>
             <li className='flex gap-5'>
-              <img
-                src='src/assets/check.png'
-                alt='icon'
-                className=' h-[26px] w-[30px]'
-              />
+              <img src={check} alt='icon' className=' h-[26px] w-[30px]' />
               <article className='flex flex-col gap-2'>
                 <h3 className=' text-xl font-bold'>
                   Potenciamos tu aprendizaje
@@ -291,7 +286,7 @@ const Landing = () => {
             ¡Completamente remoto!
           </b>
         </h2>
-        <img src='src/assets/teamwork.png' alt='' />
+        <img src={teamwork} alt='' />
       </section>
     </main>
   )

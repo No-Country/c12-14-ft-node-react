@@ -1,3 +1,5 @@
+import teamremote from '@/assets/images/teamremote.png'
+import salesteam from '@/assets/images/salesteam.png'
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 import { useState } from 'react'
 import PostProject from '../../components/PostProject/PostProject'
@@ -34,9 +36,9 @@ function FormProject() {
       <section className=' m-1 w-1/3 pt-40'>
         <div className=''>
           {view === 1 ? (
-            <img src='src/assets/teamremote.png' alt='equipo remoto' />
+            <img src={teamremote} alt='equipo remoto' />
           ) : (
-            <img src='src/assets/salesteam.png' alt='equipo remoto' />
+            <img src={salesteam} alt='equipo remoto' />
           )}
         </div>
       </section>
