@@ -35,7 +35,7 @@ export const ProjectCard = ({ project }) => {
           {project.technologies.map((tech) => (
             <div
               key={tech}
-              className='rounded-full border border-secondaryContainerBorder bg-primaryDark bg-opacity-50 px-6 py-1 capitalize text-white'
+              className='flex items-center rounded-full border border-secondaryContainerBorder bg-primaryDark bg-opacity-50 px-6 py-1 text-center capitalize text-white'
             >
               {tech}
             </div>
