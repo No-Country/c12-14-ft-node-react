@@ -95,7 +95,7 @@ const Header = () => {
               <li>
                 <img
                   className='rounded-full'
-                  src={user.photo === '' ? imagedefault : user.photo}
+                  src={user?.photo || imagedefault}
                   width={48}
                   height={48}
                   alt='foto de perfil'
