@@ -174,3 +174,10 @@
 .logout:hover > span {
   display: inline;
 }
+
+.textwrap {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
