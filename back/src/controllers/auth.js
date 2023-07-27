@@ -171,35 +171,33 @@ const googleRegister = async (req, res = response) => {
 
 }
 
-
-const githubGetAccess = (req, res= response) =>{
-
-  res.redirect(`${process.env.GITHUB_URL}/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT}`);
-
-}
-
-
-
-const githubCallback = async (req, res = response) =>{
+const firebaseAuth = async (req, res = response) =>{
 
   const authServices = new AuthServices()
 
   try {
 
-    if(!req.body.id) {
+    if(!req.body.user) {
+
+      console.log(req.body)
       const hash = await authServices.encryptPassword(req.body.password)
+
 
       const newUser = await userRepository.create({
         userName: req.body.username,
         email: req.body.email,
         password: hash,
         photo: req.body.picture,
-        gitHubAuth: true
+        googleAuth: req.body.googleAuth,
+        gitHubAuth: req.body.gitHubAuth,
+        LinkedInAuth: req.body.LinkedInAuth,
       })
+
+      req.body.user = newUser.id
     }
 
     const token = await authServices.generateJWT({
-      id: req.body.id || newUser.id,
+      id: req.body.id
     })
 
     const serialized = serialize('devCollabToken', token, {
@@ -222,12 +220,13 @@ const githubCallback = async (req, res = response) =>{
 
 }
 
+
+
 module.exports = {
   register,
   login,
   logout,
   googleLogIn,
   googleRegister,
-  githubGetAccess,
-  githubCallback
+  firebaseAuth,
 }
