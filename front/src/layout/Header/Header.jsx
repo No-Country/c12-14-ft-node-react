@@ -1,11 +1,29 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import UvaLogo from '@/assets/UvaLogo.jsx'
 import { MdNotifications } from 'react-icons/md'
+import { BiLogOutCircle } from 'react-icons/bi'
 import { useSelector } from 'react-redux'
+import { uvaApi } from '../../api/index'
+import { setUser } from '../../redux/slices/userSlice'
 
 const Header = () => {
   const user = useSelector((state) => state.auth.user)
   const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const logout = await uvaApi.post('/auth/logout', {
+      devCollabToken: user.token,
+    })
+    if (logout.data.session === 'destroyed') {
+      setUser({})
+      localStorage.removeItem('user')
+      navigate('/')
+      window.location.reload()
+    }
+  }
+
   return (
     <header className='mb-6 mt-20 flex h-[80px] w-full max-w-6xl items-center justify-between'>
       <div>
@@ -15,7 +33,11 @@ const Header = () => {
           height={44}
         />
       </div>
-      <nav className='flex w-2/3 items-center justify-between gap-12'>
+      <nav
+        className={`flex w-2/3 items-center ${
+          user ? 'justify-between' : 'justify-end'
+        } gap-12`}
+      >
         {user && (
           <>
             <ul className='flex items-center justify-between gap-20 font-bold text-primaryDark'>
@@ -52,10 +74,12 @@ const Header = () => {
               </li>
               <li
                 className={`relative
-              ${location.pathname === `/profile/${user.id}` && 'text-primary'}`}
+              ${
+                location.pathname === `/profile/${user._id}` && 'text-primary'
+              }`}
               >
-                <Link to={`/profile/${user.id}`}>Mi perfil</Link>
-                {location.pathname === `/profile/${user.id}` && (
+                <Link to={`/profile/${user._id}`}>Mi perfil</Link>
+                {location.pathname === `/profile/${user._id}` && (
                   <div
                     className='absolute -bottom-1 h-1 w-full rounded-full bg-primary'
                     style={{ left: 0 }}
@@ -78,6 +102,19 @@ const Header = () => {
                   height={48}
                   alt='foto de perfil'
                 />
+              </li>
+              <li className='logout relative'>
+                <BiLogOutCircle
+                  size={24}
+                  onClick={handleLogout}
+                  className=' cursor-pointer text-primary'
+                />
+                <span
+                  onClick={handleLogout}
+                  className=' absolute hidden max-h-[40px] min-w-[100px] cursor-pointer rounded-lg bg-primary p-1 text-white hover:inline hover:bg-red-500'
+                >
+                  Cerrar Sesion
+                </span>
               </li>
             </ul>
           </>
