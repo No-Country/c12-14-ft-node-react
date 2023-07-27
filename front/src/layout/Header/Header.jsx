@@ -5,6 +5,7 @@ import { BiLogOutCircle } from 'react-icons/bi'
 import { useSelector } from 'react-redux'
 import { uvaApi } from '../../api/index'
 import { setUser } from '../../redux/slices/userSlice'
+import dafault from '@/assets/images/default.png'
 
 const Header = () => {
   const user = useSelector((state) => state.auth.user)
@@ -96,7 +97,7 @@ const Header = () => {
                   className='rounded-full'
                   src={user.photo}
                   onError={(e) => {
-                    e.target.src = '/@/assets/images/default.png'
+                    e.target.src={default}
                   }}
                   width={48}
                   height={48}
