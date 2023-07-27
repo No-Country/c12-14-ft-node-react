@@ -18,7 +18,7 @@ const Home = () => {
     categories: [],
     technologies: [],
   })
-  console.log(filters)
+
   const [categories, setCategories] = useState([])
   const [showMorecategories, setShowMorecategories] = useState(false)
   const [projects, setProjects] = useState([])
