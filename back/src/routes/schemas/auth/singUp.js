@@ -5,9 +5,6 @@ const singUpSchema = {
       errorMessage: 'El token es requerido',
       bail:true
     },
-    custom:{
-
-    }
   }
 };
 
