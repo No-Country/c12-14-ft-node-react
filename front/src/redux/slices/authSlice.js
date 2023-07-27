@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { userCheck } from '@/libs/userCheck'
 
 const initialState = {
-  user: await userCheck(),
+  user: async() => await userCheck(),
 }
 
 const authSlice = createSlice({
