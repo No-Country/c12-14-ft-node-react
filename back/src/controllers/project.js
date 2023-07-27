@@ -79,7 +79,7 @@ const getProjectsFilteredByTechAndCat = async (
       limit,
       page,
       getPages,
-      sort:-1
+      sort
     })
 
     res.send({ msg: 'Projects founded', ...data })
