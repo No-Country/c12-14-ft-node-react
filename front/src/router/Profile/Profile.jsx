@@ -94,9 +94,6 @@ function Profile() {
             <div className='relative'>
               <img
                 src={user?.photo || imagedefault}
-                // onError={(e) => {
-                //   e.target.src = '/@/assets/images/default.png'
-                // }}
                 alt={user.userName}
                 className=' h-40 w-40 rounded-full'
               />
