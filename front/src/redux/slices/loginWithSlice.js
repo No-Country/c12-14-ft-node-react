@@ -20,19 +20,18 @@ const loginWithSlice = createSlice({
         try {
           const googleProvider = new GoogleAuthProvider()
           const access = await signInWithPopup(auth, googleProvider)
-
-          const credential = GoogleAuthProvider.credentialFromResult(access)
-          const token = credential.accessToken
           const body = {
-            username: access.user.displayName,
-            email: access.user.email,
-            password: crypto.randomUUID(),
-            picture: access.user.photoURL,
-            token: token | access._tokenResponse.idToken,
+            // username: access.user.displayName,
+            // email: access.user.email,
+            // password: crypto.randomUUID(),
+            // picture: access.user.photoURL,
+            // googleAuth: access.providerId,
+            token: access._tokenResponse.idToken,
           }
           if (access.user.emailVerified) {
-            const login = uvaApi.post('/auth/google/register', body)
-            console.log(body, login, access, token)
+            console.log('aqui')
+            const login = await uvaApi.post('/auth/external', body)
+            console.log('okay', login)
           }
           // TODO: add logic to save user data in redux
         } catch (error) {
