@@ -66,7 +66,6 @@ const validateFirebaseToken = async (req, res = response, next) => {
 
   const payload = await fAuth.validateToken(req.body.token);
 
-  console.log(payload)
 
   if (!payload.valid)
     return res.status(401)

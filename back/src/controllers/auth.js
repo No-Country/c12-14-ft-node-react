@@ -179,7 +179,6 @@ const firebaseAuth = async (req, res = response) =>{
 
     if(!req.body.user) {
 
-      console.log(req.body)
       const hash = await authServices.encryptPassword(req.body.password)
 
 

@@ -1,5 +1,5 @@
 const firebase = require("firebase-admin");
-const {firebaseConfig} = require("../../config/config");
+const {firebaseConfig} = require("../../config/auth/firebase/config");
 
 
 class FirebaseAuth {

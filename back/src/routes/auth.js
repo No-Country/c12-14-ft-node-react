@@ -5,6 +5,7 @@ const {checkSchema} = require("express-validator");
 const registerValidation = require("./schemas/auth/register");
 const logInValidation = require("./schemas/auth/logIn");
 const  loginGoogleValidation= require("./schemas/auth/logInGoogle");
+const singUpValidation = require("./schemas/auth/singUp")
 const {validate} = require("../middlewares/validator");
 const {validateGoogleLogInToken, validateGoogleRegisterToken, validateFirebaseToken} = require("../middlewares/thirdPartyAuthValidator");
 
@@ -209,6 +210,6 @@ router.post('/google/login', [checkSchema(loginGoogleValidation), validate, vali
  */
 router.post('/google/register', [checkSchema(loginGoogleValidation), validate, validateGoogleRegisterToken], googleRegister)
 
-router.post('/external', [validateFirebaseToken], firebaseAuth)
+router.post('/external', [checkSchema(singUpValidation), validate, validateFirebaseToken], firebaseAuth)
 
 module.exports = router
