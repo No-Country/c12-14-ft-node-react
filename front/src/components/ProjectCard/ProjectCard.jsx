@@ -68,7 +68,9 @@ export const ProjectCard = ({ project }) => {
             Fecha de comienzo
           </div>
           <span className='text-secondaryText'>
-            {timestampToDate(project.startDate)}
+            {project.startDate
+              ? timestampToDate(project.startDate)
+              : 'Sin fecha'}
           </span>
         </div>
         <div className='text-semibold flex flex-col items-center text-sm font-semibold '>
