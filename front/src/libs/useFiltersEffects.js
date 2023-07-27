@@ -25,6 +25,6 @@ export const useFiltersEffects = (
       )
       .then(({ data }) => setProjects(data))
       .catch((err) => console.log(err))
-      .finally(() => setCurrentPage(1))
+    // .finally(() => setCurrentPage(1))
   }, [currentPage, filters, setCurrentPage, setProjects])
 }

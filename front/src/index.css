@@ -168,3 +168,16 @@
     'stack stack collaborations collaborations collaborations';
   gap: 20px;
 }
+
+/* * //\\//\\////\\//\\////\\//\\////\\//\\////\\//\\// * */
+
+.logout:hover > span {
+  display: inline;
+}
+
+.textwrap {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-transform: capitalize;
+}

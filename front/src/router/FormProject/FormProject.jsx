@@ -42,8 +42,8 @@ function FormProject() {
       </section>
 
       <section className='flex flex-col gap-20'>
-        <div className='flex items-center gap-2'>
-          <div className='flex gap-1'>
+        <div className='flex items-center justify-around'>
+          <div className='flex gap-5'>
             <span
               className={` grid h-7 w-7 place-items-center ${
                 view === 1 ? 'bg-primary' : 'bg-[#1D8841]'
@@ -60,7 +60,7 @@ function FormProject() {
             </p>
           </div>
           <MdOutlineArrowForwardIos />
-          <div className='flex gap-1'>
+          <div className='flex gap-5'>
             <span
               className={`grid h-7 w-7 place-items-center ${
                 view === 2 ? 'bg-primary' : 'bg-gray-400'

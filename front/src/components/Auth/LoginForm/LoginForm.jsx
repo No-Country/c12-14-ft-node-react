@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-// import { FcGoogle } from 'react-icons/fc'
-import { BsLinkedin, BsGithub } from 'react-icons/bs'
 import { useState } from 'react'
 import { validateLogin } from '@/libs/validationLogin'
 import { uvaApi } from '@/api'
 import { useDispatch } from 'react-redux'
 import { setUser } from '@/redux/slices/authSlice'
+import ButtonGithubAuth from '@/components/Auth/ButtonsAuth/ButtonGithubAuth'
+import ButtonGoogleAuth from '@/components/Auth/ButtonsAuth/ButtonGoogleAuth'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -78,16 +78,8 @@ const LoginForm = () => {
       </section>
 
       <section className='flex h-[55px] gap-5 font-semibold text-white'>
-        <button className='relative flex-1 rounded-xl bg-[#0089ED] drop-shadow-sm'>
-          {/* <FcGoogle className='absolute left-8 top-4 text-2xl' /> */}
-          Iniciar con Google
-        </button>
-        <button className='flex min-w-[60px] items-center justify-center rounded-xl border border-[#0089ED] drop-shadow-sm'>
-          <BsLinkedin className='text-2xl text-[#0089ED]' />
-        </button>
-        <button className='flex min-w-[60px] items-center justify-center rounded-xl border border-black drop-shadow-sm'>
-          <BsGithub className='text-2xl text-black' />
-        </button>
+        <ButtonGoogleAuth />
+        <ButtonGithubAuth />
       </section>
 
       <form className='flex w-full flex-col gap-7' onSubmit={onSubmit}>

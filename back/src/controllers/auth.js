@@ -1,14 +1,13 @@
 const userRepository = require('../repositories/user')
 const AuthServices = require('../services/auth.service')
-const {serialize} = require('cookie')
-const {response} = require("express");
+const { serialize } = require('cookie')
+const { response } = require('express')
 
 const register = async (req, res = response) => {
-  const {userName, email, password} = req.body
+  const { userName, email, password } = req.body
   const authServices = new AuthServices()
 
   try {
-
     const hash = await authServices.encryptPassword(password)
     const newUser = await userRepository.create({
       userName: userName,
@@ -16,7 +15,7 @@ const register = async (req, res = response) => {
       password: hash,
     })
 
-    res.status(200).json({msg: 'User created', newUser})
+    res.status(200).json({ msg: 'User created', newUser })
   } catch (error) {
     res.status(500).json({
       msg: 'Error in register',
@@ -35,9 +34,7 @@ const login = async (req, res = response) => {
     if (userName) {
       if (userName.length !== 0)
         user = await userRepository.findUserByUsername(userName)
-    }else
-      user = await userRepository.findUserByEmail(email)
-
+    } else user = await userRepository.findUserByEmail(email)
 
     if (!user) {
       return res.status(400).json({
@@ -109,7 +106,6 @@ const logout = async (req, res = response) => {
 }
 
 const googleLogIn = async (req, res = response) => {
-
   const authServices = new AuthServices()
 
   const token = await authServices.generateJWT({
@@ -129,22 +125,19 @@ const googleLogIn = async (req, res = response) => {
     session: 'created',
     token,
   })
-
 }
 
 const googleRegister = async (req, res = response) => {
-
   const authServices = new AuthServices()
 
   try {
-
     const hash = await authServices.encryptPassword(req.body.password)
     const newUser = await userRepository.create({
       userName: req.body.username,
       email: req.body.email,
       password: hash,
       photo: req.body.picture,
-      googleAuth:true
+      googleAuth: true,
     })
 
     const token = await authServices.generateJWT({
@@ -159,28 +152,23 @@ const googleRegister = async (req, res = response) => {
 
     res.setHeader('Set-Cookie', serialized)
 
-
-    res.status(200).json({msg: 'User created', newUser,session: 'created',
-      token,})
+    res
+      .status(200)
+      .json({ msg: 'User created', newUser, session: 'created', token })
   } catch (error) {
     res.status(500).json({
       msg: 'Error in register',
       error: error.message,
     })
   }
-
 }
 
-const firebaseAuth = async (req, res = response) =>{
-
+const firebaseAuth = async (req, res = response) => {
   const authServices = new AuthServices()
 
   try {
-
-    if(!req.body.user) {
-
+    if (!req.body.user) {
       const hash = await authServices.encryptPassword(req.body.password)
-
 
       const newUser = await userRepository.create({
         userName: req.body.username,
@@ -196,7 +184,7 @@ const firebaseAuth = async (req, res = response) =>{
     }
 
     const token = await authServices.generateJWT({
-      id: req.body.id
+      id: req.body.id,
     })
 
     const serialized = serialize('devCollabToken', token, {
@@ -207,19 +195,14 @@ const firebaseAuth = async (req, res = response) =>{
 
     res.setHeader('Set-Cookie', serialized)
 
-
-    res.status(200).json({msg: 'User created',session: 'created',
-      token,})
+    res.status(200).json({ msg: 'User created', session: 'created', token })
   } catch (error) {
     res.status(500).json({
       msg: 'Error in register',
       error: error.message,
     })
   }
-
 }
-
-
 
 module.exports = {
   register,
