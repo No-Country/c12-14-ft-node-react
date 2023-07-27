@@ -39,15 +39,20 @@ class ProjectRepository extends BaseRepository {
     limit,
     page,
     getPages,
-    sort
+    sort,
   }) {
     try {
       const limitAsNumber = +limit
       const pageAsNumber = +page
       const getPagesBoolean = +getPages
-      const sortAsNumber = +sort
-      let criteriaArray
 
+      let sortAsNumber
+      if (sort === '1') {
+        sortAsNumber = 1
+      } else {
+        sortAsNumber = -1
+      }
+      let criteriaArray
       if (categories.length > 0 && technologies.length > 0) {
         criteriaArray = [
           { category: { $in: categories } },
@@ -64,9 +69,8 @@ class ProjectRepository extends BaseRepository {
           const totalDocuments = await projectModel
             .find({ $and: criteriaArray })
             .count()
-          console.log('totalDocuments: ', totalDocuments)
           const totalPages = Math.ceil(totalDocuments / limitAsNumber)
-          console.log('totalPages: ', totalPages)
+          
           return {
             totalPages: totalPages,
             documentsCurrentPage: documentToReturn,
