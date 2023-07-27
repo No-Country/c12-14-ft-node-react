@@ -15,6 +15,7 @@ const dataStacks = async () => {
 const Home = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [filters, setFilters] = useState({
+    sort: '-1',
     categories: [],
     technologies: [],
   })
@@ -160,10 +161,10 @@ const Home = () => {
             <select
               name='sort'
               className='h-12 w-32 rounded-lg border-none bg-primary pl-2 font-semibold text-white outline-none'
+              onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
             >
-              <option value=''>Nuevo</option>
-              <option value=''>Más reciente</option>
-              <option value=''>Más antiguo</option>
+              <option value='-1'>Más reciente</option>
+              <option value='1'>Más antiguo</option>
             </select>
           </div>
 
