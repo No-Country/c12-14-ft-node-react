@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import UvaLogo from '@/assets/UvaLogo.jsx'
+import UvaLogo from '@/assets/images/UvaLogo.jsx'
 import { MdNotifications } from 'react-icons/md'
 import { BiLogOutCircle } from 'react-icons/bi'
 import { useSelector } from 'react-redux'
@@ -96,7 +96,7 @@ const Header = () => {
                   className='rounded-full'
                   src={user.photo}
                   onError={(e) => {
-                    e.target.src = '/src/assets/default.png'
+                    e.target.src = '/@/assets/images/default.png'
                   }}
                   width={48}
                   height={48}

@@ -1,4 +1,4 @@
-import projectsViewCarousel from '@/assets/projectsViewCarousel.png'
+import projectsViewCarousel from '@/assets/images/projectsViewCarousel.png'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { ProjectCard } from '@/components/ProjectCard/ProjectCard'
 import { BsCheckLg } from 'react-icons/bs'

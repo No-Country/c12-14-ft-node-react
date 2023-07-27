@@ -35,6 +35,7 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
         admins: [
           {
             userId: user._id,
+            username: user.userName,
           },
         ],
       }

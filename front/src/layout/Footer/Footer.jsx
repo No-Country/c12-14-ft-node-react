@@ -1,5 +1,5 @@
-import AppStore from '@/assets/AppStore.png'
-import GooglePlay from '@/assets/GooglePlay.png'
+import AppStore from '@/assets/images/AppStore.png'
+import GooglePlay from '@/assets/images/GooglePlay.png'
 import {
   AiOutlineInstagram,
   AiOutlineDribbble,
@@ -25,17 +25,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className='flex flex-col gap-3'>
-          <p className='font-semibold text-white'>Install App</p>
-          <ul className='flex flex-col gap-3'>
-            <li className='text-sm font-thin text-white'>
-              <img src={GooglePlay} alt='Download on Google Play' />
-            </li>
-            <li className='text-sm font-thin text-white'>
-              <img src={AppStore} alt='Download on App Store' />
-            </li>
-          </ul>
-        </div>
+        <div className='flex flex-col gap-3'></div>
       </div>
 
       {/* Footer */}
