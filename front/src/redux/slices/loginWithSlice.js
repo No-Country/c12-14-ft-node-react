@@ -28,7 +28,7 @@ const loginWithSlice = createSlice({
             email: access.user.email,
             password: crypto.randomUUID(),
             picture: access.user.photoURL,
-            token: token | access.user.accessToken,
+            token: token | access._tokenResponse.idToken,
           }
           if (access.user.emailVerified) {
             const login = uvaApi.post('/auth/google/register', body)
