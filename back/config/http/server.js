@@ -41,7 +41,7 @@ class Server {
 
   listen() {
     this.app.listen(this.port, () => {
-      console.log(`[server-info]:Server up at http://127.0.0.1:${this.port}`)
+      console.log(`[server-info]:Server up at http://${process.env.APP_DOMAIN}:${this.port}`)
     })
   }
 }

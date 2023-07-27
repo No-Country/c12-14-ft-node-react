@@ -1,11 +1,12 @@
-const { Router } = require('express')
-const { register, login, logout, googleLogIn, googleRegister} = require('../controllers/auth')
+const { Router } = require('express');
+
+const { register, login, logout, googleLogIn, googleRegister, githubGetAccess,githubCallback} = require('../controllers/auth')
 const {checkSchema} = require("express-validator");
 const registerValidation = require("./schemas/auth/register");
 const logInValidation = require("./schemas/auth/logIn");
 const  loginGoogleValidation= require("./schemas/auth/logInGoogle");
 const {validate} = require("../middlewares/validator");
-const {validateGoogleLogInToken, validateGoogleRegisterToken} = require("../middlewares/thirdPartyAuthValidator");
+const {validateGoogleLogInToken, validateGoogleRegisterToken, validateGithubAuth} = require("../middlewares/thirdPartyAuthValidator");
 
 const router = new Router()
 
@@ -207,5 +208,9 @@ router.post('/google/login', [checkSchema(loginGoogleValidation), validate, vali
  *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
  */
 router.post('/google/register', [checkSchema(loginGoogleValidation), validate, validateGoogleRegisterToken], googleRegister)
+
+router.get("/github/", githubGetAccess )
+
+router.get("/github/callback", validateGithubAuth, githubCallback)
 
 module.exports = router
