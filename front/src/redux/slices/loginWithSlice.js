@@ -21,11 +21,11 @@ const loginWithSlice = createSlice({
           const googleProvider = new GoogleAuthProvider()
           const access = await signInWithPopup(auth, googleProvider)
           const body = {
-            // username: access.user.displayName,
-            // email: access.user.email,
-            // password: crypto.randomUUID(),
-            // picture: access.user.photoURL,
-            // googleAuth: access.providerId,
+            username: access.user.displayName,
+            email: access.user.email,
+            password: null,
+            picture: access.user.photoURL,
+            googleAuth: access.providerId,
             token: access._tokenResponse.idToken,
           }
           if (access.user.emailVerified) {

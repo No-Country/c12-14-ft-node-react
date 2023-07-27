@@ -15,11 +15,9 @@ const userSchema = new Schema(
     },
     firstName: {
       type: String,
-      required: true,
     },
     lastName: {
       type: String,
-      required: true,
     },
     userName: {
       type: String,
@@ -99,10 +97,10 @@ const userSchema = new Schema(
   }
 )
 
-userSchema.methods.toJSON = function (){
-  const {password,googleAuth,
-    gitHubAuth,LinkedInAuth, ...user} = this.toObject();
-  return user;
+userSchema.methods.toJSON = function () {
+  const { password, googleAuth, gitHubAuth, LinkedInAuth, ...user } =
+    this.toObject()
+  return user
 }
 
 module.exports = connection.model('User', userSchema)
