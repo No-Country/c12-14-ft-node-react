@@ -41,7 +41,7 @@ const members = [
   {
     id: 5,
     photo: facundo,
-    name: 'Facundo',
+    name: 'Facundo Castellano',
     rol: 'Backend Developer',
     github: '',
     linkedin: '',
@@ -79,7 +79,7 @@ const members = [
   {
     id: 4,
     photo: saul,
-    name: 'Saul',
+    name: 'Saul Zamora',
     rol: 'Backend Developer',
     github: '',
     linkedin: '',
