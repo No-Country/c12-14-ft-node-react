@@ -1,6 +1,6 @@
 import { BsGithub } from 'react-icons/bs'
 import { useDispatch } from 'react-redux'
-import { loginWithGithub } from '@/redux/slices/loginWithSlice'
+import { loginWithGithub } from '@/redux/slices/authSlice'
 
 function ButtonGithubAuth() {
   const dispatch = useDispatch()
@@ -8,7 +8,7 @@ function ButtonGithubAuth() {
     <button
       onClick={() => dispatch(loginWithGithub())}
       className=' 
-        shadow-md flex gap-2 items-center bg-white text-black font-bold py-2 px-4 rounded
+        flex items-center gap-2 rounded bg-white px-4 py-2 font-bold text-black shadow-md
       hover:bg-gray-700 hover:text-white '
     >
       <BsGithub />

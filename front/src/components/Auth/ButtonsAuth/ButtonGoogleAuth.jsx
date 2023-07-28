@@ -1,14 +1,16 @@
 import { FcGoogle } from 'react-icons/fc'
 import { useDispatch } from 'react-redux'
-import { loginWithGoogle } from '@/redux/slices/loginWithSlice'
+import { loginWithGoogle } from '@/redux/slices/authSlice'
 
 function ButtonGoogleAuth() {
   const dispatch = useDispatch()
   return (
     <button
-      onClick={() => dispatch(loginWithGoogle())}
+      onClick={() => {
+        dispatch(loginWithGoogle())
+      }}
       className=' 
-        shadow-md flex gap-2 items-center bg-white text-black font-bold py-2 px-4 rounded
+        flex items-center gap-2 rounded bg-white px-4 py-2 font-bold text-black shadow-md
       hover:bg-red-700 hover:text-white '
     >
       <FcGoogle />

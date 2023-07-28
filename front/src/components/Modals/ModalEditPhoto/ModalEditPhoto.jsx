@@ -5,6 +5,7 @@ import { closeModal } from '@/redux/slices/modalSlice'
 import { uploadImage } from '@/libs/uploadImage'
 import { uvaApi } from '../../../api/index'
 import { setUser } from '../../../redux/slices/userSlice'
+import { setUser as setAuthUser } from '../../../redux/slices/authSlice'
 
 function ModalEditPhoto({ user }) {
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ function ModalEditPhoto({ user }) {
           photo: req.data.user.photo,
         }
         dispatch(setUser(userData))
+        dispatch(setAuthUser(userData))
         dispatch(closeModal('photo'))
       } catch (error) {
         console.log(error.message)
