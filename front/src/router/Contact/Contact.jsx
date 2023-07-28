@@ -6,8 +6,8 @@ import Swal from 'sweetalert2'
 
 const Contact = () => {
   return (
-    <div className='z-10 flex h-[800px] w-screen items-center justify-center bg-[#FAFAFA]'>
-      <div className='relative flex h-[625px] w-[1120px] rounded-lg rounded-bl-[100px] bg-[#FDFCFF] shadow-lg'>
+    <div className='z-10 flex min-h-[800px] w-screen items-center justify-center bg-[#FAFAFA]'>
+      <div className='relative flex min-h-[625px] w-[1120px] rounded-lg rounded-bl-[100px] bg-[#FDFCFF] shadow-lg'>
         <div className='flex w-2/3 flex-col items-center justify-center p-8'>
           <p className='text-center text-xl font-extrabold text-primaryDark'>
             El poder de la colaboración es extraordinario. ¡Hablemos pronto y
@@ -36,7 +36,7 @@ const Contact = () => {
               placeholder='Correo electrónico'
             />
             <textarea
-              className='h-36 w-full rounded-md border py-4 pl-6 text-sm outline-primary'
+              className='h-36 max-h-60 w-full rounded-md border py-4 pl-6 text-sm outline-primary'
               placeholder='Puedes redactar tu mensaje aquí'
             />
             <button className='w-2/3 rounded-md bg-primary py-3 font-bold uppercase text-white'>
