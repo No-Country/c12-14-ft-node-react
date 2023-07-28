@@ -1,4 +1,4 @@
-import { GrStatusGoodSmall } from 'react-icons/gr'
+import { GrStatusGoodSmall, GrClose } from 'react-icons/gr'
 import { MdDateRange } from 'react-icons/md'
 import { LuClock4 } from 'react-icons/lu'
 import {
@@ -12,86 +12,94 @@ import { IoPersonAddSharp } from 'react-icons/io5'
 import { HiUsers } from 'react-icons/hi'
 import { useState } from 'react'
 import { timestampToDate, convertMillisToReadable } from '@/libs/datesParsers'
+import { useSelector } from 'react-redux'
+import { uvaApi } from '@/api'
+import Swal from 'sweetalert2'
 
 export const ProjectModal = ({ project, setShowModal }) => {
   const [copyToClipboard, setCopyToClipboard] = useState(
-    'https://www.google.com/'
+    'https://uva-to1s.onrender.com/'
+  )
+  const { user } = useSelector((state) => state.auth)
+  const [showApplyModal, setShowApplyModal] = useState(false)
+  const [currentRol, setCurrentRol] = useState({
+    rol: '',
+    senority: '',
+  })
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+  // Constants
+  const isCollaborator = project?.collaborators.find(
+    (collaborator) => collaborator._id === user._id
+  )
+  const isAdmin = project?.admins.find((admin) => admin.userId === user._id)
+  const isAvailableRoles = project?.requiredRoles.length > 0
+  const isApplying = project?.postulants.find(
+    (postulant) => postulant._id === user._id
   )
 
-  // project = {
-  //   "_id": "64c146d403121c2f00a46d7c",
-  //   "title": "proyecto X 14",
-  //   "category": "entretenimiento",
-  //   "description": "El proyecto se trata de ...",
-  //   "technologies": [
-  //     "lavarel",
-  //     "c#",
-  //     "python"
-  //   ],
-  //   "language": [
-  //     "ingles",
-  //     "español"
-  //   ],
-  //   "requiredRoles": [
-  //     {
-  //       "_id": "0001",
-  //       "rol": "backend",
-  //       "senority": "junior",
-  //       "totales": 2,
-  //       "ocupados": 1
-  //     },
-  //     {
-  //       "_id": "0002",
-  //       "rol": "backend",
-  //       "senority": "senior",
-  //       "totales": 1,
-  //       "ocupados": 0
-  //     },
-  //     {
-  //       "_id": "0003",
-  //       "rol": "frontend",
-  //       "senority": "junior",
-  //       "totales": 1,
-  //       "ocupados": 0
-  //     },
-  //     {
-  //       "_id": "0004",
-  //       "rol": "devops",
-  //       "senority": "semi-senior",
-  //       "totales": 1,
-  //       "ocupados": 0
-  //     }
-  //   ],
-  //   "isRequiredRolsCompleted": false,
-  //   "status": "no inicializado",
-  //   "timeOfProject": 5184000,
-  //   "startDate": 1639872000,
-  //   "progressState": 0.35,
-  //   "connectionLinks": [
-  //     {
-  //       "name": "discord",
-  //       "link": "https://discord.gg/proyecto1"
-  //     },
-  //     {
-  //       "name": "slack",
-  //       "link": "https://slack.com/proyecto1"
-  //     }
-  //   ],
-  //   "admins": [
-  //     {
-  //       "id": "64bd4781e31d9f15566d7e9b",
-  //       "email": "castellanofacundo@gmail.com"
-  //     }
-  //   ],
-  //   "collaborators": [
-  //     "312c89487b9e1290",
-  //     "3128b9e4879129c4"
-  //   ],
-  //   "postulants": [],
-  //   "hidden": false,
-  //   "createdAt": "2023-07-26T16:16:20.463Z",
-  //   "updatedAt": "2023-07-26T16:16:20.463Z"
-  // }
+  const handleApply = async () => {
+    const params = {
+      projectId: project._id,
+      postulantId: user._id,
+      rol: {
+        rol: currentRol.rol,
+        senority: currentRol.senority,
+      },
+    }
+    const { data } = await uvaApi.patch('/projects/postulant', params)
+    if (data.msg.includes('Mail sended')) {
+      Swal.fire({
+        title: '¡Postulación enviada!',
+        text: 'Revisa tu correo para ver más detalles',
+        icon: 'success',
+        confirmButtonText: 'Ok',
+      })
+    }
+    if (data.msg.includes('Postulant was alredy postulated')) {
+      if (data.postulantCondition === 'accepted') {
+        Swal.fire({
+          title: '¡Ya eres parte del proyecto!',
+          text: 'Revisa tu correo para ver más detalles',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        })
+      }
+      if (data.postulantCondition === 'pending') {
+        Swal.fire({
+          title: '¡Ya estás postulado!',
+          text: 'Espera a que el administrador acepte tu postulación',
+          icon: 'warning',
+          confirmButtonText: 'Ok',
+        })
+      }
+      if (data.postulantCondition === 'rejected') {
+        Swal.fire({
+          title: 'Fuiste rechazado',
+          text: 'No te desanimes, sigue intentando',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        })
+      }
+    }
+  }
+
+  const handleDeleteProject = async () => {
+    try {
+      await uvaApi.delete(`/projects/${project._id}`)
+
+      Swal.fire({
+        title: 'Proyecto eliminado',
+        text: 'El proyecto fue eliminado correctamente',
+        icon: 'success',
+        confirmButtonText: 'Ok',
+      }).then(() => {
+        window.location.reload()
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div
@@ -103,10 +111,20 @@ export const ProjectModal = ({ project, setShowModal }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className='flex w-[680px] flex-col gap-5 text-primaryDark'>
+          <GrClose
+            className='absolute right-3 top-3 cursor-pointer text-xl'
+            onClick={() => setShowModal(false)}
+          />
           <div className='flex items-center justify-between rounded-lg border-2 border-secondaryContainerBorder bg-white px-10 py-8 text-2xl'>
             <h4 className='font-extrabold'>{project.title}</h4>
-            <div className='flex items-center gap-2 text-sm font-semibold capitalize'>
-              <GrStatusGoodSmall className='text-green-400' />
+            <div className='flex items-center gap-2 text-sm font-semibold capitalize text-primary'>
+              <GrStatusGoodSmall
+                className={`${
+                  project.status === 'activo' && 'text-green-400'
+                } ${
+                  project.status === 'no inicializado' && 'text-orange-200'
+                } ${project.status === 'finalizado' && 'text-red-400'}`}
+              />
               {project.status}
             </div>
           </div>
@@ -128,7 +146,9 @@ export const ProjectModal = ({ project, setShowModal }) => {
                     Fecha de comienzo
                   </div>
                   <span className='text-secondaryText'>
-                    {timestampToDate(project.startDate)}
+                    {project.startDate
+                      ? timestampToDate(project.startDate)
+                      : 'Sin fecha'}
                   </span>
                 </div>
               </div>
@@ -137,12 +157,14 @@ export const ProjectModal = ({ project, setShowModal }) => {
                 Idiomas:
                 <span className='font-medium capitalize text-secondaryText'>
                   {' '}
-                  {project.language.map((lang, i) => (
-                    <span key={i}>
-                      {lang}
-                      {i < project.language.length - 1 && ', '}
-                    </span>
-                  ))}
+                  {project.language.length > 0
+                    ? project.language.map((lang, i) => (
+                        <span key={i}>
+                          {lang}
+                          {i < project.language.length - 1 && ', '}
+                        </span>
+                      ))
+                    : 'Sin idiomas especificados'}
                 </span>
               </div>
             </div>
@@ -164,8 +186,9 @@ export const ProjectModal = ({ project, setShowModal }) => {
                     Duración aproximada
                   </div>
                   <span className='ml-8 font-semibold text-secondaryText'>
-                    {/* Cuatro semanas */}
-                    {convertMillisToReadable(project.timeOfProject)}
+                    {project.timeOfProject
+                      ? convertMillisToReadable(project.timeOfProject)
+                      : 'Sin duración aproximada'}
                   </span>
                 </div>
                 <div className='flex items-center gap-4 self-start'>
@@ -178,7 +201,9 @@ export const ProjectModal = ({ project, setShowModal }) => {
                 <p>
                   Publicado por{' '}
                   <span className='font-semibold'>
-                    {project.admins[0].email}
+                    {project.admins[0].username
+                      ? project.admins[0].username
+                      : 'User'}
                   </span>
                 </p>
               </div>
@@ -188,12 +213,141 @@ export const ProjectModal = ({ project, setShowModal }) => {
 
         <div className='flex w-80 flex-col rounded-lg bg-white font-bold text-primary'>
           <div className='flex flex-col items-center justify-between gap-5 rounded-t-md border-2  border-b-0 border-secondaryContainerBorder p-10 pb-6 font-bold'>
-            <button className='w-full rounded-md bg-primary py-3 text-white'>
-              Aplicar
-            </button>
-            <button className='w-full rounded-md border-2 border-primary border-secondaryContainerBorder py-3'>
-              Guardar en favoritos
-            </button>
+            {isCollaborator && (
+              <button className='mt-8 w-full rounded-md bg-primary py-3 text-white'>
+                Abandonar Proyecto
+              </button>
+            )}
+            {isAdmin && (
+              <>
+                <button className='mt-8 w-full rounded-md bg-primary py-3 text-white'>
+                  Editar Proyecto
+                </button>
+                <button
+                  className='w-full rounded-md border-2 border-secondaryContainerBorder py-3'
+                  onClick={() => setShowDeleteModal(true)}
+                >
+                  Eliminar Proyecto
+                </button>
+              </>
+            )}
+
+            {showDeleteModal && (
+              <div
+                className='fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50'
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) {
+                    setShowDeleteModal(false)
+                  }
+                }}
+              >
+                <div className='flex flex-col rounded-md bg-white p-10'>
+                  <h3 className='mb-5 text-center text-xl font-bold'>
+                    ¿Estás seguro de que quieres eliminar este proyecto?
+                  </h3>
+                  <div className='flex items-center justify-between gap-4'>
+                    <button
+                      className='w-full rounded-md bg-primary py-3 text-white'
+                      onClick={() => setShowDeleteModal(false)}
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      className='w-full rounded-md border-2 border-secondaryContainerBorder py-3'
+                      onClick={() => {
+                        setShowDeleteModal(false)
+                        handleDeleteProject(project._id)
+                      }}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            {!isCollaborator && !isAdmin && (
+              <>
+                <button
+                  className='w-full rounded-md bg-primary py-3 text-white disabled:bg-opacity-50'
+                  disabled={isApplying || !isAvailableRoles}
+                  onClick={() => setShowApplyModal(true)}
+                >
+                  Aplicar
+                </button>
+                <button className='w-full rounded-md border-2 border-primary border-secondaryContainerBorder py-3'>
+                  Guardar en favoritos
+                </button>
+              </>
+            )}
+            {showApplyModal && (
+              <div
+                className='fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50'
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) {
+                    setCurrentRol({
+                      rol: '',
+                      senority: '  ',
+                    })
+                    setShowApplyModal(false)
+                  }
+                }}
+              >
+                <div className='relative rounded-lg bg-white p-10'>
+                  {
+                    <div className='flex flex-col items-center gap-4'>
+                      <GrClose
+                        className='absolute right-3 top-3 cursor-pointer text-lg'
+                        onClick={() => {
+                          setCurrentRol({
+                            rol: '',
+                            senority: '  ',
+                          })
+                          setShowApplyModal(false)
+                        }}
+                      />
+                      <div className='flex flex-col items-center gap-2'>
+                        <h3 className='text-xl font-bold'>
+                          Aplicar a este proyecto
+                        </h3>
+                        <p className='text-secondaryText'>
+                          Selecciona el rol al que quieres aplicar
+                        </p>
+                      </div>
+                      <div className='flex flex-col gap-4'>
+                        {project.requiredRoles.map((rol) => (
+                          <div
+                            key={rol.id || rol._id}
+                            className='flex items-center gap-4 capitalize'
+                          >
+                            <input
+                              type='radio'
+                              name='rol'
+                              id={rol.id || rol._id}
+                              value={JSON.stringify(rol)}
+                              onChange={(e) =>
+                                setCurrentRol(JSON.parse(e.target.value))
+                              }
+                            />
+                            <label htmlFor={rol.id || rol._id}>
+                              {rol.rol} {rol.senority}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                      <button
+                        className='w-full rounded-md bg-primary py-3 text-white'
+                        onClick={() => {
+                          handleApply(project._id, currentRol)
+                          setShowApplyModal(false)
+                        }}
+                      >
+                        Aplicar
+                      </button>
+                    </div>
+                  }
+                </div>
+              </div>
+            )}
             <div className='flex cursor-pointer items-center gap-8 self-start pt-7 font-semibold'>
               <BsFillExclamationOctagonFill className='text-lg' />
               Reportar este proyecto
@@ -205,11 +359,19 @@ export const ProjectModal = ({ project, setShowModal }) => {
               Perfiles vacantes:
             </div>
             <ul className='flex list-disc flex-col gap-1 pl-14 text-secondaryText'>
-              {project.requiredRoles.map((rol) => (
-                <li key={rol._id} className='capitalize'>
-                  ({rol.totales - rol.ocupados}) {rol.rol} {rol.senority}
+              {project.requiredRoles.length > 0 ? (
+                project.requiredRoles.map((rol) => {
+                  return (
+                    <li key={rol.id || rol._id} className='capitalize'>
+                      ({rol.totales - rol.ocupados}) {rol.rol} {rol.senority}
+                    </li>
+                  )
+                })
+              ) : (
+                <li className='font-normal'>
+                  No hay roles requeridos para este proyecto
                 </li>
-              ))}
+              )}
             </ul>
 
             <div className='flex items-center gap-2 pt-7 font-semibold'>
@@ -224,7 +386,7 @@ export const ProjectModal = ({ project, setShowModal }) => {
             </div>
           </div>
 
-          <div className='flex flex-col rounded-b-md border-2 border-t-0 border-secondaryContainerBorder p-10 py-14 text-sm'>
+          <div className='flex h-full flex-col rounded-b-md border-2 border-t-0 border-secondaryContainerBorder p-10 py-14 text-sm'>
             <div className='flex items-center gap-2 pb-8 font-bold'>
               <BsFillShareFill />
               Compartir
@@ -239,8 +401,8 @@ export const ProjectModal = ({ project, setShowModal }) => {
                 navigator.clipboard.writeText(copyToClipboard)
                 setCopyToClipboard('Copiado!')
                 setTimeout(() => {
-                  setCopyToClipboard('https://www.google.com/')
-                }, 1000)
+                  setCopyToClipboard('https://uva-to1s.onrender.com/')
+                }, 1500)
               }}
             />
             <p
@@ -249,8 +411,8 @@ export const ProjectModal = ({ project, setShowModal }) => {
                 navigator.clipboard.writeText(copyToClipboard)
                 setCopyToClipboard('Copiado!')
                 setTimeout(() => {
-                  setCopyToClipboard('https://www.google.com/')
-                }, 1000)
+                  setCopyToClipboard('https://uva-to1s.onrender.com/')
+                }, 1500)
               }}
             >
               Copiar enlace
