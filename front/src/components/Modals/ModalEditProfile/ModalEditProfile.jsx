@@ -104,7 +104,6 @@ function ModalEditProfile({ user }) {
   }
 
   const handleDeleteLink = (e) => {
-    console.log(e.target.id)
     const id = e.target.id
     const newLinks = form.socialsMedia.filter((link) => link.id !== id)
     setForm({

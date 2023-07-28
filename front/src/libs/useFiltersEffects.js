@@ -13,15 +13,12 @@ export const useFiltersEffects = (
   }, [setCategories])
 
   useEffect(() => {
-    console.log(filters)
     uvaApi
       .post(
         `/projects/filter/categories-stacks?limit=3&page=${currentPage}&getPages=1&sort=${filters.sort}`,
         {
           categories: filters.categories,
-          technologies: filters.technologies.map((tech) =>
-            tech.stackName.toLowerCase()
-          ),
+          technologies: filters.technologies.map((tech) => tech.stackName),
         }
       )
       .then(({ data }) => setProjects(data))
