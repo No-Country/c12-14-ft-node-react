@@ -15,8 +15,8 @@ import imagedefault from '@/assets/images/default.png'
 function Profile() {
   const dispatch = useDispatch()
   const { id } = useParams()
-
   const [admin, setAdmin] = useState(false)
+
   const {
     modal,
     user: { user },

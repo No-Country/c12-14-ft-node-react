@@ -13,6 +13,7 @@ export const useFiltersEffects = (
   }, [setCategories])
 
   useEffect(() => {
+    console.log(filters)
     uvaApi
       .post(
         `/projects/filter/categories-stacks?limit=3&page=${currentPage}&getPages=1&sort=${filters.sort}`,

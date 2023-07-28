@@ -181,7 +181,7 @@ class ProjectRepository extends BaseRepository {
       const limitAsNumber = +limit
       const pageAsNumber = +page
       const getPagesBoolean = +getPages
-      const criteria = { technologies: { $in: myTech.toLocaleLowerCase() } }
+      const criteria = { technologies: { $in: myTech } }
       const documentsToReturn = await projectModel
         .find(criteria)
         .limit(limitAsNumber)
@@ -264,9 +264,7 @@ class ProjectRepository extends BaseRepository {
     const requiredRoles = project.requiredRoles
 
     for (let [indexPostulant, postulant] of postulants.entries()) {
- 
       if (postulant.postulantId === postulantId) {
-
         const collaborator = {
           rol: postulant.rol,
           senority: postulant.senority,
@@ -277,7 +275,6 @@ class ProjectRepository extends BaseRepository {
           collaborator.status = 'accepted'
 
           for (let [index, vacant] of requiredRoles.entries()) {
-
             if (vacant.rol == rol && vacant.senority == senority) {
               vacant.ocupados += 1
               requiredRoles.splice(index, 1, vacant)

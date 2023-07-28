@@ -45,11 +45,10 @@ const members = [
     photo: facundo,
     name: 'Facundo Castellano',
     rol: 'Backend Developer',
-    github: '',
-    linkedin: '',
+    github: 'https://github.com/FacuCastellano',
+    linkedin: 'https://www.linkedin.com/in/facundo-castellano-34798135/',
     ubication: argentina,
   },
-
   {
     id: 2,
     photo: gabriela,

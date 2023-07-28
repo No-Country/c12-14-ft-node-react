@@ -10,6 +10,7 @@ export const userCheck = async () => {
           Authorization: `Bearer ${user.token}`,
         },
       })
+
       if (verifyResponse.data.user._id) {
         return verifyResponse.data.user
       }
