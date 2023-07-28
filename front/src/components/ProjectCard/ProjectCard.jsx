@@ -57,7 +57,9 @@ export const ProjectCard = ({ project }) => {
           <div className='flex items-center gap-1'>
             <BiSolidUser className='text-lg' />
             Publicado por{' '}
-            <span className='font-semibold'>{project.admins[0].email}</span>
+            <span className='font-semibold'>
+              {project.admins[0].username ? project.admins[0].username : 'User'}
+            </span>
           </div>
         </div>
       </div>

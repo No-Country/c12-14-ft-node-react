@@ -5,8 +5,11 @@ const {firebaseConfig} = require("../../config/auth/firebase/config");
 class FirebaseAuth {
 
   constructor() {
-    this.firebase = firebase.initializeApp(firebaseConfig)
 
+    if ( !firebase.apps.length )
+      this.firebase = firebase.initializeApp(firebaseConfig)
+    else
+      this.firebase = firebase.apps[0]
   }
 
   async validateToken(token = "") {
