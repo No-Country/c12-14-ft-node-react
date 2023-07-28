@@ -1,9 +1,8 @@
 const express = require('express')
 const cors = require('cors')
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc')
+const swaggerUi = require('swagger-ui-express')
 const swaggerOptions = require('../docs/swagger/options')
-
 
 const mainRoutes = require('../../src/routes/main')
 const userRoutes = require('../../src/routes/users')
@@ -29,9 +28,11 @@ class Server {
     this.app.use('/api/projects', projectRoutes)
     this.app.use('/api/stacks', stackRoutes)
 
-    this.app.use('/api/doc', swaggerUi.serve,
-      swaggerUi.setup(swaggerJSDoc(swaggerOptions)));
-
+    this.app.use(
+      '/api/doc',
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerJSDoc(swaggerOptions))
+    )
   }
 
   middlewares() {
@@ -41,7 +42,9 @@ class Server {
 
   listen() {
     this.app.listen(this.port, () => {
-      console.log(`[server-info]:Server up at http://127.0.0.1:${this.port}`)
+      console.log(
+        `[server-info]:Server up at http://${process.env.APP_DOMAIN}:${this.port}`
+      )
     })
   }
 }

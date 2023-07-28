@@ -1,9 +1,77 @@
-import projectsViewCarousel from '@/assets/projectsViewCarousel.png'
-import { IoIosArrowBack, IoIosArrowForward, IoIosSearch } from 'react-icons/io'
+import projectsViewCarousel from '@/assets/images/projectsViewCarousel.png'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { ProjectCard } from '@/components/ProjectCard/ProjectCard'
 import { BsCheckLg } from 'react-icons/bs'
+import { handleFilters } from '@/libs/filtersFunctions'
+import { useFiltersEffects } from '@/libs/useFiltersEffects'
+import { useEffect, useState } from 'react'
+import { uvaApi } from '@/api'
+
+const dataStacks = async () => {
+  const { data } = await uvaApi.get('/stacks')
+  return data.stack
+}
 
 const Home = () => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const [filters, setFilters] = useState({
+    sort: '-1',
+    categories: [],
+    technologies: [],
+  })
+
+  const [categories, setCategories] = useState([])
+  const [showMorecategories, setShowMorecategories] = useState(false)
+  const [projects, setProjects] = useState([])
+  const bgImages = [projectsViewCarousel, projectsViewCarousel]
+  const [bannerNavigation, setBannerNavigation] = useState({
+    currentPage: 1,
+    totalPages: bgImages.length,
+  })
+  const [stack, setStack] = useState([])
+  const [search, setSearch] = useState('')
+  const [result, setResult] = useState('')
+
+  useEffect(() => {
+    dataStacks().then((data) => {
+      setStack(data)
+    })
+  }, [])
+
+  const handleSearch = (e) => {
+    const search = e.target.value
+    setSearch(search)
+    if (search !== '') {
+      const result = stack.filter((tag) => {
+        return (
+          tag.stackName.toLowerCase().includes(search.toLowerCase()) &&
+          !filters.technologies.some((tech) => tech.stackName === tag.stackName)
+        )
+      })
+      setResult(result)
+    } else {
+      setResult('')
+    }
+  }
+
+  const handleSelect = (e) => {
+    const id = e.target.id
+    const stackName = e.target.innerText
+    setFilters({
+      ...filters,
+      technologies: [...filters.technologies, { id, stackName }],
+    })
+    setResult('')
+    setSearch('')
+  }
+
+  useFiltersEffects(
+    filters,
+    setCategories,
+    currentPage,
+    setCurrentPage,
+    setProjects
+  )
   return (
     <div className='flex w-full items-center justify-center bg-secondaryBackground'>
       <div>
@@ -23,22 +91,63 @@ const Home = () => {
           </div>
 
           {/* navigation */}
-          <div className='absolute -left-6 top-1/2 -translate-y-1/2 transform cursor-pointer rounded-full bg-white p-2 text-4xl text-primaryDark'>
-            <IoIosArrowBack />
+          <div
+            className='absolute -left-6 top-1/2 -translate-y-1/2 transform cursor-pointer rounded-full bg-secondaryBackground p-2 text-4xl text-primaryDark'
+            onClick={() =>
+              bannerNavigation.currentPage > 1 &&
+              setBannerNavigation({
+                ...bannerNavigation,
+                currentPage: bannerNavigation.currentPage - 1,
+              })
+            }
+          >
+            {bannerNavigation.currentPage === 1 ? (
+              <IoIosArrowBack className='opacity-50' />
+            ) : (
+              <IoIosArrowBack />
+            )}
           </div>
-          <div className='absolute -right-6 top-1/2 -translate-y-1/2 transform cursor-pointer rounded-full bg-white p-2 text-4xl text-primaryDark'>
-            <IoIosArrowForward />
+
+          <div
+            className='absolute -right-6 top-1/2 -translate-y-1/2 transform cursor-pointer rounded-full bg-secondaryBackground p-2 text-4xl text-primaryDark'
+            onClick={() =>
+              bannerNavigation.currentPage < bannerNavigation.totalPages &&
+              setBannerNavigation({
+                ...bannerNavigation,
+                currentPage: bannerNavigation.currentPage + 1,
+              })
+            }
+          >
+            {bannerNavigation.currentPage === bannerNavigation.totalPages ? (
+              <IoIosArrowForward className='opacity-50' />
+            ) : (
+              <IoIosArrowForward />
+            )}
           </div>
 
           {/* pagination */}
           <div className='absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-4'>
-            <div className='h-3 w-3 cursor-pointer rounded-full bg-white' />
-            <div className='h-3 w-3 cursor-pointer rounded-full bg-gray-400' />
+            {Array.from(Array(bgImages.length), (_, i) => i + 1).map((page) => (
+              <div
+                className={`h-3 w-3 cursor-pointer rounded-full ${
+                  bannerNavigation.currentPage === page
+                    ? 'bg-white'
+                    : 'bg-gray-400'
+                }`}
+                key={page}
+                onClick={() =>
+                  setBannerNavigation({
+                    ...bannerNavigation,
+                    currentPage: page,
+                  })
+                }
+              />
+            ))}
           </div>
 
           {/* bg image */}
           <img
-            src={projectsViewCarousel}
+            src={bgImages[bannerNavigation.currentPage - 1]}
             alt='projectsViewCarousel'
             className='absolute right-20 top-0 h-full w-[320px] object-cover object-right'
             draggable={false}
@@ -52,24 +161,36 @@ const Home = () => {
             <select
               name='sort'
               className='h-12 w-32 rounded-lg border-none bg-primary pl-2 font-semibold text-white outline-none'
+              onChange={(e) => setFilters({ ...filters, sort: e.target.value })}
             >
-              <option value=''>Nuevo</option>
-              <option value=''>Más reciente</option>
-              <option value=''>Más antiguo</option>
+              <option value='-1'>Más reciente</option>
+              <option value='1'>Más antiguo</option>
             </select>
           </div>
 
           <div className='mt-3 flex gap-4'>
             <div className='mb-20 flex flex-col gap-4'>
-              <ProjectCard />
-              <ProjectCard />
-              <ProjectCard />
+              {projects?.documentsCurrentPage?.length > 0 ? (
+                projects?.documentsCurrentPage?.map((project) => (
+                  <ProjectCard key={project._id} project={project} />
+                ))
+              ) : (
+                <div className='mb-20 flex flex-col gap-4'>
+                  <div className='font-sans relative ml-1 flex h-screen w-[680px] items-center justify-center rounded-lg border border-secondaryContainerBorder bg-white text-primaryDark'>
+                    <div className='flex items-center justify-between px-8 pb-4 pt-6 text-xl'>
+                      <h4 className='cursor-pointer font-bold capitalize'>
+                        No se encontraron proyectos
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* advanced search */}
             <div className='h-full w-[470px] overflow-hidden rounded-lg border border-secondaryContainerBorder'>
               <div className='flex flex-col bg-white px-8'>
-                <p className='py-10 font-extrabold text-primaryDark'>
+                <p className='py-10 text-lg font-extrabold text-primaryDark'>
                   Busqueda avanzada
                 </p>
                 <p className='pb-8 text-sm font-medium text-secondaryText'>
@@ -79,87 +200,178 @@ const Home = () => {
                 </p>
               </div>
               <div className='border-y-2 border-primary border-opacity-10 bg-white p-8'>
-                <p className='font-extrabold text-primaryDark'>Tecnologías</p>
+                <p className='text-lg font-extrabold text-primaryDark'>
+                  Tecnologías
+                </p>
                 {/* search bar */}
-                <div className='relative mb-16 mt-12 flex w-full justify-center rounded-full border-2 border-primary border-opacity-60'>
+                <div className='relative z-10'>
                   <input
-                    className=' h-10 w-full bg-transparent px-10 pr-16 text-sm font-medium italic placeholder-primaryDark placeholder-opacity-50 outline-none'
-                    type='text'
-                    placeholder='Buscar tecnologías'
+                    className={`border-2 border-primary border-opacity-50 focus-visible:outline-0 ${
+                      result !== '' ? ' rounded-t-lg' : 'rounded-lg'
+                    } h-14 w-full p-8 `}
+                    type='search'
+                    placeholder='Ej: react.js'
+                    onChange={handleSearch}
+                    value={search}
                   />
-                  <div className='absolute right-0 top-1/2 -translate-y-1/2 transform cursor-pointer rounded-r-full bg-primary p-2 px-6 text-2xl text-white'>
-                    <IoIosSearch />
+
+                  <div
+                    className={
+                      result !== ''
+                        ? 'top-17 absolute w-full rounded-b-md border-2 border-t-0 border-primary border-opacity-50 bg-secondaryBackground p-4'
+                        : ''
+                    }
+                  >
+                    <div className='no-scrollbar flex max-h-60 flex-wrap items-center justify-center gap-2 overflow-auto text-white'>
+                      {result !== '' &&
+                        result.length > 0 &&
+                        result.map((tag) => {
+                          return (
+                            <div
+                              key={tag._id}
+                              className='flex cursor-pointer items-center gap-2 rounded-full bg-primary bg-opacity-70 px-4 py-1 text-white'
+                              onClick={handleSelect}
+                              id={tag._id}
+                              name={tag.stackName}
+                            >
+                              {tag.stackName}
+                            </div>
+                          )
+                        })}
+                      {result !== '' && result.length === 0 && (
+                        <p className='text-black'>No hay resultados</p>
+                      )}
+                    </div>
                   </div>
+                </div>
+                {/* selected tags */}
+                <div className='mt-4 flex flex-wrap gap-2'>
+                  {filters.technologies.map((technology) => (
+                    <div
+                      key={technology.id}
+                      className='flex cursor-pointer items-center gap-2 rounded-full bg-primary bg-opacity-70 px-4 py-1 text-white'
+                      onClick={() =>
+                        setFilters({
+                          ...filters,
+                          technologies: filters.technologies.filter(
+                            (tech) => tech.id !== technology.id
+                          ),
+                        })
+                      }
+                    >
+                      {technology.stackName}
+                    </div>
+                  ))}
                 </div>
               </div>
 
               {/* categories */}
-              <div className='flex flex-col gap-6 border-primary border-opacity-10 bg-white p-8 pb-12'>
-                <p className='font-extrabold text-primaryDark'>Categorías</p>
-                <div className='flex items-center gap-4'>
-                  <input
-                    className='peer h-4 w-4 cursor-pointer appearance-none rounded-sm border border-gray-500 border-opacity-40 bg-gray-300 checked:border-primaryDark'
-                    id='checkbox1'
-                    type='checkbox'
-                  />
-                  <label htmlFor='checkbox1' className='cursor-pointer'>
-                    Desarrollo Web
-                  </label>
-                  <BsCheckLg className='pointer-events-none absolute hidden text-primaryDark peer-checked:block' />
-                </div>
-                <div className='flex items-center gap-4'>
-                  <input
-                    className='peer h-4 w-4 cursor-pointer appearance-none rounded-sm border border-gray-500 border-opacity-40 bg-gray-300 checked:border-primaryDark'
-                    id='checkbox2'
-                    type='checkbox'
-                  />
-                  <label htmlFor='checkbox2' className='cursor-pointer'>
-                    Ciencia de datos
-                  </label>
-                  <BsCheckLg className='pointer-events-none absolute hidden text-primaryDark peer-checked:block' />
-                </div>
-                <div className='flex items-center gap-4'>
-                  <input
-                    className='peer h-4 w-4 cursor-pointer appearance-none rounded-sm border border-gray-500 border-opacity-40 bg-gray-300 checked:border-primaryDark'
-                    id='checkbox3'
-                    type='checkbox'
-                  />
-                  <label htmlFor='checkbox3' className='cursor-pointer'>
-                    Telecomunicaciones
-                  </label>
-                  <BsCheckLg className='pointer-events-none absolute hidden text-primaryDark peer-checked:block' />
+              <div className='flex flex-col gap-4 border-primary border-opacity-10 bg-white p-8 pb-12'>
+                <p className='text-lg font-extrabold text-primaryDark'>
+                  Categorías
+                </p>
+                {/* show first 5 categories */}
+                {categories?.category?.slice(0, 5).map((category) => (
+                  <div className='flex items-center gap-2' key={category._id}>
+                    <input
+                      className='peer h-4 w-4 cursor-pointer appearance-none rounded-sm border border-gray-500 border-opacity-40 bg-gray-300 checked:border-primaryDark'
+                      id={category.categoryName}
+                      type='checkbox'
+                      name='categories'
+                      onChange={(e) => handleFilters(e, filters, setFilters)}
+                    />
+                    <label
+                      htmlFor={category.categoryName}
+                      className='cursor-pointer capitalize'
+                    >
+                      {category.categoryName}
+                    </label>
+                    <BsCheckLg className='pointer-events-none absolute hidden text-primaryDark peer-checked:block' />
+                  </div>
+                ))}
+                {/* show more categories */}
+                {showMorecategories &&
+                  categories?.category?.slice(5).map((category) => (
+                    <div className='flex items-center gap-4' key={category._id}>
+                      <input
+                        className='peer h-4 w-4 cursor-pointer appearance-none rounded-sm border border-gray-500 border-opacity-40 bg-gray-300 checked:border-primaryDark'
+                        id={category.categoryName}
+                        type='checkbox'
+                        name='categories'
+                        onChange={handleFilters}
+                      />
+                      <label
+                        htmlFor={category.categoryName}
+                        className='cursor-pointer capitalize'
+                      >
+                        {category.categoryName}
+                      </label>
+                      <BsCheckLg className='pointer-events-none absolute hidden text-primaryDark peer-checked:block' />
+                    </div>
+                  ))}
+                {/* show more categories button */}
+                <div
+                  className='cursor-pointer font-semibold text-primaryDark'
+                  onClick={() => setShowMorecategories(!showMorecategories)}
+                >
+                  {showMorecategories ? 'Mostrar menos' : 'Mostrar más'}
                 </div>
               </div>
             </div>
           </div>
 
           {/* bottom pagination and navigation */}
-          <div className='mb-20 mt-10 flex items-center justify-center gap-2 self-start text-white'>
-            <div className='flex cursor-pointer items-center justify-center text-4xl'>
-              <IoIosArrowBack className='text-primaryDark text-opacity-50' />
+          <div className='mb-20 flex items-center justify-center gap-2 self-start text-white'>
+            <div
+              className='flex items-center justify-center text-4xl'
+              onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+            >
+              {currentPage === 1 ? (
+                <IoIosArrowBack
+                  className={`cursor-pointer text-primaryDark
+                ${projects?.totalPages === 0 && 'hidden'}
+              `}
+                />
+              ) : (
+                <IoIosArrowBack className='cursor-pointer text-primaryDark' />
+              )}
             </div>
 
-            <div className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primaryDark'>
-              1
-            </div>
-            <div className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primaryDark bg-opacity-50'>
-              2
-            </div>
-            <div className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primaryDark bg-opacity-50'>
-              3
-            </div>
-            <div className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primaryDark bg-opacity-50'>
-              4
-            </div>
-            <div className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primaryDark bg-opacity-50'>
-              5
-            </div>
-            <div className='flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primaryDark bg-opacity-50'>
-              6
-            </div>
+            {
+              // pagination
+              Array.from(Array(projects?.totalPages), (_, i) => i + 1).map(
+                (page) => (
+                  <div
+                    className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-full ${
+                      currentPage === page
+                        ? 'bg-primaryDark'
+                        : 'bg-primaryDark bg-opacity-50'
+                    }`}
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </div>
+                )
+              )
+            }
 
-            <div className='flex cursor-pointer items-center justify-center text-4xl'>
-              <IoIosArrowForward className='text-primaryDark' />
+            <div
+              className='flex items-center justify-center text-4xl'
+              onClick={() =>
+                currentPage < projects?.totalPages &&
+                setCurrentPage(currentPage + 1)
+              }
+            >
+              {currentPage === projects?.totalPages ? (
+                <IoIosArrowForward className='text-primaryDark text-opacity-50' />
+              ) : (
+                <IoIosArrowForward
+                  className={`cursor-pointer text-primaryDark
+                    ${projects?.totalPages === 0 && 'hidden'}
+                  `}
+                />
+              )}
             </div>
           </div>
         </div>

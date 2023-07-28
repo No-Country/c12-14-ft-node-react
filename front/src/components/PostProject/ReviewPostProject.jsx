@@ -1,10 +1,14 @@
 import validateProject from '@/libs/validationProject'
 import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
+  const navigate = useNavigate()
   const [terms, setTerms] = useState(false)
   const [notifications, setNotifications] = useState(false)
+  const { user } = useSelector((state) => state.auth)
 
   const handleEditForm = () => {
     setView(1)
@@ -22,13 +26,18 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
         technologies: form.technologies.map((technology) => {
           return technology.stackName
         }),
-        requiredRols: form.rols,
+        requiredRoles: form.rols,
         connectionLinks: form.links,
         terms,
         notifications,
         languaje: 'es',
         status: 'buscando colaboradores',
-        admins: ['idAdmin1'],
+        admins: [
+          {
+            userId: user._id,
+            username: user.userName,
+          },
+        ],
       }
 
       const send = await axios.post(
@@ -37,23 +46,15 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
       )
 
       if (send.status === 201) {
-        alert('Proyecto publicado')
-        setView(1)
-        setForm({
-          title: '',
-          category: '',
-          description: '',
-          technologies: [],
-          rols: [],
-          links: [],
-        })
+        navigate('/home')
       }
+      return true
     }
   }
 
   return (
     <form className='flex flex-col gap-10'>
-      <div className='container flex flex-col gap-10'>
+      <div className='container flex max-w-3xl flex-col gap-10'>
         {/* // title */}
         <div className='flex flex-col gap-2'>
           <h2 className=' font-bold  text-primary'>Titulo de proyecto</h2>
@@ -76,7 +77,7 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
         {/* // technologies */}
         <div className='flex flex-col gap-2'>
           <h2 className=' font-bold  text-primary'>Tecnologias requeridas</h2>
-          <div className='flex gap-2  rounded-lg border-2 border-[#6CB5FF] p-5'>
+          <div className='flex flex-wrap gap-2  rounded-lg border-2 border-[#6CB5FF] p-5'>
             {form.technologies.map((tecnology) => (
               <div
                 key={tecnology.id}
@@ -91,7 +92,7 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
         {/* // rols */}
         <div className='flex flex-col gap-2'>
           <label className='  font-bold  text-primary'>Roles solicitados</label>
-          <div className='flex gap-2  rounded-lg border-2 border-[#BBA9E1] p-5'>
+          <div className='flex flex-wrap gap-2  rounded-lg border-2 border-[#BBA9E1] p-5'>
             {form.rols.map((rol) => (
               <div
                 key={rol.id}

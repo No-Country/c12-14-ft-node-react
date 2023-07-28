@@ -1,3 +1,5 @@
+import teamremote from '@/assets/images/teamremote.png'
+import salesteam from '@/assets/images/salesteam.png'
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 import { useState } from 'react'
 import PostProject from '../../components/PostProject/PostProject'
@@ -34,16 +36,16 @@ function FormProject() {
       <section className=' m-1 w-1/3 pt-40'>
         <div className=''>
           {view === 1 ? (
-            <img src='src/assets/teamremote.png' alt='equipo remoto' />
+            <img src={teamremote} alt='equipo remoto' />
           ) : (
-            <img src='src/assets/salesteam.png' alt='equipo remoto' />
+            <img src={salesteam} alt='equipo remoto' />
           )}
         </div>
       </section>
 
       <section className='flex flex-col gap-20'>
-        <div className='flex items-center gap-2'>
-          <div className='flex gap-1'>
+        <div className='flex items-center justify-around'>
+          <div className='flex gap-5'>
             <span
               className={` grid h-7 w-7 place-items-center ${
                 view === 1 ? 'bg-primary' : 'bg-[#1D8841]'
@@ -60,7 +62,7 @@ function FormProject() {
             </p>
           </div>
           <MdOutlineArrowForwardIos />
-          <div className='flex gap-1'>
+          <div className='flex gap-5'>
             <span
               className={`grid h-7 w-7 place-items-center ${
                 view === 2 ? 'bg-primary' : 'bg-gray-400'

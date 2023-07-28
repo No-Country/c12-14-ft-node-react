@@ -1,11 +1,12 @@
-import AppStore from '@/assets/AppStore.png'
-import GooglePlay from '@/assets/GooglePlay.png'
+import AppStore from '@/assets/images/AppStore.png'
+import GooglePlay from '@/assets/images/GooglePlay.png'
 import {
   AiOutlineInstagram,
   AiOutlineDribbble,
   AiOutlineTwitter,
   AiFillYoutube,
 } from 'react-icons/ai'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -15,22 +16,16 @@ const Footer = () => {
         <div className='flex flex-col gap-3'>
           <p className='font-semibold text-white'>Compañía</p>
           <ul className='flex flex-col gap-3'>
-            <li className='text-sm font-thin text-white'>Acerca de Nosotros</li>
-            <li className='text-sm font-thin text-white'>Contáctanos</li>
+            <li className='rounded-lg text-sm font-bold text-white hover:bg-white hover:p-1 hover:text-black'>
+              <Link to='about-us'>Acerca de Nosotros</Link>
+            </li>
+            <li className='rounded-lg text-sm font-bold text-white hover:bg-white hover:p-1 hover:text-black'>
+              <Link to='contact'>Contáctanos</Link>
+            </li>
           </ul>
         </div>
 
-        <div className='flex flex-col gap-3'>
-          <p className='font-semibold text-white'>Install App</p>
-          <ul className='flex flex-col gap-3'>
-            <li className='text-sm font-thin text-white'>
-              <img src={GooglePlay} alt='Download on Google Play' />
-            </li>
-            <li className='text-sm font-thin text-white'>
-              <img src={AppStore} alt='Download on App Store' />
-            </li>
-          </ul>
-        </div>
+        <div className='flex flex-col gap-3'></div>
       </div>
 
       {/* Footer */}

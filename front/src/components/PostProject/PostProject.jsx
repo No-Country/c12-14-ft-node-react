@@ -23,9 +23,10 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
   const [rol, setRol] = useState({
     id: crypto.randomUUID(),
-    name: '',
+    rol: '',
     senority: '',
-    number: '',
+    ocupados: 0,
+    totales: '',
   })
 
   const [link, setLink] = useState({
@@ -103,27 +104,30 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
   const addRols = (e) => {
     e.preventDefault()
-    if (rol === '') return
-    setForm({
-      ...form,
-      rols: [...form.rols, rol],
-    })
-
-    validateProject(
-      {
+    if (rol.totales !== 0) {
+      if (rol === '') return
+      setForm({
         ...form,
-        rols: [...form.rols, rol],
-      },
-      errors,
-      setErrors
-    )
+        rols: [...form.rols, { ...rol, totales: Number(rol.totales) }],
+      })
 
-    setRol({
-      id: crypto.randomUUID(),
-      name: '',
-      senority: '',
-      number: '',
-    })
+      validateProject(
+        {
+          ...form,
+          rols: [...form.rols, rol],
+        },
+        errors,
+        setErrors
+      )
+
+      setRol({
+        id: crypto.randomUUID(),
+        rol: '',
+        senority: '',
+        totales: 0,
+        ocupados: '',
+      })
+    }
   }
 
   const handleDeleteRol = (e) => {
@@ -233,7 +237,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
   return (
     <form className='roun flex flex-col gap-10'>
-      <div className=' container flex flex-col gap-5'>
+      <div className=' container flex max-w-3xl flex-col gap-10'>
         {/* // title */}
         <div className='flex flex-col gap-2'>
           <label className=' font-bold  text-primary'>Titulo de proyecto</label>
@@ -252,7 +256,9 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
         <div className='flex flex-col gap-2'>
           <label className=' font-bold  text-primary'>Categoria</label>
           <select
-            className={classInput('category')}
+            className={`h-16 border-2 border-primary capitalize ${classInput(
+              'category'
+            )}`}
             name='category'
             value={form.category}
             onChange={handleInput}
@@ -262,6 +268,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
               categories.map((category) => {
                 return (
                   <option
+                    className=' hover:bg-primary'
                     key={category._id}
                     id={category._id}
                     value={category.categoryName}
@@ -290,7 +297,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
         </div>
 
         {/* // technologies */}
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-5'>
           <label className=' font-bold  text-primary'>
             Tecnologias requeridas
           </label>
@@ -302,7 +309,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
             setErrors={setErrors}
           />
           <div
-            className={`flex gap-2  rounded-lg border-2 border-[#6CB5FF] p-5 ${
+            className={`flex flex-wrap gap-2 rounded-lg border-2 border-[#6CB5FF] p-5 ${
               writing &&
               (errors.technologies !== ''
                 ? ' border-red-500  focus-visible:outline-red-500'
@@ -313,7 +320,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
               <div
                 key={tecnology.id}
                 id={tecnology.id}
-                className='rounded-xl bg-[#6CB5FF] p-2 font-bold'
+                className='grid min-w-[30%] justify-items-center rounded-xl bg-[#6CB5FF] p-2 font-bold'
                 onClick={handleDeleteTecnology}
               >
                 {tecnology.stackName}
@@ -324,7 +331,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
         </div>
 
         {/* // rols */}
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-5'>
           <label className=' font-bold  text-primary'>Roles solicitados</label>
           <div className='flex gap-2'>
             <div className='flex gap-2'>
@@ -332,8 +339,8 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
                 className='h-14 w-full rounded-lg border-2 border-[#BBA9E1] p-2 '
                 type='text'
                 placeholder='Ej: Backend'
-                value={rol.name}
-                name='name'
+                value={rol.rol}
+                name='rol'
                 onChange={handleInputRols}
               />
               <input
@@ -348,8 +355,8 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
                 className='h-14 w-full rounded-lg border-2 border-[#BBA9E1] p-2 '
                 type='number'
                 placeholder='Ej: 1'
-                value={rol.number}
-                name='number'
+                value={rol.totales}
+                name='totales'
                 onChange={handleInputRols}
               />
             </div>
@@ -361,7 +368,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
             </button>
           </div>
           <div
-            className={`flex gap-2  rounded-lg border-2 border-[#BBA9E1] p-5 ${
+            className={`flex flex-wrap gap-2 rounded-lg border-2 border-[#BBA9E1] p-5 ${
               writing &&
               (errors.rols !== ''
                 ? ' border-red-500  focus-visible:outline-red-500'
@@ -372,10 +379,10 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
               <div
                 key={rol.id}
                 id={rol.id}
-                className='rounded-xl bg-[#BBA9E1] p-2 font-bold'
+                className='grid min-w-[30%] justify-items-center rounded-xl bg-[#BBA9E1] p-2 font-bold'
                 onClick={handleDeleteRol}
               >
-                {`${rol.name} | ${rol.senority} | ${rol.number}`}
+                {`${rol.rol} | ${rol.senority} | ${rol.totales}`}
               </div>
             ))}
           </div>
@@ -411,7 +418,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
               <IoAddSharp color={'#5526B3'} />
             </button>
           </div>
-          <div className='flex gap-2  rounded-lg border-2 p-5'>
+          <div className='flex flex-wrap gap-2  rounded-lg border-2 p-5'>
             {form.links.map((link) => (
               <p
                 key={link.id}

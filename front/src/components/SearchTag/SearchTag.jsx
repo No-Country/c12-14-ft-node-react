@@ -55,7 +55,7 @@ function SearchTag({ data, datastate, setDatastate, errors, setErrors }) {
       <div
         className={
           result !== ''
-            ? 'top-17 absolute w-full rounded-b-md border-2 border-[#6CB5FF] bg-slate-300 p-4'
+            ? 'no-scrollbar top-17 absolute flex max-h-60 w-full flex-wrap items-center justify-center gap-2 overflow-auto rounded-b-md border-2 border-[#6CB5FF] bg-white p-4 text-white'
             : ''
         }
       >
@@ -65,7 +65,7 @@ function SearchTag({ data, datastate, setDatastate, errors, setErrors }) {
             return (
               <div
                 key={tag._id}
-                className='w-1/3 cursor-pointer rounded-lg bg-[#6CB5FF]'
+                className='flex cursor-pointer items-center gap-2 rounded-full bg-[#6CB5FF] bg-opacity-70 px-4 py-1 text-white'
               >
                 <p
                   className='flex justify-center font-bold'

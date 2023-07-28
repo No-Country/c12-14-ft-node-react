@@ -1,55 +1,124 @@
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 const OAuth2 = google.auth.OAuth2
-
 const accountTransport = require('../../config/nodemailer/account.transport.json')
-const CLIENT_ID = accountTransport.auth.clientId
-const CLIENT_SECRET = accountTransport.auth.clientSecret
-const REDIRECT_URI = accountTransport.auth.redirectURI
-const REFRESH_TOKEN = accountTransport.auth.refreshToken
 
-const oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
+const TemplateMails = require('../helpers/templateMails')
+const templates = new TemplateMails()
 
-oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
+class MailService {
+  constructor() {
+    const { clientId, clientSecret, redirectURI, refreshToken } =
+      accountTransport.auth
 
-async function sendMail({ to, subject, html }) {
-  try {
-    const access_token = await oauth2Client.getAccessToken()
-    const transporter = nodemailer.createTransport({
+    this.clientId = clientId
+    this.clientSecret = clientSecret
+    this.redirectURI = redirectURI
+    this.refresh_token = refreshToken
+
+    this.oauth2Client = new OAuth2(
+      this.clientId,
+      this.clientSecret,
+      this.redirectURI
+    )
+    this.oauth2Client.setCredentials({ refresh_token: this.refresh_token })
+
+    this.transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         type: 'OAuth2',
         user: 'uva.team.no.country@gmail.com',
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
-        accessToken: access_token,
+        clientId: this.clientId,
+        clientSecret: this.clientSecret,
+        refreshToken: this.refresh_token,
       },
     })
+  }
 
-    const mailOptions = {
-      from: 'UVA <uva.team.no.country@gmail.com>',
-      to: [...to],
-      subject: subject,
-      html: html,
+  async sendMail({ to, subject, html }) {
+    try {
+      //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
+
+      const mailOptions = {
+        from: 'UVA <uva.team.no.country@gmail.com>',
+        to: [...to],
+        subject: subject,
+        html: html,
+      }
+
+      return await this.transporter.sendMail(mailOptions)
+    } catch (e) {
+      console.log(e)
     }
+  }
 
-    return await transporter.sendMail(mailOptions)
-  } catch (e) {
-    console.log(e)
+  async sendWelcome({ to, subject = '¡Bienvenido a UVA! ' }) {
+    try {
+      //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
+
+      const mailOptions = {
+        from: 'UVA <uva.team.no.country@gmail.com>',
+        to: to,
+        subject: subject,
+        html: templates.welcome(),
+      }
+
+      return await this.transporter.sendMail(mailOptions)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async sendPostulationToProjectOwner({ to, projectData, postulantData }) {
+    try {
+      const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
+
+      const mailOptions = {
+        from: 'UVA <uva.team.no.country@gmail.com>',
+        to: to,
+        subject: `¡Hey! Alguien ha postulado para tu proyecto: ${projectData.title}!`,
+        html: templates.postulationForProyect({ projectData, postulantData }),
+      }
+
+      return await this.transporter.sendMail(mailOptions)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async sendAcceptedConfirmation({ projectData, postulantData }) {
+    try {
+      //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
+
+      const mailOptions = {
+        from: 'UVA <uva.team.no.country@gmail.com>',
+        to: postulantData.email,
+        subject: `¡Felicitaciones! Has sido aceptado para colaborar en el proyecto: ${projectData.title}!`,
+        html: templates.postulantAccepted({ projectData, postulantData }),
+      }
+
+      return await this.transporter.sendMail(mailOptions)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  async sendRejectedConfirmation({ projectData, postulantData }) {
+    try {
+      //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
+
+      const mailOptions = {
+        from: 'UVA <uva.team.no.country@gmail.com>',
+        to: postulantData.email,
+        subject: `Lamentamos informarte que tu solicitud para colaborar en el proyecto: ${projectData.title} ha sido rechazada.`,
+        html: templates.postulantRejected({ projectData, postulantData }),
+      }
+
+      return await this.transporter.sendMail(mailOptions)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 
-
-sendMail({
-  to: ['castellanofacundo@hotmail.com'],
-  subject: 'Correo de prueba',
-  html: `<b> Hola desde UVA TEAM</b> </br> </hr>
-        Espero tengas un buen dia\n
-        saludos cordiales.
-        el equipo de UVA TEAM`,
-}).then((result) => {
-  console.log(result)
-})
-
-module.exports = { sendMail }
+module.exports = MailService

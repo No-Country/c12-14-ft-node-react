@@ -1,6 +1,6 @@
 // import LoginAs from '@/components/Auth/LoginAs/LoginAs'
 import LoginForm from '@/components/Auth/LoginForm/LoginForm'
-import AuthBG from '@/assets/authBg.svg'
+import AuthBG from '@/assets/images/authBg.svg'
 import { Link } from 'react-router-dom'
 
 const Login = () => {

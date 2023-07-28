@@ -1,5 +1,5 @@
 import RegisterForm from '@/components/Auth/RegisterForm/RegisterForm'
-import AuthBG from '@/assets/authBg.svg'
+import AuthBG from '@/assets/images/authBg.svg'
 import { Link } from 'react-router-dom'
 
 const Login = () => {

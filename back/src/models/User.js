@@ -13,6 +13,12 @@ const userSchema = new Schema(
     password: {
       type: String,
     },
+    firstName: {
+      type: String,
+    },
+    lastName: {
+      type: String,
+    },
     userName: {
       type: String,
       unique: true, //-->ver si esto esta bien q sea asi, pq el mail podria ser el identificador
@@ -91,10 +97,10 @@ const userSchema = new Schema(
   }
 )
 
-userSchema.methods.toJSON = function (){
-  const {password,googleAuth,
-    gitHubAuth,LinkedInAuth, ...user} = this.toObject();
-  return user;
+userSchema.methods.toJSON = function () {
+  const { password, googleAuth, gitHubAuth, LinkedInAuth, ...user } =
+    this.toObject()
+  return user
 }
 
 module.exports = connection.model('User', userSchema)

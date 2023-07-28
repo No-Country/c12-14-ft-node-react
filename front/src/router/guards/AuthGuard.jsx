@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 export const AuthGuard = () => {
   const user = useSelector((state) => state.auth)
 
-  if (!user?.user?.id) {
+  if (!user?.user?._id) {
     return <Navigate to='/login' />
   }
 

@@ -1,8 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { userCheck } from '@/libs/userCheck'
 
+export const fetchUser = createAsyncThunk('auth/fetchUser', userCheck)
+
 const initialState = {
-  user: await userCheck(),
+  user: null,
 }
 
 const authSlice = createSlice({
@@ -12,6 +14,11 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       localStorage.setItem('user', JSON.stringify(action.payload))
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      state.user = action.payload
+    })
   },
 })
 
