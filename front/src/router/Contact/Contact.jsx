@@ -15,16 +15,16 @@ const Contact = () => {
           <form className='flex w-full flex-col items-center justify-center gap-8 pt-12'>
             <input
               type='text'
-              className='w-full rounded-md border py-4 pl-6 text-sm'
+              className='w-full rounded-md border py-4 pl-6 text-sm outline-primary'
               placeholder='Tu nombre'
             />
             <input
               type='text'
-              className='w-full rounded-md border py-4 pl-6 text-sm'
+              className='w-full rounded-md border py-4 pl-6 text-sm outline-primary'
               placeholder='Correo electrónico'
             />
             <textarea
-              className='h-36 w-full rounded-md border py-4 pl-6 text-sm'
+              className='h-36 w-full rounded-md border py-4 pl-6 text-sm outline-primary'
               placeholder='Puedes redactar tu mensaje aquí'
             />
             <button className='w-2/3 rounded-md bg-primary py-3 font-bold uppercase text-white'>
