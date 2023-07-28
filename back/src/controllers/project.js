@@ -30,7 +30,11 @@ const getProject = async (req, res = response) => {
 const createProjects = async (req, res = response) => {
   await projectRepository
     .create(req.body)
-    .then((data) => {
+    .then(async (data) => {
+      const id = req.body.admins[0].userId
+      const user = await userRepository.findById(id)
+      user.adminProjects.push(data._id)
+      await user.save()
       res
         .status(201)
         .json({ msg: 'Project successfully created', project: data })
