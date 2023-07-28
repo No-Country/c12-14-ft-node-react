@@ -79,7 +79,7 @@ function ModalEditStack({ user }) {
       <form action='' className=' flex flex-col gap-8'>
         {/* // stack */}
         <div className='flex flex-col gap-4'>
-          <label className=' font-bold'>Mis Roles</label>
+          <label className=' font-bold'>Mis Tegnologias</label>
 
           <div className={`flex flex-wrap gap-2`}>
             {form.stack.map((technology) => (
