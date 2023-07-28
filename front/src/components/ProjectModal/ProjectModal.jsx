@@ -39,6 +39,16 @@ export const ProjectModal = ({ project, setShowModal }) => {
   )
 
   const handleApply = async () => {
+    if (!user) {
+      Swal.fire({
+        title: '¡Inicia sesión!',
+        text: 'Debes iniciar sesión para poder postularte',
+        icon: 'warning',
+        confirmButtonText: 'Ok',
+      })
+      return
+    }
+
     const params = {
       projectId: project._id,
       postulantId: user._id,
@@ -47,6 +57,7 @@ export const ProjectModal = ({ project, setShowModal }) => {
         senority: currentRol.senority,
       },
     }
+
     const { data } = await uvaApi.patch('/projects/postulant', params)
     if (data.msg.includes('Mail sended')) {
       Swal.fire({
