@@ -1,4 +1,5 @@
 import { FaSquareGithub, FaLinkedin } from 'react-icons/fa6'
+import { RiPagesLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import facundo from '@/assets/images/facundo.png'
 import jeffer from '@/assets/images/jeffer.png'
@@ -31,7 +32,12 @@ const Member = (member) => {
             <FaSquareGithub size={20} className='hover:text-primary' />
           </Link>
         )}
-        <Link to={member.info.github} target='__blank'>
+        {member.info?.portfolio && (
+          <Link to={member.info.portfolio} target='__blank'>
+            <RiPagesLine size={20} className='hover:text-primary' />
+          </Link>
+        )}
+        <Link to={member.info.linkedin} target='__blank'>
           <FaLinkedin size={20} className='hover:text-primary' />
         </Link>
       </div>
@@ -55,7 +61,7 @@ const members = [
     name: 'Gabriela Salazar',
     rol: 'UX/UI Designer',
     github: '',
-    portfolio: '',
+    portfolio: 'https://gabrielasalazar299.wixsite.com/gabriela-salazar',
     linkedin: 'https://www.linkedin.com/in/gsalazarc/',
     ubication: italy,
     nationality: salvador,

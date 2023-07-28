@@ -98,7 +98,7 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
                 key={rol.id}
                 className='rounded-xl bg-[#BBA9E1] p-2 font-bold'
               >
-                {`${rol.name} | ${rol.senority} | ${rol.number}`}
+                {`${rol.name} | ${rol.senority} | ${rol.totales}`}
               </div>
             ))}
           </div>
