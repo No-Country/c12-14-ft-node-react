@@ -218,7 +218,6 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
       errors.links === ''
     ) {
       setView(2)
-      console.log(form)
     }
   }
 
