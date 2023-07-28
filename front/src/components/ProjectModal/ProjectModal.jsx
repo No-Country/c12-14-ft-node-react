@@ -32,7 +32,7 @@ export const ProjectModal = ({ project, setShowModal }) => {
   const isCollaborator = project?.collaborators.find(
     (collaborator) => collaborator._id === user._id
   )
-  const isAdmin = project?.admins.find((admin) => admin.userId === user._id)
+  const isAdmin = project?.admins.find((admin) => admin.userId === user?._id)
   const isAvailableRoles = project?.requiredRoles.length > 0
   const isApplying = project?.postulants.find(
     (postulant) => postulant._id === user._id
