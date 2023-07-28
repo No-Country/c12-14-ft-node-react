@@ -70,7 +70,7 @@ class ProjectRepository extends BaseRepository {
             .find({ $and: criteriaArray })
             .count()
           const totalPages = Math.ceil(totalDocuments / limitAsNumber)
-          
+
           return {
             totalPages: totalPages,
             documentsCurrentPage: documentToReturn,
@@ -206,12 +206,13 @@ class ProjectRepository extends BaseRepository {
     }
   }
 
-  async addPostulant({ proyectId, postulantData }) {
+  async addPostulant({ projectId, postulantData }) {
     try {
-      const project = await projectModel.findById(proyectId)
+      const project = await projectModel.findById(projectId)
 
       //verifico que no haya sido rechazado o que este aceptado.
       const collaborators = project.collaborators
+
       for (let collaborator of collaborators) {
         if (collaborator.id === postulantData.id) {
           return collaborator.status
@@ -220,8 +221,9 @@ class ProjectRepository extends BaseRepository {
 
       //verifico que no postule dos veces
       const postulants = project.postulants
+
       for (let postulant of postulants) {
-        if (postulant.id === postulantData.id) {
+        if (postulant.postulantId === postulantData.id) {
           return postulant.status
         }
       }
@@ -234,11 +236,17 @@ class ProjectRepository extends BaseRepository {
         date: new Date(),
       }
 
-      return await projectModel.findOneAndUpdate(
-        { id: proyectId },
+      const projectUpdated = await projectModel.findOneAndUpdate(
+        { _id: projectId },
         { $push: { postulants: newPostulant } },
         { new: true }
       )
+
+      if (!projectUpdated) {
+        console.log('Proyecto no encontrado en la funcion AddPostulant.')
+      } else {
+        return 'postulated'
+      }
     } catch (err) {
       console.log(err)
       Logger.error(
@@ -250,32 +258,36 @@ class ProjectRepository extends BaseRepository {
 
   async acceptRejectPostulant(projectId, postulantId, desition) {
     const project = await this.findById(projectId)
+
     const postulants = project.postulants
     const collaborators = project.collaborators
-    const requiredRols = project.requiredRols
+    const requiredRoles = project.requiredRoles
 
     for (let [indexPostulant, postulant] of postulants.entries()) {
-      let id
-      let rol
-      let senority
-
+ 
       if (postulant.postulantId === postulantId) {
-        id = postulant.postulantId
-        rol = postulant.rol
-        senority = postulant.senority
-      }
-      if (id && rol && senority) {
+
+        const collaborator = {
+          rol: postulant.rol,
+          senority: postulant.senority,
+          id: postulantId,
+          date: new Date(),
+        }
         if (desition) {
-          collaborators.push(id)
-          for (let [index, vacant] of requiredRols.entries()) {
+          collaborator.status = 'accepted'
+
+          for (let [index, vacant] of requiredRoles.entries()) {
+
             if (vacant.rol == rol && vacant.senority == senority) {
               vacant.ocupados += 1
-              requiredRols.splice(index, 1, vacant)
-
+              requiredRoles.splice(index, 1, vacant)
               break
             }
           }
+        } else {
+          collaborator.status = 'rejected'
         }
+        collaborators.push(collaborator)
         postulants.splice(indexPostulant, 1)
         break
       }
@@ -283,7 +295,7 @@ class ProjectRepository extends BaseRepository {
     return await this.UpdateById(projectId, {
       postulants,
       collaborators,
-      requiredRols,
+      requiredRoles,
     })
 
     //habria que ver como diferenciar si el proyecto fue modificado o no.. pero  ver bien el return
