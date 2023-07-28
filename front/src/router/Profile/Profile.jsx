@@ -226,16 +226,21 @@ function Profile() {
             </h2>
             <ol className=' list-decimal'>
               {user.adminProjects.length !== 0 ? (
-                user.adminProjects.map((project) => (
-                  <li key={project._id}>
-                    <p
-                      value={project._id}
-                      className='cursor-pointer font-bold underline'
-                    >
-                      {project.title}
-                    </p>
-                  </li>
-                ))
+                // eslint-disable-next-line array-callback-return
+                user.adminProjects.map((project) => {
+                  if (project) {
+                    return (
+                      <li key={project._id}>
+                        <p
+                          value={project._id}
+                          className='cursor-pointer font-bold underline'
+                        >
+                          {project.title}
+                        </p>
+                      </li>
+                    )
+                  }
+                })
               ) : (
                 <span>Sin Proyectos Publicados</span>
               )}
