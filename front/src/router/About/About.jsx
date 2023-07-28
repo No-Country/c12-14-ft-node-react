@@ -26,9 +26,11 @@ const Member = (member) => {
       </div>
       <h3>{member.info.rol}</h3>
       <div className='flex gap-2'>
-        <Link to={member.info.github} target='__blank'>
-          <FaSquareGithub size={20} className='hover:text-primary' />
-        </Link>
+        {member.info?.github && (
+          <Link to={member.info.github} target='__blank'>
+            <FaSquareGithub size={20} className='hover:text-primary' />
+          </Link>
+        )}
         <Link to={member.info.github} target='__blank'>
           <FaLinkedin size={20} className='hover:text-primary' />
         </Link>
@@ -52,9 +54,10 @@ const members = [
     id: 2,
     photo: gabriela,
     name: 'Gabriela Salazar',
-    rol: 'UX|UI Designer',
+    rol: 'UX/UI Designer',
     github: '',
-    linkedin: '',
+    portfolio: '',
+    linkedin: 'https://www.linkedin.com/in/gsalazarc/',
     ubication: italy,
     nationality: salvador,
   },
@@ -63,8 +66,8 @@ const members = [
     photo: jeffer,
     name: 'Jefferson Steven',
     rol: 'Frontend Developer',
-    github: '',
-    linkedin: '',
+    github: 'https://github.com/Jefersonsteven',
+    linkedin: 'https://www.linkedin.com/in/jeffersonsteven/',
     ubication: colombia,
   },
   {
@@ -72,8 +75,8 @@ const members = [
     photo: luis,
     name: 'Luis Osio Chico',
     rol: 'Frontend Developer',
-    github: '',
-    linkedin: '',
+    github: 'https://github.com/LOsioChico',
+    linkedin: 'https://www.linkedin.com/in/jeffersonsteven/',
     ubication: colombia,
   },
   {
@@ -81,8 +84,8 @@ const members = [
     photo: saul,
     name: 'Saul Zamora',
     rol: 'Backend Developer',
-    github: '',
-    linkedin: '',
+    github: 'https://github.com/G-zeus',
+    linkedin: 'https://www.linkedin.com/in/szamorasoft/',
     ubication: mexico,
   },
 ]
@@ -91,9 +94,11 @@ function About() {
   return (
     <main className='flex max-w-6xl flex-col items-center justify-around gap-28 py-24'>
       <section>
-        <div className=' h-5 w-1/2 bg-[#4285F4]'></div>
+        <div className=' flex flex-col gap-1'>
+          <div className=' h-1 w-1/2 rounded-md bg-[#4285F4]'></div>
+          <div className=' h-2 w-1/2 rounded-md bg-[#4285F4]'></div>
+        </div>
         <h1 className=' text-3xl font-bold'>Nuestro Equipo</h1>
-        <div className=' h-5 w-1/2 bg-[#4285F4]'></div>
       </section>
       <section className='flex gap-2'>
         {members.map((member) => (

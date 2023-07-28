@@ -55,7 +55,7 @@ const RegisterForm = () => {
       })
 
       dispatch(setUser(data.newUser))
-      navigate('/')
+      navigate('/login')
     } catch (error) {
       error.response.data.errors.forEach((error) => {
         if (error.msg.includes('email')) {

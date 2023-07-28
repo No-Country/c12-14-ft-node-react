@@ -53,7 +53,7 @@ function ModalEditProfile({ user }) {
           ...form.roles,
           {
             id: crypto.randomUUID(),
-            name: rol,
+            name: rol.name,
           },
         ],
       })
