@@ -2,11 +2,13 @@ import validateProject from '@/libs/validationProject'
 import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
   const navigate = useNavigate()
   const [terms, setTerms] = useState(false)
   const [notifications, setNotifications] = useState(false)
+  const { user } = useSelector((state) => state.auth)
 
   const handleEditForm = () => {
     setView(1)
@@ -24,13 +26,18 @@ function ReviewPostProject({ form, setForm, errors, setErrors, setView }) {
         technologies: form.technologies.map((technology) => {
           return technology.stackName
         }),
-        requiredRols: form.rols,
+        requiredRoles: form.rols,
         connectionLinks: form.links,
         terms,
         notifications,
         languaje: 'es',
         status: 'buscando colaboradores',
-        admins: ['idAdmin1'],
+        admins: [
+          {
+            userId: user._id,
+            username: user.userName,
+          },
+        ],
       }
 
       const send = await axios.post(

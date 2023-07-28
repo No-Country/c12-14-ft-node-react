@@ -10,6 +10,7 @@ import ModalEditInfo from '../../components/Modals/ModalEditInfo/ModalEditInfo'
 import { setUser } from '../../redux/slices/userSlice'
 import getUser from '../../libs/getUser'
 import ModalEditStack from '../../components/Modals/ModalEditStack/ModalEditStack'
+import imagedefault from '@/assets/images/default.png'
 
 function Profile() {
   const dispatch = useDispatch()
@@ -92,10 +93,7 @@ function Profile() {
             {/* image */}
             <div className='relative'>
               <img
-                src={user?.photo || '/src/assets/default.png'}
-                onError={(e) => {
-                  e.target.src = '/src/assets/default.png'
-                }}
+                src={user?.photo || imagedefault}
                 alt={user.userName}
                 className=' h-40 w-40 rounded-full'
               />

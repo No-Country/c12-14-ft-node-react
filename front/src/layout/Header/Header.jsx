@@ -1,10 +1,11 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import UvaLogo from '@/assets/UvaLogo.jsx'
+import UvaLogo from '@/assets/images/UvaLogo.jsx'
 import { MdNotifications } from 'react-icons/md'
 import { BiLogOutCircle } from 'react-icons/bi'
 import { useSelector } from 'react-redux'
 import { uvaApi } from '../../api/index'
 import { setUser } from '../../redux/slices/userSlice'
+import imagedefault from '@/assets/images/default.png'
 
 const Header = () => {
   const user = useSelector((state) => state.auth.user)
@@ -94,10 +95,7 @@ const Header = () => {
               <li>
                 <img
                   className='rounded-full'
-                  src={user.photo}
-                  onError={(e) => {
-                    e.target.src = '/src/assets/default.png'
-                  }}
+                  src={user?.photo || imagedefault}
                   width={48}
                   height={48}
                   alt='foto de perfil'

@@ -23,9 +23,10 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
   const [rol, setRol] = useState({
     id: crypto.randomUUID(),
-    name: '',
+    rol: '',
     senority: '',
-    number: '',
+    ocupados: 0,
+    totales: '',
   })
 
   const [link, setLink] = useState({
@@ -103,27 +104,30 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
 
   const addRols = (e) => {
     e.preventDefault()
-    if (rol === '') return
-    setForm({
-      ...form,
-      rols: [...form.rols, rol],
-    })
-
-    validateProject(
-      {
+    if (rol.totales !== 0) {
+      if (rol === '') return
+      setForm({
         ...form,
-        rols: [...form.rols, rol],
-      },
-      errors,
-      setErrors
-    )
+        rols: [...form.rols, { ...rol, totales: Number(rol.totales) }],
+      })
 
-    setRol({
-      id: crypto.randomUUID(),
-      name: '',
-      senority: '',
-      number: '',
-    })
+      validateProject(
+        {
+          ...form,
+          rols: [...form.rols, rol],
+        },
+        errors,
+        setErrors
+      )
+
+      setRol({
+        id: crypto.randomUUID(),
+        rol: '',
+        senority: '',
+        totales: 0,
+        ocupados: '',
+      })
+    }
   }
 
   const handleDeleteRol = (e) => {
@@ -335,8 +339,8 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
                 className='h-14 w-full rounded-lg border-2 border-[#BBA9E1] p-2 '
                 type='text'
                 placeholder='Ej: Backend'
-                value={rol.name}
-                name='name'
+                value={rol.rol}
+                name='rol'
                 onChange={handleInputRols}
               />
               <input
@@ -351,8 +355,8 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
                 className='h-14 w-full rounded-lg border-2 border-[#BBA9E1] p-2 '
                 type='number'
                 placeholder='Ej: 1'
-                value={rol.number}
-                name='number'
+                value={rol.totales}
+                name='totales'
                 onChange={handleInputRols}
               />
             </div>
@@ -378,7 +382,7 @@ function PostProject({ form, setForm, errors, setErrors, setView }) {
                 className='grid min-w-[30%] justify-items-center rounded-xl bg-[#BBA9E1] p-2 font-bold'
                 onClick={handleDeleteRol}
               >
-                {`${rol.name} | ${rol.senority} | ${rol.number}`}
+                {`${rol.rol} | ${rol.senority} | ${rol.totales}`}
               </div>
             ))}
           </div>

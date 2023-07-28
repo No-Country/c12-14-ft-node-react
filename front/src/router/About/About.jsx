@@ -1,5 +1,15 @@
 import { FaSquareGithub, FaLinkedin } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
+import facundo from '@/assets/images/facundo.png'
+import jeffer from '@/assets/images/jeffer.png'
+import luis from '@/assets/images/luis.png'
+import gabriela from '@/assets/images/gabriela.png'
+import saul from '@/assets/images/saul.png'
+import argentina from '@/assets/images/argentina.png'
+import colombia from '@/assets/images/colombia.png'
+import mexico from '@/assets/images/mexico.png'
+import salvador from '@/assets/images/salvador.png'
+import italy from '@/assets/images/italy.png'
 
 const Member = (member) => {
   return (
@@ -8,6 +18,12 @@ const Member = (member) => {
       <h2 className=' font-bold text-primaryDark'>
         <b>{member.info.name}</b>
       </h2>
+      <div className='flex gap-2'>
+        {member.info.nationality && (
+          <img src={member.info.nationality} alt='soy' />
+        )}
+        <img src={member.info.ubication} alt='ubicacion' />
+      </div>
       <h3>{member.info.rol}</h3>
       <div className='flex gap-2'>
         <Link to={member.info.github} target='__blank'>
@@ -24,44 +40,50 @@ const Member = (member) => {
 const members = [
   {
     id: 5,
-    photo: 'src/assets/facundo.png',
-    name: 'Facundo',
+    photo: facundo,
+    name: 'Facundo Castellano',
     rol: 'Backend Developer',
     github: '',
     linkedin: '',
+    ubication: argentina,
   },
 
   {
     id: 2,
-    photo: 'src/assets/gabriela.png',
+    photo: gabriela,
     name: 'Gabriela Salazar',
     rol: 'UX|UI Designer',
     github: '',
     linkedin: '',
+    ubication: italy,
+    nationality: salvador,
   },
   {
     id: 1,
-    photo: 'src/assets/jeffer.png',
+    photo: jeffer,
     name: 'Jefferson Steven',
     rol: 'Frontend Developer',
     github: '',
     linkedin: '',
+    ubication: colombia,
   },
   {
     id: 3,
-    photo: 'src/assets/luis.png',
-    name: 'Luis',
+    photo: luis,
+    name: 'Luis Osio Chico',
     rol: 'Frontend Developer',
     github: '',
     linkedin: '',
+    ubication: colombia,
   },
   {
     id: 4,
-    photo: 'src/assets/saul.png',
-    name: 'Saul',
+    photo: saul,
+    name: 'Saul Zamora',
     rol: 'Backend Developer',
     github: '',
     linkedin: '',
+    ubication: mexico,
   },
 ]
 
