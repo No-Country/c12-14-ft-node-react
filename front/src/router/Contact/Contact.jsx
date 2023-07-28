@@ -2,6 +2,7 @@ import contactBg from '@/assets/images/contactBg.png'
 import doubleCircle from '@/assets/images/doubleCircle.png'
 import backLeft from '@/assets/images/backLeft.png'
 import backRight from '@/assets/images/backRight.png'
+import Swal from 'sweetalert2'
 
 const Contact = () => {
   return (
@@ -12,7 +13,18 @@ const Contact = () => {
             El poder de la colaboración es extraordinario. ¡Hablemos pronto y
             exploremos juntos el emocionante camino del trabajo en equipo!
           </p>
-          <form className='flex w-full flex-col items-center justify-center gap-8 pt-12'>
+          <form
+            className='flex w-full flex-col items-center justify-center gap-8 pt-12'
+            onSubmit={(e) => {
+              e.preventDefault()
+              Swal.fire({
+                icon: 'success',
+                title: '¡Gracias por tu mensaje!',
+                text: 'En breve nos pondremos en contacto contigo.',
+                confirmButtonText: 'Cerrar',
+              })
+            }}
+          >
             <input
               type='text'
               className='w-full rounded-md border py-4 pl-6 text-sm outline-primary'
