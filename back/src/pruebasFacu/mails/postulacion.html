@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Plantilla de correo electrónico con botones de aceptar/rechazar
+    </title>
+    <style>
+      .button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold; /* Texto en negrita */
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      .button-accept {
+        background-color: #4caf50;
+        color: white;
+      }
+      .button-reject {
+        background-color: #f44336;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>¡Hola!</h1>
+    <p>Has recibido una solicitud para un proyecto.</p>
+    <p>¿Deseas aceptar o rechazar la solicitud?</p>
+    <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${proyectId}&postulantId=${postulantId}&desition=${desition}" class="button button-accept" id="accept-button">Aceptar</a>
+    <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${proyectId}&postulantId=${postulantId}&desition${desition}" class="button button-reject" id="reject-button">Rechazar</a>
+  </body>
+</html>

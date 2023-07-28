@@ -70,7 +70,7 @@ const getProjectsFilteredByTechAndCat = async (
   res = response
 ) => {
   try {
-    const { limit, page, getPages,sort } = req.query
+    const { limit, page, getPages, sort } = req.query
     const categories = req.body.categories
     const technologies = req.body.technologies
     const data = await projectRepository.filterCrossTechAndCat({
@@ -79,7 +79,7 @@ const getProjectsFilteredByTechAndCat = async (
       limit,
       page,
       getPages,
-      sort
+      sort,
     })
 
     res.send({ msg: 'Projects founded', ...data })
@@ -150,6 +150,7 @@ const postulantDesition = async (req = request, res = response) => {
       postulantId,
       desition
     )
+
     const project = await projectRepository.findById(projectId)
     const postulant = await userRepository.findById(postulantId)
 
@@ -159,31 +160,33 @@ const postulantDesition = async (req = request, res = response) => {
     }
 
     const postulantData = {
+      lastname: postulant.lastName,
+      username: postulant.userName,
       firstname: postulant.firstName,
-      lastname: postulant.lasttName,
       email: postulant.email,
     }
 
     if (desition) {
+      //tengo q agregar el proyectoId a user. su propiedad CollaboratorProjects.
+
+      const user = await userRepository.findById(postulantId)
+      user.collaboratorProjects.push(projectId)
+      await user.save()
+
       await mailService.sendAcceptedConfirmation({
         projectData,
         postulantData,
       })
 
       //habria q mandarle un mail de que fue aceptado
-      res.redirect(
-        'https://previews.123rf.com/images/mahmud7/mahmud71709/mahmud7170900011/85202177-grunge-green-accepted-rubber-seal-stamp-on-white-background.jpg'
-      )
+      res.redirect('https://uva-to1s.onrender.com/')
     } else {
-
       await mailService.sendRejectedConfirmation({
         projectData,
         postulantData,
       })
       //habria que mandarle un mail que fue rechazado
-      res.redirect(
-        'https://media.istockphoto.com/id/533935463/es/foto/rechazado.webp?s=2048x2048&w=is&k=20&c=vT3raukmOIiVqRScTGKevsfqwcbmTKK--Qo3Ti2MW_I='
-      )
+      res.redirect('https://uva-to1s.onrender.com/')
     }
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
@@ -213,21 +216,30 @@ const sentMailToProjectOwner = async (req = request, res = response) => {
       id: postulantId,
       firstName: postulant.firstName,
       lastName: postulant.lastName,
+      userName: postulant.userName,
       socialsMedia: postulant.socialsMedia,
       rol: rol,
     }
 
-    await projectRepository.addPostulant({
+    const postulantCondition = await projectRepository.addPostulant({
       projectId,
       postulantData: postulantData1,
     })
-    await mailService.sendPostulationToProjectOwner({
-      to: adminMail,
-      projectData,
-      postulantData: postulantData2,
-    })
 
-    res.send({ msg: 'Mail sended' })
+    if (postulantCondition === 'postulated') {
+      await mailService.sendPostulationToProjectOwner({
+        to: adminMail,
+        projectData,
+        postulantData: postulantData2,
+      })
+
+      res.send({ msg: 'Mail sended' })
+    } else {
+      res.send({
+        msg: 'Postulant was alredy postulated',
+        postulantCondition: postulantCondition,
+      })
+    }
   } catch (err) {
     res.status(500).send({ msg: 'Project missing error', error: err.message })
   }

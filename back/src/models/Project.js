@@ -73,11 +73,11 @@ const projectSchema = new Schema(
       type: Array,
       default: [],
       // aca se define la estructura del objeto dentro del array
-      items: [{
-        applicantId: String,
-        rol: String,
-        seniority: String
-      }]
+      // items: [{
+      //   applicantId: String,
+      //   rol: String,
+      //   seniority: String
+      // }]
     },
     hidden: {
       type: Boolean,
