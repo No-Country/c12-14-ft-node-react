@@ -1,12 +1,24 @@
 class TemplateMails {
+  capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+  }
+
   postulationForProyect({ projectData, postulantData }) {
-    const { id, firstName, lastName, socialsMedia } = postulantData
+    const { id, firstName, lastName, socialsMedia, userName } = postulantData
     const { projectId, title } = projectData
     let socialmediaLinks = ''
     for (let media of socialsMedia) {
       socialmediaLinks += `<p><a href=${media.url} target="_blank" >${media.name}</a></p>`
     }
-
+    let name
+    if (firstName || lastName) {
+      name =
+        this.capitalizeFirstLetter(firstName) +
+        ' ' +
+        this.capitalizeFirstLetter(lastName)
+    } else {
+      name = this.capitalizeFirstLetter(userName)
+    }
     return `
             <!DOCTYPE html>
               <html>
@@ -46,13 +58,13 @@ class TemplateMails {
               </head>
               <body>
                 <h1>¡Hola!</h1>
-                <p>${firstName} ${lastName} ha postulado para tu proyecto:<b> ${title}</b> </p>
+                <p>${name} ha postulado para tu proyecto:<b> ${title}</b> </p>
                 <p>Aca abajo te dejamos sus redes sociales para que puedas conocer mejor a este postulante.</p>
                 ${socialmediaLinks}
 
                 <p>¿Deseas aceptar o rechazar la solicitud de esta paresona como colaborador</p>
-                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition=accepted" class="button button-accept" id="accept-button"  style="color: white">Aceptar</a>
-                <a href="http://127.0.0.1:3000/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition" class="button button-reject" id="reject-button" style="color: white">Rechazar</a>
+                <a href="https://dev-collab.onrender.com/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition=accepted" class="button button-accept" id="accept-button"  style="color: white">Aceptar</a>
+                <a href="https://dev-collab.onrender.com/api/projects/postulant/accept-reject?projectId=${projectId}&postulantId=${id}&desition" class="button button-reject" id="reject-button" style="color: white">Rechazar</a>
               </body>
             </html>
 `
@@ -107,6 +119,18 @@ class TemplateMails {
   }
 
   postulantAccepted({ projectData, postulantData }) {
+    const { lastname, firstname, username } = postulantData
+    console.log({ lastname, firstname, username })
+    let name
+    if (firstname || lastname) {
+      name =
+        this.capitalizeFirstLetter(firstname) +
+        ' ' +
+        this.capitalizeFirstLetter(lastname)
+    } else {
+      name = this.capitalizeFirstLetter(username)
+    }
+
     return `
     <!DOCTYPE html>
     <html>
@@ -146,10 +170,10 @@ class TemplateMails {
       </head>
       <body>
         <div class="container">
-          <h1>¡Felicitaciones ${postulantData.firstname} !</h1>
+          <h1>¡Felicitaciones ${name} !</h1>
           <p>Has sido aceptado como colaborador para el proyecto ${projectData.title}! </p>
           <p>Esperamos tengas una gran experiencia en el desarrollo del mismo!</p>
-          <p><a href="#ACAPORNER EL LINK DE ACCESO al Proyecto${projectData.id}">Clickea para ir al proyecto! ${projectData.title}</a></p>
+          <p><a href="https://uva-to1s.onrender.com/project/${projectData.id}">IR AL PROYECTO</a></p>
           
         </div>
       </body>

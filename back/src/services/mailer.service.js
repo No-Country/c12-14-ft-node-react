@@ -71,7 +71,7 @@ class MailService {
 
   async sendPostulationToProjectOwner({ to, projectData, postulantData }) {
     try {
-      //const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
+      const access_token = await this.oauth2Client.getAccessToken() //ver pq no hace falta usarlo
 
       const mailOptions = {
         from: 'UVA <uva.team.no.country@gmail.com>',
