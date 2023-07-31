@@ -184,7 +184,7 @@ const firebaseAuth = async (req, res = response) => {
     }
 
     const token = await authServices.generateJWT({
-      id: req.body.id,
+      id: req.body.user,
     })
 
     const serialized = serialize('devCollabToken', token, {
