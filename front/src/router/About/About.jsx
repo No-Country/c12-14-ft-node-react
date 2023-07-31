@@ -81,7 +81,7 @@ const members = [
     name: 'Luis Osio Chico',
     rol: 'Frontend Developer',
     github: 'https://github.com/LOsioChico',
-    linkedin: 'https://www.linkedin.com/in/jeffersonsteven/',
+    linkedin: 'https://www.linkedin.com/in/losiochico/',
     ubication: colombia,
   },
   {
