@@ -1,2 +1,2 @@
-# Dev-Collab
-Plataforma para colaboración entre desarrolladores
+# <UVA>
+Plataforma para encontrar colaboradores para proyectos y/o proyectos para colaborar
